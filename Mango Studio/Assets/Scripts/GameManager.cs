@@ -234,6 +234,9 @@ public class GameManager : MonoBehaviour
 
 		//setHealthText ();
 		if (currentplayer.getHealth () <= 0) {
+			Vector3 p = THEBOSS.transform.position;
+			float q = p.z;
+			THEBOSS.transform.position = new Vector3 (0, 0, q);
 			currentplayer.destroy();
 
 			//this.THEBOSS.model.transform.position.y = 0;
