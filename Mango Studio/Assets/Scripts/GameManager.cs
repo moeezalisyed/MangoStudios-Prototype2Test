@@ -84,6 +84,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+
+
+
 		if (this.gamewon == false && THEBOSS.bossHealth <= 0) {
 			this.gamewon = true;
 		}
@@ -95,13 +98,23 @@ public class GameManager : MonoBehaviour
 				currentplayer.direction = 3;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
-				if(currentplayer.transform.y < 0)
-			} else {
+//				if (currentplayer.transform.position.x > Screen.width) {
+//					print ("x width");
+//					Vector3 xvec = currentplayer.transform.position;
+//					xvec.x = 0;
+//					currentplayer.transform.position = xvec;
+//				}
+			} else{
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 3;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
-				
+//					if (currentplayer.transform.position.x > Screen.width) {
+//						print ("x width");
+//						Vector3 xvec = currentplayer.transform.position;
+//						xvec.x = 0;
+//						currentplayer.transform.position = xvec;
+//					}
 				
 				
 				}
@@ -118,12 +131,23 @@ public class GameManager : MonoBehaviour
 				currentplayer.direction = 0;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+//				if (currentplayer.transform.position.y < 0) {
+//					print ("y 0");
+//					Vector3 xvec = currentplayer.transform.position;
+//					xvec.y = Screen.height;
+//					currentplayer.transform.position = xvec;
+//				}
 			} else {
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 0;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
-
+//					if (currentplayer.transform.position.y < 0) {
+//						print ("y 0");
+//						Vector3 xvec = currentplayer.transform.position;
+//						xvec.y = Screen.height;
+//						currentplayer.transform.position = xvec;
+//					}
 
 				}
 
@@ -139,13 +163,25 @@ public class GameManager : MonoBehaviour
 				currentplayer.direction = 1;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+//				if (currentplayer.transform.position.x < 0) {
+//					print ("x 0");
+//					Vector3 xvec = currentplayer.transform.position;
+//					xvec.x = Screen.width;
+//					currentplayer.transform.position = xvec;
+//				}
+
 
 			} else {
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 1;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
-
+//					if (currentplayer.transform.position.x < 0) {
+//						print ("x 0");
+//						Vector3 xvec = currentplayer.transform.position;
+//						xvec.x = Screen.width;
+//						currentplayer.transform.position = xvec;
+//					}
 				}
 
 
@@ -160,12 +196,24 @@ public class GameManager : MonoBehaviour
 				currentplayer.direction = 2;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+//				if (currentplayer.transform.position.y > Screen.height) {
+//					print ("y height");
+//					Vector3 xvec = currentplayer.transform.position;
+//					xvec.y = 0;
+//					currentplayer.transform.position = xvec;
+//				}
 
 			} else {
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 2;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+//					if (currentplayer.transform.position.y > Screen.height) {
+//						print ("y height");
+//						Vector3 xvec = currentplayer.transform.position;
+//						xvec.y = 0;
+//						currentplayer.transform.position = xvec;
+//					}
 				}
 
 

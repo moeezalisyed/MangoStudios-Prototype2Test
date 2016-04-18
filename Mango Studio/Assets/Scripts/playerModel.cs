@@ -17,6 +17,9 @@ public class playerModel : MonoBehaviour
 	//private float damagebuf;
 	public float cd;
 	public float cdbuf;
+	public	float cdbufA= 0f;		//time until ability cooldown is over
+	public float cdA= 0f;	//cooldown length for ability
+
 	public List<Vector3> shadowMovements = new List<Vector3>();
 	public List<Boolean> shadowFiring =  new List<Boolean>();
 	public List<int> shadowDirection =  new List<int>();
@@ -43,16 +46,19 @@ public class playerModel : MonoBehaviour
 		if (playerType == 1) {
 			cd = 0;
 			cdbuf = 0;
+			this.cdA = 1.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
 			mat.color = new Color (1, 1, 1, 1);
 		} else if (playerType == 0) {
 			cd = 0;
 			cdbuf = 0.7f;
+			this.cdA = 1.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
 			mat.color = new Color (1, 1, 1, 1);
 		} else if (playerType == 2) {
 			cd = 0;
 			cdbuf = 0.5f;
+			this.cdA = 1.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Triangle");
 			mat.color = new Color (5, 1, 1, 1);
 		} else if (playerType == 3) {
@@ -69,6 +75,18 @@ public class playerModel : MonoBehaviour
 	}
 
 	void Update(){
+
+
+		// Kinda funky world wrapping - commented out for now!
+
+//		Vector3 curPos = Camera.main.WorldToScreenPoint(this.transform.position);
+//		curPos.x = curPos.x % Screen.width;
+//		print ("player x : " + curPos.x + "width: " + Screen.width);
+//		curPos.y = curPos.y % Screen.height;
+//		curPos = Camera.main.ScreenToWorldPoint (curPos);
+//		this.transform.position = curPos;
+
+		owner.clock += Time.deltaTime;
 		clock += Time.deltaTime;
 		if (firstRun) {
 			shadowMovements.Add (this.transform.position);
@@ -247,6 +265,29 @@ public class playerModel : MonoBehaviour
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
 			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+		
+
+			GUI.color = Color.yellow;
+			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
+			GUI.skin.box.fontSize = 25;
+			string p = "";
+
+			for (int i = 0; i < (owner.cdA - owner.clock + owner.cdbufA) * 10; i++) {
+				p += "I";
+			}
+
+
+			GUI.Box (new Rect (10, 650, 200, 100), "Special: \n" + p);
+
+			GUI.color = Color.white;
+			GUI.skin.box.fontSize = 12;
+			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+		
+		
+		
+		
+		
+		
 		}
 	}
 

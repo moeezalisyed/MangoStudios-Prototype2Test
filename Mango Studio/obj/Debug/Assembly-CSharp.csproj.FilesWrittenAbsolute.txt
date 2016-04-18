@@ -1,34 +1,17 @@
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Assembly-CSharp.dll.mdb
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Assembly-CSharp.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/obj/Debug/Assembly-CSharp.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/obj/Debug/Assembly-CSharp.dll.mdb
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/UnityEngine.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/UnityEditor.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/UnityEngine.Networking.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/UnityEngine.UI.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Mono.Cecil.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Unity.SerializationLogic.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Unity.DataContract.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/ICSharpCode.NRefactory.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Unity.UNetWeaver.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Unity.CecilTools.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Mono.Cecil.Pdb.dll
-/Users/Jun/Small-Characters--small-characters-mechanics-study/Mango Studio/Temp/bin/Debug/Mono.Cecil.Mdb.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Assembly-CSharp.dll.mdb
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Assembly-CSharp.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/obj/Debug/Assembly-CSharp.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/obj/Debug/Assembly-CSharp.dll.mdb
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/UnityEngine.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/UnityEditor.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/UnityEngine.Networking.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/UnityEngine.UI.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Mono.Cecil.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Unity.SerializationLogic.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Unity.DataContract.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/ICSharpCode.NRefactory.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Unity.UNetWeaver.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Unity.CecilTools.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Mono.Cecil.Pdb.dll
-/Users/Jun/Prototype1_MangoStudies/Mango Studio/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/obj/Debug/Assembly-CSharp.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/UnityEngine.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/UnityEditor.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Mono.Cecil.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Unity.DataContract.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/MoeezASyed/Documents/Mango Studios/MangoStudios-Prototype2Test/Mango Studio/Temp/bin/Debug/Mono.Cecil.Mdb.dll

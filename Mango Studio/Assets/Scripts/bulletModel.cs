@@ -16,8 +16,16 @@ public class BulletModel : MonoBehaviour {
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/bullet2");	// Set the texture.  Must be in Resources folder.
-		mat.color = new Color(1,1,1);
+
+		if (this.owner.name == "Bullet") {
+			mat.mainTexture = Resources.Load<Texture2D> ("Textures/bullet2");	// Set the texture.  Must be in Resources folder.
+			mat.color = new Color(1,1,1);
+		} else if (this.owner.name == "SpecialBullet") {
+			mat.mainTexture = Resources.Load<Texture2D> ("Textures/bullet");	// Set the texture.  Must be in Resources folder.
+			mat.color = new Color(1,0,0);
+		}
+
+
 
 		this.transform.rotation = new Quaternion(owner.transform.rotation .x,owner.transform.rotation.y,owner.transform.rotation.z,owner.transform.rotation.w);
 	}

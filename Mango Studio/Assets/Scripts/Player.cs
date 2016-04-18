@@ -13,11 +13,35 @@ public class Player : MonoBehaviour {
 	public BoxCollider2D playerbody;
 	public bool usingability = false;
 	public bool usingcircpowerup = false;
+	public	float cdbufA= -0.5f;		//time until ability cooldown is over
+	public float cdA= 0f;	//cooldown length for ability
+	public float clock;	// to keep track of the time(not used for now)
 
 	public void init(int playerType, GameManager m) {
+
 		this.playerType = playerType;
 		//this.initHealth = initHealth;
 		this.m = m;
+
+
+		if (this.playerType == 0){
+			//triangle
+
+			this.cdA = 1.5f;
+
+
+		} else if (this.playerType == 1){
+			//circle
+
+			this.cdA = 1.5f;
+
+		} else if (this.playerType == 2){
+			//square
+
+			this.cdA = 1.5f;
+
+		}
+
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		playerbody = gameObject.AddComponent<BoxCollider2D> ();
@@ -28,6 +52,10 @@ public class Player : MonoBehaviour {
 		model = modelObject.AddComponent<playerModel>();						// Add an playerModel script to control visuals of the gem.
 		model.init(playerType, this);		
 		this.tag = "Player";
+	}
+	void Start(){
+		clock = 0f;
+	
 	}
 
 	public void move(int x, int y){
@@ -40,7 +68,11 @@ public class Player : MonoBehaviour {
 	}
 
 	public void useAbility(){
-		StartCoroutine (usingabil ());
+		if (clock - cdbufA > cdA) {
+			StartCoroutine (usingabil ());
+			cdbufA = clock;
+		}
+
 	}
 
 
@@ -57,6 +89,7 @@ public class Player : MonoBehaviour {
 		}
 		if (this.playerType == 1) {
 			this.tag = "inviscircle";
+			//print ("changed tag to " + this.tag);
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/inviscircle");
 			transform.localScale = new Vector3 (3, 3, 0);
 		}
