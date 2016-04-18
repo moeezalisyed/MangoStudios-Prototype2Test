@@ -207,6 +207,9 @@ public class Boss : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Bullet") {
 			this.dealDamage (2);
+		} else if (other.name == "SpecialBullet") {
+			print("Did special damage");
+			this.dealDamage (5);
 		}
 	}
 

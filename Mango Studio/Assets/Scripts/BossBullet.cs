@@ -33,7 +33,7 @@ public class BossBullet : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		print ("entered collider in boss bullet");
-		if (other.tag == "Player") {
+		if (other.tag == "Player" || other.tag == "inviscircle") {
 			Destroy (this.gameObject);
 		}
 	}

@@ -118,7 +118,7 @@ public class playerModel : MonoBehaviour
 				if (shadowFiring [shadowitr] == true) {
 					this.shoot ();
 				}
-				if (shadowFiring [shadowitr] == true) {
+				if (shadowSPAB [shadowitr] == true) {
 					this.owner.useAbility ();
 				}
 				this.transform.position = shadowMovements [shadowitr];

@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
 	public int direction = 0;
 	public BoxCollider2D playerbody;
 	public bool usingability = false;
+	public bool usingcircpowerup = false;
 
 	public void init(int playerType, GameManager m) {
 		this.playerType = playerType;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour {
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		playerbody = gameObject.AddComponent<BoxCollider2D> ();
+
 		Rigidbody2D playerRbody = gameObject.AddComponent<Rigidbody2D> ();
 		playerRbody.gravityScale = 0;
 		playerbody.isTrigger = true;
@@ -41,14 +43,22 @@ public class Player : MonoBehaviour {
 		StartCoroutine (usingabil ());
 	}
 
+
+	IEnumerator startPowerUp (){
+		this.usingcircpowerup = true;
+		yield return new WaitForSeconds (3);
+		this.usingcircpowerup = false;
+	}
+
 	IEnumerator usingabil (){
 		this.usingability = true;
 		if (this.playerType == 2) {
 			model.cdbuf = 0.1f;
 		}
 		if (this.playerType == 1) {
+			this.tag = "inviscircle";
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/inviscircle");
-			transform.localScale = new Vector3 (2, 2, 0);
+			transform.localScale = new Vector3 (3, 3, 0);
 		}
 		yield return new WaitForSeconds (3);
 		this.usingability = false;
@@ -56,6 +66,7 @@ public class Player : MonoBehaviour {
 			model.cdbuf = 0.5f;
 		}
 		if (this.playerType == 1) {
+			this.tag = "Player";
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
 			transform.localScale = new Vector3 (1, 1, 0);
 		}
@@ -82,14 +93,19 @@ public class Player : MonoBehaviour {
 		return model.getType();
 	}
 
+
+
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.name == "Circle") {
+		if (other.tag == "inviscircle") {
 			//Here it will check if it collided with a circle
 			/*if (other.GetComponentInParent (Texture2D) == "inviscircle") {
 				//increase the damage stuff
 				print("got to the invis circle");
 			}*/
-		
+
+			print ("Got a powerup!");
+			StartCoroutine (startPowerUp ());
+
 		}
 
 

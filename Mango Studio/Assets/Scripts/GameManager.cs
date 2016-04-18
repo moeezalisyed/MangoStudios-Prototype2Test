@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
 				currentplayer.direction = 3;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
 				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+				if(currentplayer.transform.y < 0)
 			} else {
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 3;

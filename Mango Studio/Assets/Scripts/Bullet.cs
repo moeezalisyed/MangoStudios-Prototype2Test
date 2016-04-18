@@ -9,9 +9,14 @@ public class Bullet : MonoBehaviour {
 	private float clock;
 
 
+
 	// Use this for initialization
 	public void init(playerModel owner) {
-		this.name = "Bullet";
+		if (owner.owner.usingcircpowerup == true) {
+			this.name = "SpecialBullet";
+		} else {
+			this.name = "Bullet";
+		}
 		speed = 7;
 		playerType = owner.getType ();
 		clock = 0f;
