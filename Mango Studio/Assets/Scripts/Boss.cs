@@ -7,7 +7,7 @@ public class Boss : MonoBehaviour {
 
 	public BossModel model;
 	private float speed;
-	private GameManager m;
+	public GameManager m;
 	private float bulletCooldown;
 	private float beamCooldown;
 	private float bladeCooldown;
@@ -20,6 +20,11 @@ public class Boss : MonoBehaviour {
 	public int bossHealth;
 	private bool slow;
 	private BossBlades blade;
+
+	// sfx
+	public AudioClip bossDead;
+	public AudioClip bossHit;
+	public AudioClip bossHitX;	
 
 	// Use this for initialization
 	public void init (GameManager owner) {
@@ -125,6 +130,7 @@ public class Boss : MonoBehaviour {
 
 		if (this.bossHealth <= 0) {
 			Destroy (this.gameObject);
+			m.PlayEffect (bossDead);
 		}
 
 	}
@@ -158,7 +164,6 @@ public class Boss : MonoBehaviour {
 
 		if (this.bossHealth > 90 && this.bossHealth <= 100) {
 			model.changeTexture (0);
-			
 		} else if (this.bossHealth > 80 && this.bossHealth <= 90 ) {
 			model.changeTexture (1);
 		} else if (this.bossHealth > 70&& this.bossHealth <= 80) {
@@ -207,9 +212,11 @@ public class Boss : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Bullet") {
 			this.dealDamage (2);
+			m.PlayEffect (bossHit);
 		} else if (other.name == "SpecialBullet") {
 			print("Did special damage");
 			this.dealDamage (5);
+			m.PlayEffect (bossHitX);
 		}
 	}
 

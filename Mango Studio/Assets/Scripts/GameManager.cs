@@ -50,9 +50,10 @@ public class GameManager : MonoBehaviour
     private AudioClip winmusic;
 
     // Sound effect clips
-    private AudioClip playerDead;
-    private AudioClip playerHit;
-    private AudioClip click;
+    private AudioClip bossDead;
+    private AudioClip bossHit;
+    private AudioClip bossHitX;
+    public AudioClip abilityon;
 
     // Use this for initialization
     void Start()
@@ -77,6 +78,9 @@ public class GameManager : MonoBehaviour
 		Boss boss = bossObject.AddComponent<Boss>();
 		boss.init (this);
 		THEBOSS = boss;
+
+		// setting up music
+        SoundSetUp();
 
 	}
         
@@ -230,6 +234,7 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.Z)) {
 			currentplayer.useAbility ();
+			PlayEffect(abilityon);
 		}
 
 		//setHealthText ();
@@ -296,6 +301,35 @@ public class GameManager : MonoBehaviour
 		this.gameover = true;
 
 	}
+
+    private void SoundSetUp()
+    {
+        // music
+/*        idle = Resources.Load<AudioClip>("Music/title song");
+        gametrack = Resources.Load<AudioClip>("Music/Main song loop");
+        winmusic = Resources.Load<AudioClip>("Music/You Win Song");*/
+
+        // sfx
+        bossDead = Resources.Load<AudioClip>("Music/explosion");
+        bossHit = Resources.Load<AudioClip>("Music/shoot");
+        bossHitX = Resources.Load<AudioClip>("Music/shootX");  //Special bullet when ability is on
+        abilityon = Resources.Load<AudioClip>("Music/abilityon");
+
+    }
+        // Music section
+    public void PlayEffect(AudioClip clip)
+    {
+        sfx.clip = clip;
+        sfx.Play();
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        this.music.loop = true;
+        this.music.clip = clip;
+        this.music.Play();
+    }
+
 
 	void OnGUI(){
 		if (this.gameover) {
