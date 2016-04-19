@@ -33,7 +33,7 @@ public class Player : MonoBehaviour {
 		} else if (this.playerType == 1){
 			//circle
 
-			this.cdA = 1.5f;
+			this.cdA = 3.0f;
 
 		} else if (this.playerType == 2){
 			//square

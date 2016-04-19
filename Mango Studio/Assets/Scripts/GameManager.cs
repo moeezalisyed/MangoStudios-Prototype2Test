@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
     private GameObject playerFolder;// folders for object organization
 
     private List<Player> players; // list of all placed players
+//	******** FELIPE LOOK HERE FOR current player ********
 	public Player currentplayer;
+
+//	******** FELIPE LOOK HERE FOR Shadow CHARACTER List ********
 	public List<Player> shadowPlayers = new List<Player>();
     // Beat tracking
     private float clock;
@@ -262,6 +265,11 @@ public class GameManager : MonoBehaviour
 			if (playertype == 3) {
 				currentplayer.setCD (.5f);
 			}
+
+			if (playertype == 1) {
+				currentplayer.setCD (2.0f);
+			}
+
 		}
 //		if (startitr){
 //			

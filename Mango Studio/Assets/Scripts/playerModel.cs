@@ -44,18 +44,22 @@ public class playerModel : MonoBehaviour
 		mat = GetComponent<Renderer> ().material;
 		mat.shader = Shader.Find ("Sprites/Default");
 		if (playerType == 1) {
+			//circle
 			cd = 0;
-			cdbuf = 0;
+			cdbuf = 2.0f;
 			this.cdA = 1.5f;
+			this.cdbufA = 0f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
 			mat.color = new Color (1, 1, 1, 1);
 		} else if (playerType == 0) {
-			cd = 0;
+			//square
+			cd = 0.0f;
 			cdbuf = 0.7f;
 			this.cdA = 1.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
 			mat.color = new Color (1, 1, 1, 1);
 		} else if (playerType == 2) {
+			//triangle 
 			cd = 0;
 			cdbuf = 0.5f;
 			this.cdA = 1.5f;
