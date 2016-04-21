@@ -5,11 +5,13 @@ public class BossBullet : MonoBehaviour {
 	
 	private BossBulletModel model;
 	private float speed;
+	private Boss owner;
 
 	// Use this for initialization
-	void Start () {
+	void Start (Boss boss) {
+		owner = boss;
 		this.name = "BossBullet";
-		speed = 6;
+		speed = 3 * owner.chargeSpeed;
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossBulletModel>();						// Add a marbleModel script to control visuals of the gem.
@@ -17,7 +19,7 @@ public class BossBullet : MonoBehaviour {
 
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
 		playerbody.isTrigger = true;
-		transform.localScale = new Vector3 (.5f, .5f, 1);
+		transform.localScale = new Vector3 (.35f, .35f, 1);
 	
 	}
 	

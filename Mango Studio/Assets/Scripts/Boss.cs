@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Boss : MonoBehaviour {
 
 	public BossModel model;
-	private float speed;
+	public float speed;
 	public GameManager m;
 	private float bulletCooldown;
 	private float beamCooldown;
@@ -15,7 +15,7 @@ public class Boss : MonoBehaviour {
 	private bool usingBlades;
 	private bool charge;
 	private float charging;
-	private float chargeSpeed;
+	public float chargeSpeed;
 	private float chargecd;
 	public int bossHealth;
 	private bool slow;
@@ -29,9 +29,10 @@ public class Boss : MonoBehaviour {
 	// Use this for initialization
 	public void init (GameManager owner) {
 		this.name = "Boss";
-		speed = 1;
-		chargeSpeed = 4;
+
 		m = owner;
+		speed = m.bossSpeed;
+		chargeSpeed = m.bossSpeed*2;
 		this.bossHealth = 100;
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossModel>();						// Add a marbleModel script to control visuals of the gem.
@@ -42,7 +43,7 @@ public class Boss : MonoBehaviour {
 		bossRbody.gravityScale = 0;
 		bossbody.isTrigger = true;
 
-		transform.localScale = new Vector3 (2, 2, 1);
+		transform.localScale = new Vector3 (1.2f, 1.2f, 1);
 	}
 	
 	// Update is called once per frame
@@ -135,6 +136,11 @@ public class Boss : MonoBehaviour {
 
 	}
 
+	public void setSpeeds(){
+		this.speed = m.bossSpeed;
+		this.chargeSpeed = m.bossSpeed * 2;
+	}
+
 	void FireBullet(){ 						//I made this take x and y because I was thinking about it and different enemies will need to fire from different parts of their models
 		GameObject bulletObject = new GameObject();		
 		BossBullet bullet = bulletObject.AddComponent<BossBullet>();
@@ -202,7 +208,7 @@ public class Boss : MonoBehaviour {
 
 		}
 
-		GUI.Box(new Rect (10, 10, 200, 100), "Boss: \n" + s);
+		GUI.Box(new Rect (250, 5, 200, 100), "Boss: \n" + s);
 
 		GUI.color = Color.white;
 		GUI.skin.box.fontSize = 12;

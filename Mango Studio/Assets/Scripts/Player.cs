@@ -52,6 +52,7 @@ public class Player : MonoBehaviour {
 		model = modelObject.AddComponent<playerModel>();						// Add an playerModel script to control visuals of the gem.
 		model.init(playerType, this);		
 		this.tag = "Player";
+		transform.localScale = new Vector3 (0.8f, 0.8f, 1);
 	}
 	void Start(){
 		clock = 0f;
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour {
 			this.tag = "inviscircle";
 			//print ("changed tag to " + this.tag);
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/inviscircle");
-			transform.localScale = new Vector3 (3, 3, 0);
+			transform.localScale = new Vector3 (3f, 3f, 0);
 		}
 		yield return new WaitForSeconds (3);
 		this.usingability = false;

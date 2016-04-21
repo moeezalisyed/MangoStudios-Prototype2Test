@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private int numBeats = 0;
     int playerbeaten = 0;
     int playernum = 0;
-	private int playertype;
+	private int playertype = 0;
 	public Text HealthText;
 	private List<Vector3> shadow;
 	private int shadowiterator;
@@ -31,7 +31,19 @@ public class GameManager : MonoBehaviour
 	public Boss THEBOSS;
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
+	private int playerLives = 3;
+	private int[] playerOrder;// = new int[playerLives];
+	private int playerOrderIndex = 0;
 
+
+	// These are the readonly CD Functions
+	public readonly float coolDownCircle = 2.0f;
+	public readonly float coolDownTriangle = 2.0f;
+	public readonly float coolDownSquare = 1.0f;
+
+	//define character speed for every iteration blowup and slowdown
+	public float charSpeed = 2f;
+	public float bossSpeed = 2f;
 
     // Level number
 
@@ -59,18 +71,37 @@ public class GameManager : MonoBehaviour
     public AudioClip abilityon;
 
     // Use this for initialization
-    void Start()
-	{
+    void Start(){
+		// Set up the player order
+		playerOrder = new int[playerLives];
+		for (int i = 0; i <= playerLives; i++) {
+			for (int j = 0; j <= playerLives / 3; j++) {
+				this.playerOrder [i] = this.playertype;
+				i++;
+			}
+			this.playertype++;
+		}
+
+		this.shuffleYates (playerOrder);
+
+		//Randomise the player order
+
+
+
+
 		//set up folder for enemies
 		playerFolder = new GameObject ();
 		playerFolder.name = "Enemies";
 		players = new List<Player> ();
-		playertype = 2;
+		//playertype = 2;
 		//addPlayer(0, 1, 0, 0);
 		//addPlayer(playertype, 1, -4, -4);
-		addPlayer(playertype, 1, -4, -4);
+
+		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
+		playerOrderIndex++;
 		currentplayer = players [0];
-		currentplayer.setCD (0.5f);
+
+		//currentplayer.setCD (0.5f);
 		//setHealthText ();
 		clock = 0f;
 		shadow = new List<Vector3> ();
@@ -104,7 +135,7 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2) {
 				currentplayer.direction = 3;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //				if (currentplayer.transform.position.x > Screen.width) {
 //					print ("x width");
 //					Vector3 xvec = currentplayer.transform.position;
@@ -115,7 +146,7 @@ public class GameManager : MonoBehaviour
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 3;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //					if (currentplayer.transform.position.x > Screen.width) {
 //						print ("x width");
 //						Vector3 xvec = currentplayer.transform.position;
@@ -137,7 +168,7 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2) {
 				currentplayer.direction = 0;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //				if (currentplayer.transform.position.y < 0) {
 //					print ("y 0");
 //					Vector3 xvec = currentplayer.transform.position;
@@ -148,7 +179,7 @@ public class GameManager : MonoBehaviour
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 0;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //					if (currentplayer.transform.position.y < 0) {
 //						print ("y 0");
 //						Vector3 xvec = currentplayer.transform.position;
@@ -169,7 +200,7 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2) {
 				currentplayer.direction = 1;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //				if (currentplayer.transform.position.x < 0) {
 //					print ("x 0");
 //					Vector3 xvec = currentplayer.transform.position;
@@ -182,7 +213,7 @@ public class GameManager : MonoBehaviour
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 1;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //					if (currentplayer.transform.position.x < 0) {
 //						print ("x 0");
 //						Vector3 xvec = currentplayer.transform.position;
@@ -202,7 +233,7 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2) {
 				currentplayer.direction = 2;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-				currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //				if (currentplayer.transform.position.y > Screen.height) {
 //					print ("y height");
 //					Vector3 xvec = currentplayer.transform.position;
@@ -214,7 +245,7 @@ public class GameManager : MonoBehaviour
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 2;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * 4 * Time.deltaTime);
+					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //					if (currentplayer.transform.position.y > Screen.height) {
 //						print ("y height");
 //						Vector3 xvec = currentplayer.transform.position;
@@ -242,9 +273,13 @@ public class GameManager : MonoBehaviour
 
 		//setHealthText ();
 		if (currentplayer.getHealth () <= 0) {
+			//recenter the boss
 			Vector3 p = THEBOSS.transform.position;
 			float q = p.z;
 			THEBOSS.transform.position = new Vector3 (0, 0, q);
+			//Start a corouting to slow down the time:
+			StartCoroutine(iterationSlowdown(3) );
+
 			currentplayer.destroy();
 
 			//this.THEBOSS.model.transform.position.y = 0;
@@ -252,22 +287,28 @@ public class GameManager : MonoBehaviour
 			shadowPlayers.Add (currentplayer);
 			//startitr = true;
 
-			if ( shadowPlayers.Count <= 5) {
+			if ( shadowPlayers.Count <= this.playerLives) {
 				playertype++;
-			} else if (shadowPlayers.Count > 5) {
+			} else if (shadowPlayers.Count > this.playerLives) {
 				this.gameOver();
 			
 			}
-			playertype = playertype % 3 ;
-			playertype++;
-			addPlayer (playertype, 1, -4, -4);
-			currentplayer = players [0];
-			if (playertype == 3) {
-				currentplayer.setCD (.5f);
-			}
 
-			if (playertype == 1) {
-				currentplayer.setCD (2.0f);
+
+			addPlayer (playerOrder[playerOrderIndex], 1, -4, -4);
+			playerOrderIndex++;
+			currentplayer = players [0];
+
+			if (currentplayer.playerType == 0) {
+				//square
+				currentplayer.setCD (this.coolDownSquare);
+			} else if (currentplayer.playerType == 1) {
+				//circle
+				currentplayer.setCD (this.coolDownCircle);
+			
+			} else if (currentplayer.playerType == 2) {
+				//triangle
+				currentplayer.setCD (this.coolDownTriangle);
 			}
 
 		}
@@ -281,6 +322,18 @@ public class GameManager : MonoBehaviour
 //			shadowiterator++;
 //			}
     }
+
+
+	IEnumerator iterationSlowdown (int sec){
+		this.charSpeed = this.charSpeed/5;
+		this.bossSpeed = this.bossSpeed/5;
+		THEBOSS.setSpeeds();
+		yield return new WaitForSeconds (sec);
+		this.charSpeed = this.charSpeed*5;
+		this.bossSpeed = this.bossSpeed*5;
+		THEBOSS.setSpeeds();
+	}
+
 
 	public void addPlayer(int playerType, int initHealth, int x, int y)
 	{
@@ -337,6 +390,21 @@ public class GameManager : MonoBehaviour
         this.music.clip = clip;
         this.music.Play();
     }
+
+	public void shuffleYates(int[] array)
+	{
+		int n = array.Length;
+		for (int i = 0; i < n; i++)
+		{
+			Random rng = new Random ();
+			// NextDouble returns a random number between 0 and 1.
+			// ... It is equivalent to Math.random() in Java.
+			int r = i + (int)(Random.value * (n - i));
+			int t = array[r];
+			array[r] = array[i];
+			array[i] = t;
+		}
+	}
 
 
 	void OnGUI(){
@@ -398,7 +466,7 @@ public class GameManager : MonoBehaviour
 
 			}
 
-			GUI.Box(new Rect (10, 150, 200, 100), "Player: \n " + ss);
+			GUI.Box(new Rect (10, 5, 200, 100), "Player: \n " + ss);
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;

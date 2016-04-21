@@ -45,23 +45,23 @@ public class playerModel : MonoBehaviour
 		mat.shader = Shader.Find ("Sprites/Default");
 		if (playerType == 1) {
 			//circle
-			cd = 0;
-			cdbuf = 2.0f;
+		//	cd = owner.m.coolDownCircle;
+			cdbuf = -0.5f;
 			this.cdA = 1.5f;
 			this.cdbufA = 0f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
 			mat.color = new Color (1, 1, 1, 1);
 		} else if (playerType == 0) {
 			//square
-			cd = 0.0f;
-			cdbuf = 0.7f;
+			//cd = owner.m.coolDownCircle;
+			cdbuf = -0.5f;
 			this.cdA = 1.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
 			mat.color = new Color (1, 1, 1, 1);
 		} else if (playerType == 2) {
 			//triangle 
-			cd = 0;
-			cdbuf = 0.5f;
+		//	cd = 0;
+			cdbuf = -0.5f;
 			this.cdA = 1.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Triangle");
 			mat.color = new Color (5, 1, 1, 1);
@@ -118,7 +118,7 @@ public class playerModel : MonoBehaviour
 //			} else if (playerType == 1) {
 //				transform.position = new Vector3 (transform.position.x + speed * movex, transform.position.y + speed * movey);
 //			} else if (playerType == 3) {
-				transform.position = new Vector3 (transform.position.x + speed * movex, transform.position.y + speed * movey);
+			//	transform.position = new Vector3 (transform.position.x + speed * movex, transform.position.y + speed * movey);
 //			}
 //			if (clock - damagebuf > 3) {
 //				damage ();
@@ -150,31 +150,7 @@ public class playerModel : MonoBehaviour
 		}
 	}
 
-	//void OnGUI(){
-//		GUI.color = Color.green;
-//		GUI.skin.box.alignment = TextAnchor.MiddleLeft;
-//		string s = "";
-//		for (int i = 0; i < healthval / 10; i++) {
-//			s += "I";
-//		}
-//		GUI.Box(new Rect (Screen.width / 2 - 200, Screen.height / 2 - 200, 150, 100), s);
-//		GUI.color = Color.white;
-//		GUI.skin.box.alignment = TextAnchor.MiddleCenter;
-//
-//		//the cd bar
-//		GUI.color = Color.red;
-//		GUI.skin.box.alignment = TextAnchor.MiddleLeft;
-//		string t = "";
-//		/*for (int i = 0; i < (int)(cd-clock+cdbuf)*100; i++) {
-//			t += cd-clock+cdbuf;
-//		}*/
-//		t = String.Format("{0:0,0.0000000}", cd-clock+cdbuf);
-//		GUI.Box(new Rect (Screen.width / 2 - 200, Screen.height / 2 + 200, 150, 100), t);
-//		GUI.color = Color.white;
-//		GUI.skin.box.alignment = TextAnchor.MiddleCenter;
-	
-	
-	//}
+
 
 
 	public void move(int x, int y){
@@ -238,19 +214,7 @@ public class playerModel : MonoBehaviour
 	void OnBecameInvisible() {
 		print ("went off screen");
 	}
-
-//	void OnTriggerEnter2D(Collider2D other){
-//		//print ("col");
-//		if (other.name == "Boss") {
-//			this.damage ();
-//		}
-//		if (other.name == "BossBullet") {
-//			this.damage ();
-//		}
-//		if (other.name == "BossBeam") {
-//			this.damage ();
-//		}
-//	}
+		
 
 	void OnGUI(){
 		if (this.firstRun) {
@@ -264,7 +228,7 @@ public class playerModel : MonoBehaviour
 			}
 
 
-			GUI.Box (new Rect (10, 500, 200, 100), "Cooldown: \n" + s);
+			GUI.Box (new Rect (490, 5, 200, 100), "Cooldown: \n" + s);
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
@@ -276,12 +240,12 @@ public class playerModel : MonoBehaviour
 			GUI.skin.box.fontSize = 25;
 			string p = "";
 
-			for (int i = 0; i < (owner.cdA - owner.clock + owner.cdbufA) * 10; i++) {
+			for (int i = 0; i < ((owner.cdA - owner.clock + owner.cdbufA)  * 10); i++) {
 				p += "I";
 			}
 
 
-			GUI.Box (new Rect (10, 650, 200, 100), "Special: \n" + p);
+			GUI.Box (new Rect (730, 5, 200, 100), "Special: \n" + p);
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
