@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
 
 	// These are the readonly CD Functions
-	public readonly float coolDownCircle = 0.6f;
+	public readonly float coolDownCircle = 0.2f;
 	public readonly float coolDownTriangle = 0.6f;
 	public readonly float coolDownSquare = 1.3f;
 
@@ -225,7 +225,6 @@ public class GameManager : MonoBehaviour
 		} 
 		if (Input.GetKey (KeyCode.UpArrow) ) {
 			
-
 
 			//above
 			if (currentplayer.playerType != 2) {
@@ -450,7 +449,7 @@ public class GameManager : MonoBehaviour
 
 	public void createPlayerOrderList() {
 
-		for (int i = 0; i < playerLives; i++) {
+		/*for (int i = 0; i < playerLives; i++) {
 			for (int j = 0; j < playerLives / 3; j++) {
 				this.playerOrder [i] = this.playertype;
 				if (j < playerLives / 3 - 1) {
@@ -458,9 +457,12 @@ public class GameManager : MonoBehaviour
 				}
 			}
 			this.playertype++;
-		}
+		}*/
 
 		this.shuffleYates (playerOrder);
+		for (int i = 0; i < playerLives; i++) {
+			this.playerOrder [i] = i % 3;
+		}
 	}
 
 

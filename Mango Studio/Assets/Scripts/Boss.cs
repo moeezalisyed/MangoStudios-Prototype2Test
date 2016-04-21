@@ -217,9 +217,15 @@ public class Boss : MonoBehaviour {
 
 		GUI.Box(new Rect (250, 5, 200, 100), "Boss: \n" + s);
 
+		Vector2 targetPos;
+		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+
+		//GUI.Box(new Rect(targetPos.x-40, Screen.height-targetPos.y-80, 100, 25), s);
+
 		GUI.color = Color.white;
 		GUI.skin.box.fontSize = 12;
 		GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
