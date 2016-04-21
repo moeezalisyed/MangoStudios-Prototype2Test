@@ -496,21 +496,27 @@ public class GameManager : MonoBehaviour
 		
 
 		if (this.playerOrderIndex < playerLives) {
-			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+			GUI.skin.box.alignment = TextAnchor.LowerCenter;
 			GUI.skin.box.fontSize = 22;
-			GUI.Box(new Rect (970, 0, 100, 100), "Next Up:");
+			GUI.Box (new Rect (970, 19, 100, 40), "Next Up:");
 
 			int nextType = playerOrder [playerOrderIndex];
 			if (nextType == 0) {
-				GUI.Box(new Rect(995, 105, 50,50), this.forSq);
+				GUI.Box (new Rect (995, 60, 50, 50), this.forSq);
 			} else if (nextType == 1) {
-				GUI.Box(new Rect(995, 105, 50,50), this.forC);
+				GUI.Box (new Rect (995, 60, 50, 50), this.forC);
 			} else if (nextType == 2) {
-				GUI.Box(new Rect(995, 105, 50,50), this.forT);
+				GUI.Box (new Rect (995, 60, 50, 50), this.forT);
 			}
-			GUI.skin.box.fontSize = 12;
+		}else {
+				GUI.color = Color.red;
+				GUI.skin.box.fontSize = 22;
+				GUI.Box(new Rect (970, 19, 100, 40), "Last Life!");
+
+
 		
 		}
+		GUI.skin.box.fontSize = 12;
 
 
 
