@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour {
 		} else {
 			this.name = "Bullet";
 		}
-		speed = 7;
+		speed = 6;
 		playerType = owner.getType ();
 		clock = 0f;
 
@@ -26,6 +26,8 @@ public class Bullet : MonoBehaviour {
 		model.init(this);
 
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
+		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
+		bossRbody.gravityScale = 0;
 		playerbody.isTrigger = true;
 
 	}
@@ -50,11 +52,11 @@ public class Bullet : MonoBehaviour {
 				Destroy (this.gameObject);
 			}
 		}
-		else if (playerType == 3) {
-			if (clock > .6) {
-				Destroy (this.gameObject);
-			}
-		}
+//		else if (playerType == 3) {
+//			if (clock > .6) {
+//				Destroy (this.gameObject);
+//			}
+//		}
 
 		if (this.transform.position.x > 9 || this.transform.position.x < -9 || this.transform.position.y > 6 || this.transform.position.y < -6) {
 			Destroy (this.gameObject);
@@ -62,7 +64,11 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.name == "Boss") {
+		if (other.name == "Boss" || other.name == "BossBeam") {
+			Destroy (this.gameObject);
+		}
+		if (other.name == "BossBullet") {
+			Destroy (other.gameObject);
 			Destroy (this.gameObject);
 		}
 	}

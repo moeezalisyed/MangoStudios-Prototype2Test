@@ -82,7 +82,7 @@ public class Player : MonoBehaviour {
 
 	IEnumerator startPowerUp (){
 		this.usingcircpowerup = true;
-		yield return new WaitForSeconds (3);
+		yield return new WaitForSeconds (5);
 		this.usingcircpowerup = false;
 	}
 
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour {
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/inviscircle");
 			transform.localScale = new Vector3 (3f, 3f, 0);
 		}
-		yield return new WaitForSeconds (3);
+		yield return new WaitForSeconds (5);
 		this.usingability = false;
 		if (this.playerType == 2) {
 			this.setCD (this.model.cd * 30);

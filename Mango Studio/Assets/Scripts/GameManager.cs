@@ -303,7 +303,7 @@ public class GameManager : MonoBehaviour
 			float q = p.z;
 			THEBOSS.transform.position = new Vector3 (0, 0, q);
 			//Start a corouting to slow down the time:
-			StartCoroutine(iterationSlowdown(3) );
+
 
 			currentplayer.destroy();
 
@@ -323,6 +323,7 @@ public class GameManager : MonoBehaviour
 			addPlayer (playerOrder[playerOrderIndex], 1, -4, -4);
 			playerOrderIndex++;
 			currentplayer = players [0];
+			StartCoroutine(iterationSlowdown(3) );
 
 			if (currentplayer.playerType == 0) {
 				//square
