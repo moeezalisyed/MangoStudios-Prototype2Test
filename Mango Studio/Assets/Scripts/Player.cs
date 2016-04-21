@@ -86,6 +86,13 @@ public class Player : MonoBehaviour {
 		this.usingcircpowerup = false;
 	}
 
+	//Making the player temporary flash when it got hit
+	IEnumerator whenGotHit (){
+		this.model.mat.color = Color.red;
+		yield return new WaitForSeconds (0.03f);
+		this.model.mat.color = new Color(1,1,1,1);
+	}
+
 	IEnumerator usingabil (){
 		this.usingability = true;
 		if (this.playerType == 2) {
@@ -161,6 +168,7 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
+				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
 			}
 
@@ -169,6 +177,7 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
+				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
 			}
 
@@ -177,6 +186,7 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
+				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
 			}
 

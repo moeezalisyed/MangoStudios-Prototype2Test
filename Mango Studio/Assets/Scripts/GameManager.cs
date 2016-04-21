@@ -31,9 +31,16 @@ public class GameManager : MonoBehaviour
 	public Boss THEBOSS;
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
+
+	//******Handling player lives, as well as the order and iteration of player********
 	private int playerLives = 9;
 	private int[] playerOrder;// = new int[playerLives];
 	private int playerOrderIndex = 0;
+
+	//******Boss Lives********
+	private int bossTotalLives = 3;
+	private int bossCurrentLife = 1;
+
 
 	//Textures for GUI
 	public Texture forSq;
@@ -82,21 +89,12 @@ public class GameManager : MonoBehaviour
     void Start(){
 		// Set up the player order
 		playerOrder = new int[playerLives];
-		for (int i = 0; i < playerLives; i++) {
-			for (int j = 0; j < playerLives / 3; j++) {
-				this.playerOrder [i] = this.playertype;
-				if (j < playerLives / 3 - 1) {
-					i++;
-				}
-			}
-			this.playertype++;
-		}
+		this.createPlayerOrderList ();
 
-		this.shuffleYates (playerOrder);
 
-		foreach (int x in playerOrder) {
-			print ("playerorder : " + x);
-		}
+//		foreach (int x in playerOrder) {
+//			print ("playerorder : " + x);
+//		}
 
 		//Randomise the player order
 
@@ -142,6 +140,35 @@ public class GameManager : MonoBehaviour
         SoundSetUp();
 
 	}
+
+	//create next boss
+	public void createNextBoss(){
+		
+		GameObject bossObject = new GameObject();
+		Boss boss = bossObject.AddComponent<Boss>();
+		boss.init (this);
+		Destroy (THEBOSS.gameObject);
+		THEBOSS = boss;
+		playerOrderIndex = 0;
+		this.players.Clear ();
+		this.shadowPlayers.Clear ();
+		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
+		playerOrderIndex++;
+		currentplayer = players [0];
+		if (currentplayer.playerType == 0) {
+			//square
+			currentplayer.setCD (this.coolDownSquare);
+		} else if (currentplayer.playerType == 1) {
+			//circle
+			currentplayer.setCD (this.coolDownCircle);
+
+		} else if (currentplayer.playerType == 2) {
+			//triangle
+			currentplayer.setCD (this.coolDownTriangle);
+		}
+	
+	}
+
         
     // Update is called once per frame
     void Update()
@@ -151,7 +178,18 @@ public class GameManager : MonoBehaviour
 
 
 		if (this.gamewon == false && THEBOSS.bossHealth <= 0) {
-			this.gamewon = true;
+			this.gamewon = true;				
+//			The commented bit below is for multiple levels and bosses - still working through the code for this ******* MOEEZ
+//			if (this.bossCurrentLife >= 3) {
+//				this.gamewon = true;
+//			} else {
+//				//got here
+//				print("Defeated one boss");
+//				this.bossCurrentLife++;
+//				this.createPlayerOrderList ();
+//				this.createNextBoss ();
+//				************************************************
+//			}
 		}
 		clock += Time.deltaTime;
 		currentplayer.model.shadowDirection.Add (currentplayer.direction);
@@ -338,15 +376,7 @@ public class GameManager : MonoBehaviour
 			}
 
 		}
-//		if (startitr){
-//			
-//
-//
-//			print ("we got here!" + shadow[0]);
-//
-//			enemies [1].model.transform.localPosition = shadow [shadowiterator];
-//			shadowiterator++;
-//			}
+
     }
 
 
@@ -416,6 +446,23 @@ public class GameManager : MonoBehaviour
         this.music.clip = clip;
         this.music.Play();
     }
+
+
+	public void createPlayerOrderList() {
+
+		for (int i = 0; i < playerLives; i++) {
+			for (int j = 0; j < playerLives / 3; j++) {
+				this.playerOrder [i] = this.playertype;
+				if (j < playerLives / 3 - 1) {
+					i++;
+				}
+			}
+			this.playertype++;
+		}
+
+		this.shuffleYates (playerOrder);
+	}
+
 
 	public void shuffleYates(int[] array)
 	{
