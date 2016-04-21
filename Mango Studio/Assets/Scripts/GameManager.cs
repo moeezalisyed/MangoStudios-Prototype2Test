@@ -396,10 +396,10 @@ public class GameManager : MonoBehaviour
 		int n = array.Length;
 		for (int i = 0; i < n; i++)
 		{
-			Random rng = new Random ();
+			System.Random rng = new System.Random ();
 			// NextDouble returns a random number between 0 and 1.
 			// ... It is equivalent to Math.random() in Java.
-			int r = i + (int)(Random.value * (n - i));
+			int r = i + (int)(rng.NextDouble() * (n - i));
 			int t = array[r];
 			array[r] = array[i];
 			array[i] = t;
