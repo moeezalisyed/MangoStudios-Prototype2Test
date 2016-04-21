@@ -61,17 +61,17 @@ public class Bullet : MonoBehaviour {
 		//The rest are to check if bullet is out of range
 
 		if (playerType == 0) {
-			if (clock >  2.0f) {
+			if (clock >  .5f) {
 				Destroy (this.gameObject);
 			}
 		}
 		else if (playerType == 2) {
-			if (clock > 3.5f) {
+			if (clock > 2f) {
 				Destroy (this.gameObject);
 			}
 		}
 		else if (playerType == 1) {
-			if (clock > 2.5f) {
+			if (clock > .7f) {
 				Destroy (this.gameObject);
 			}
 		}
