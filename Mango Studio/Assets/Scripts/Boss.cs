@@ -37,7 +37,9 @@ public class Boss : MonoBehaviour {
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossModel>();						// Add a marbleModel script to control visuals of the gem.
 		model.init(this);
-
+		this.bossHit = m.bossHit;
+		this.bossHitX = m.bossHitX;
+		this.bossDead = m.bossDead;
 		BoxCollider2D bossbody = gameObject.AddComponent<BoxCollider2D> ();
 		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
 		bossRbody.gravityScale = 0;

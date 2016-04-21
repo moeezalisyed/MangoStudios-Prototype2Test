@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 	public Boss THEBOSS;
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
-	private int playerLives = 3;
+	private int playerLives = 9;
 	private int[] playerOrder;// = new int[playerLives];
 	private int playerOrderIndex = 0;
 
@@ -70,10 +70,13 @@ public class GameManager : MonoBehaviour
     private AudioClip winmusic;
 
     // Sound effect clips
-    private AudioClip bossDead;
-    private AudioClip bossHit;
-    private AudioClip bossHitX;
+	public AudioClip bossDead;
+	public AudioClip bossHit;
+	public AudioClip bossHitX;
     public AudioClip abilityon;
+	public AudioClip shootClip;
+	public AudioClip shootSPABClip;
+
 
     // Use this for initialization
     void Start(){
@@ -290,7 +293,7 @@ public class GameManager : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.Z)) {
 			currentplayer.useAbility ();
-			PlayEffect(abilityon);
+
 		}
 
 		//setHealthText ();

@@ -198,6 +198,10 @@ public class playerModel : MonoBehaviour
 	public void shoot(){
 		
 		if (clock - cdbuf > cd) {
+			if (this.firstRun) {
+				this.owner.m.PlayEffect (this.owner.m.shootClip);
+			}
+
 			GameObject bulletObject = new GameObject();		
 			Bullet bullet = bulletObject.AddComponent<Bullet>();
 			bullet.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,0);
@@ -253,10 +257,13 @@ public class playerModel : MonoBehaviour
 			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
 		
 		
-		
-		
-		
-		
+			if (this.owner.usingability) {
+				GUI.color = Color.green;
+				GUI.skin.box.fontSize = 22;
+				GUI.Box (new Rect (Screen.width - 150, Screen.height - 150, 100, 100), "Ability on!");
+				GUI.skin.box.fontSize = 12;
+				GUI.color = Color.white;
+			}
 		}
 	}
 

@@ -70,6 +70,9 @@ public class Player : MonoBehaviour {
 
 	public void useAbility(){
 		if (clock - cdbufA > cdA) {
+			if (this.model.firstRun) {
+				m.PlayEffect (this.m.abilityon);
+			}
 			StartCoroutine (usingabil ());
 			cdbufA = clock;
 		}
@@ -86,8 +89,9 @@ public class Player : MonoBehaviour {
 	IEnumerator usingabil (){
 		this.usingability = true;
 		if (this.playerType == 2) {
-			model.cdbuf = 0.1f;
+			this.setCD (this.model.cd/30);
 		}
+
 		if (this.playerType == 1) {
 			this.tag = "inviscircle";
 			//print ("changed tag to " + this.tag);
@@ -97,7 +101,7 @@ public class Player : MonoBehaviour {
 		yield return new WaitForSeconds (3);
 		this.usingability = false;
 		if (this.playerType == 2) {
-			model.cdbuf = 0.5f;
+			this.setCD (this.model.cd * 30);
 		}
 		if (this.playerType == 1) {
 			this.tag = "Player";
