@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour
 
 
 	// These are the readonly CD Functions
-	public readonly float coolDownCircle = 2.0f;
-	public readonly float coolDownTriangle = 2.0f;
-	public readonly float coolDownSquare = 1.0f;
+	public readonly float coolDownCircle = 0.6f;
+	public readonly float coolDownTriangle = 0.6f;
+	public readonly float coolDownSquare = 1.3f;
 
 	//define character speed for every iteration blowup and slowdown
 	public float charSpeed = 2f;

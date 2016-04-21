@@ -17,8 +17,24 @@ public class Bullet : MonoBehaviour {
 		} else {
 			this.name = "Bullet";
 		}
-		speed = 6;
+
+
+
 		playerType = owner.getType ();
+
+
+		if (this.playerType == 0) {
+			speed = 8.5f;
+		} else if (this.playerType == 1) {
+			speed = 6;
+		} else if (this.playerType == 2) {
+			speed = 3.5f;
+		}
+
+		if (this.name == "SpecialBullet") {
+			speed -= 3;
+		}
+
 		clock = 0f;
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
@@ -36,27 +52,30 @@ public class Bullet : MonoBehaviour {
 	void Update () {
 
 		transform.Translate (Vector3.up * Time.deltaTime * speed);
-		clock = clock + Time.deltaTime;
+
+		//Special Bullets don't go out of range
+		if (this.name != "SpecialBullet") {
+			clock = clock + Time.deltaTime;
+		}
+
+		//The rest are to check if bullet is out of range
+
 		if (playerType == 0) {
-			if (clock > 1.3) {
+			if (clock >  2.0f) {
 				Destroy (this.gameObject);
 			}
 		}
 		else if (playerType == 2) {
-			if (clock > .9) {
+			if (clock > 3.5f) {
 				Destroy (this.gameObject);
 			}
 		}
 		else if (playerType == 1) {
-			if (clock > .8) {
+			if (clock > 2.5f) {
 				Destroy (this.gameObject);
 			}
 		}
-//		else if (playerType == 3) {
-//			if (clock > .6) {
-//				Destroy (this.gameObject);
-//			}
-//		}
+
 
 		if (this.transform.position.x > 9 || this.transform.position.x < -9 || this.transform.position.y > 6 || this.transform.position.y < -6) {
 			Destroy (this.gameObject);

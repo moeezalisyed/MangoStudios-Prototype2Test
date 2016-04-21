@@ -224,7 +224,7 @@ public class Boss : MonoBehaviour {
 			m.PlayEffect (bossHit);
 		} else if (other.name == "SpecialBullet") {
 			print("Did special damage");
-			this.dealDamage (5);
+			this.dealDamage (7);
 			m.PlayEffect (bossHitX);
 		}
 	}

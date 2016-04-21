@@ -29,4 +29,9 @@ public class BulletModel : MonoBehaviour {
 
 		this.transform.rotation = new Quaternion(owner.transform.rotation .x,owner.transform.rotation.y,owner.transform.rotation.z,owner.transform.rotation.w);
 	}
+
+	//Destroy the bullet if it goes off-screen
+	void OnBecameInvisible() {
+		Destroy (this.owner.gameObject);
+	}
 }
