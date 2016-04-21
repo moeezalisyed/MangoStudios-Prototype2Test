@@ -43,6 +43,7 @@ public class playerModel : MonoBehaviour
 		name = "Player Model";
 		mat = GetComponent<Renderer> ().material;
 		mat.shader = Shader.Find ("Sprites/Default");
+
 		if (playerType == 1) {
 			//circle
 		//	cd = owner.m.coolDownCircle;
@@ -56,7 +57,7 @@ public class playerModel : MonoBehaviour
 			//cd = owner.m.coolDownCircle;
 			cdbuf = -0.5f;
 			this.cdA = 1.5f;
-			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
+			mat.mainTexture = Resources.Load<Texture2D> ("Textures/wdot");
 			mat.color = new Color (1, 1, 1, 1);
 		} else if (playerType == 2) {
 			//triangle 
@@ -66,7 +67,7 @@ public class playerModel : MonoBehaviour
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Triangle");
 			mat.color = new Color (5, 1, 1, 1);
 		} else if (playerType == 3) {
-			mat.mainTexture = Resources.Load<Texture2D> ("Textures/wdot");
+			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
 			mat.color = new Color (1, 5, 1, 1);
 			//transform.eulerAngles = new Vector3 (0, 0, -45);
 		}

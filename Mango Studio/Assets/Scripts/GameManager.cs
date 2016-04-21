@@ -35,6 +35,11 @@ public class GameManager : MonoBehaviour
 	private int[] playerOrder;// = new int[playerLives];
 	private int playerOrderIndex = 0;
 
+	//Textures for GUI
+	public Texture forSq;
+	public Texture forC;
+	public Texture forT;
+
 
 	// These are the readonly CD Functions
 	public readonly float coolDownCircle = 2.0f;
@@ -74,15 +79,21 @@ public class GameManager : MonoBehaviour
     void Start(){
 		// Set up the player order
 		playerOrder = new int[playerLives];
-		for (int i = 0; i <= playerLives; i++) {
-			for (int j = 0; j <= playerLives / 3; j++) {
+		for (int i = 0; i < playerLives; i++) {
+			for (int j = 0; j < playerLives / 3; j++) {
 				this.playerOrder [i] = this.playertype;
-				i++;
+				if (j < playerLives / 3 - 1) {
+					i++;
+				}
 			}
 			this.playertype++;
 		}
 
 		this.shuffleYates (playerOrder);
+
+		foreach (int x in playerOrder) {
+			print ("playerorder : " + x);
+		}
 
 		//Randomise the player order
 
@@ -99,9 +110,20 @@ public class GameManager : MonoBehaviour
 
 		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
-		currentplayer = players [0];
 
-		//currentplayer.setCD (0.5f);
+		currentplayer = players [0];
+		print ("firstplayertype: " + currentplayer.playerType);
+		if (currentplayer.playerType == 0) {
+			//square
+			currentplayer.setCD (this.coolDownSquare);
+		} else if (currentplayer.playerType == 1) {
+			//circle
+			currentplayer.setCD (this.coolDownCircle);
+
+		} else if (currentplayer.playerType == 2) {
+			//triangle
+			currentplayer.setCD (this.coolDownTriangle);
+		}
 		//setHealthText ();
 		clock = 0f;
 		shadow = new List<Vector3> ();
@@ -288,7 +310,7 @@ public class GameManager : MonoBehaviour
 			//startitr = true;
 
 			if ( shadowPlayers.Count <= this.playerLives) {
-				playertype++;
+				//playertype++;
 			} else if (shadowPlayers.Count > this.playerLives) {
 				this.gameOver();
 			
@@ -335,13 +357,13 @@ public class GameManager : MonoBehaviour
 	}
 
 
-	public void addPlayer(int playerType, int initHealth, int x, int y)
+	public void addPlayer(int playerTypee, int initHealth, int x, int y)
 	{
 		GameObject playerObject = new GameObject();
 		Player player = playerObject.AddComponent<Player>();
 		player.transform.parent = playerFolder.transform;
 		player.transform.position = new Vector3(x, y, 0);
-		player.init(playerType, this);
+		player.init(playerTypee, this);
 		players.Add(player);
 		playernum++;
 		player.name = "Player " + players.Count;
@@ -472,6 +494,24 @@ public class GameManager : MonoBehaviour
 			GUI.skin.box.fontSize = 12;
 			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
 		
+
+		if (this.playerOrderIndex < playerLives) {
+			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+			GUI.skin.box.fontSize = 22;
+			GUI.Box(new Rect (970, 0, 100, 100), "Next Up:");
+
+			int nextType = playerOrder [playerOrderIndex];
+			if (nextType == 0) {
+				GUI.Box(new Rect(995, 105, 50,50), this.forSq);
+			} else if (nextType == 1) {
+				GUI.Box(new Rect(995, 105, 50,50), this.forC);
+			} else if (nextType == 2) {
+				GUI.Box(new Rect(995, 105, 50,50), this.forT);
+			}
+			GUI.skin.box.fontSize = 12;
+		
+		}
+
 
 
 	}

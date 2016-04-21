@@ -144,6 +144,7 @@ public class Boss : MonoBehaviour {
 	void FireBullet(){ 						//I made this take x and y because I was thinking about it and different enemies will need to fire from different parts of their models
 		GameObject bulletObject = new GameObject();		
 		BossBullet bullet = bulletObject.AddComponent<BossBullet>();
+		bullet.init (this);
 		bullet.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,0);
 		bullet.transform.rotation = new Quaternion(this.transform.rotation .x,this.transform.rotation.y,this.transform.rotation.z,this.transform.rotation.w);
 	}

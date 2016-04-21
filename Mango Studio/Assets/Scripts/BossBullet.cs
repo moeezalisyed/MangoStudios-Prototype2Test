@@ -8,7 +8,7 @@ public class BossBullet : MonoBehaviour {
 	private Boss owner;
 
 	// Use this for initialization
-	void Start (Boss boss) {
+	public void init (Boss boss) {
 		owner = boss;
 		this.name = "BossBullet";
 		speed = 3 * owner.chargeSpeed;
