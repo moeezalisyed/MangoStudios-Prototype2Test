@@ -22,7 +22,7 @@ public class BossBlades : MonoBehaviour {
 		playerbody.isTrigger = true;
 		transform.localScale = new Vector3 (.2f, 3.5f, 1);
 
-
+		this.m.m.bulletsFolder.Add (this.gameObject);
 
 	}
 	// Update is called once per frame

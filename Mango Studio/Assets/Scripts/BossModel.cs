@@ -16,7 +16,16 @@ public class BossModel : MonoBehaviour {
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
 		mat.mainTexture = Resources.Load<Texture2D>("Textures/WhiteBox");	// Set the texture.  Must be in Resources folder.
-		mat.color = new Color(1,0,0);
+		if (owner.m.bossCurrentLife == 1) {
+			mat.color = new Color(1,0,0);
+		} else if (owner.m.bossCurrentLife == 2){
+			mat.color = new Color(0,1,0);
+		} else if(owner.m.bossCurrentLife == 3){
+			mat.color = new Color(0,0,1);
+		}
+
+
+
 	}
 
 	public void changeTexture(int texType){

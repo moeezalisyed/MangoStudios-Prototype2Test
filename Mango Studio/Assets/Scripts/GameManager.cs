@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public int boardWidth, boardHeight; // board size init is in Unity editor
     private GameObject playerFolder;// folders for object organization
+	public List<GameObject> bulletsFolder = new List<GameObject>();
 
 
     private List<Player> players; // list of all placed players
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
 
 	//******Boss Lives********
 	private int bossTotalLives = 3;
-	private int bossCurrentLife = 1;
+	public int bossCurrentLife = 1;
 
 
 	//Textures for GUI
@@ -106,11 +107,14 @@ public class GameManager : MonoBehaviour
 
 		//set up folder for enemies
 		playerFolder = new GameObject ();
-		playerFolder.name = "Enemies";
+		playerFolder.name = "Players";
 		players = new List<Player> ();
-		//playertype = 2;
-		//addPlayer(0, 1, 0, 0);
-		//addPlayer(playertype, 1, -4, -4);
+
+		//set up a bullets folder to destroy all bullets during iterations
+
+
+
+
 
 		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
@@ -140,6 +144,7 @@ public class GameManager : MonoBehaviour
 		THEBOSS = boss;
 		StartCoroutine (iterationSlowdown (3));
 
+
 		// setting up music
         SoundSetUp();
 
@@ -147,15 +152,24 @@ public class GameManager : MonoBehaviour
 
 	//create next boss
 	public void createNextBoss(){
-		
+		Destroy (THEBOSS.gameObject);
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
 		boss.init (this);
 		Destroy (THEBOSS.gameObject);
 		THEBOSS = boss;
 		playerOrderIndex = 0;
+		foreach (Player x in players) {
+			Destroy (x.gameObject);
+		}
+		foreach (Player x in shadowPlayers) {
+			Destroy (x.gameObject);
+		}
 		this.players.Clear ();
 		this.shadowPlayers.Clear ();
+		players = new List<Player> ();
+		shadowPlayers = new List<Player> ();
+		playerOrderIndex = 0;
 		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
 		currentplayer = players [0];
@@ -182,18 +196,19 @@ public class GameManager : MonoBehaviour
 
 
 		if (this.gamewon == false && THEBOSS.bossHealth <= 0) {
-			this.gamewon = true;				
+			//this.gamewon = true;				
 //			The commented bit below is for multiple levels and bosses - still working through the code for this ******* MOEEZ
-//			if (this.bossCurrentLife >= 3) {
-//				this.gamewon = true;
-//			} else {
-//				//got here
-//				print("Defeated one boss");
-//				this.bossCurrentLife++;
-//				this.createPlayerOrderList ();
-//				this.createNextBoss ();
-//				************************************************
-//			}
+			if (this.bossCurrentLife >= 3) {
+				this.gamewon = true;
+			} else {
+				//got here
+				print("Defeated one boss");
+				this.bossCurrentLife++;
+				this.createPlayerOrderList ();
+				this.createNextBoss ();
+				StartCoroutine (iterationSlowdown (3));
+				//************************************************
+			}
 		}
 		clock += Time.deltaTime;
 		currentplayer.model.shadowDirection.Add (currentplayer.direction);
@@ -351,7 +366,11 @@ public class GameManager : MonoBehaviour
 			THEBOSS.transform.position = new Vector3 (0, 0, q);
 			THEBOSS.bossHealth = 100;
 			//Start a corouting to slow down the time:
+			foreach (GameObject x in this.bulletsFolder) {
+				Destroy (x.gameObject);
+			}
 
+			bulletsFolder.Clear ();
 
 			//currentplayer.destroy();
 
@@ -474,7 +493,7 @@ public class GameManager : MonoBehaviour
 			}
 			this.playertype++;
 		}
-
+		this.playertype = 0;
 		this.shuffleYates (playerOrder);
 //		for (int i = 0; i < playerLives; i++) {
 //			this.playerOrder [i] = i % 3;

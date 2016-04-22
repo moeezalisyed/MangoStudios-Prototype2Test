@@ -113,7 +113,7 @@ public class Player : MonoBehaviour {
 		if (this.playerType == 1) {
 			this.tag = "Player";
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
-			transform.localScale = new Vector3 (1, 1, 0);
+			transform.localScale = new Vector3 (0.6f, 0.6f, 0);
 		}
 	}
 

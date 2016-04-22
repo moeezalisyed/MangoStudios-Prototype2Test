@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	public void init(playerModel owner) {
+		print ("Created BUllet: " + owner.owner.playerType);
 		if (owner.owner.usingcircpowerup == true || owner.owner.tag == "inviscircle") {
 			this.name = "SpecialBullet";
 		} else {
