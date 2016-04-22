@@ -265,6 +265,26 @@ public class playerModel : MonoBehaviour
 				GUI.color = Color.white;
 			}
 		}
+
+		if (this.healthval > 3) {			
+			GUI.color = Color.green;
+		} else {
+			GUI.color = Color.red;
+		}
+		GUI.skin.box.alignment = TextAnchor.LowerLeft;
+		GUI.skin.box.fontSize = 16;
+		String ss = "";
+
+		for (int i = 0; i < this.healthval; i++) {
+
+			ss += "I";
+
+		}
+
+		Vector2 targetPos;
+		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+
+		GUI.Box(new Rect(targetPos.x-30, Screen.height-targetPos.y-50, 60, 20), ss);
 	}
 
 

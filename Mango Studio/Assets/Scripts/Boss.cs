@@ -20,6 +20,9 @@ public class Boss : MonoBehaviour {
 	public int bossHealth;
 	private bool slow;
 	private BossBlades blade;
+	private Player target;
+	private float targetx;
+	private float targety;
 
 	// sfx
 	public AudioClip bossDead;
@@ -32,7 +35,7 @@ public class Boss : MonoBehaviour {
 
 		m = owner;
 		speed = m.bossSpeed;
-		chargeSpeed = m.bossSpeed*2;
+		chargeSpeed = m.bossSpeed*4;
 		this.bossHealth = 100;
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossModel>();						// Add a marbleModel script to control visuals of the gem.
@@ -44,28 +47,29 @@ public class Boss : MonoBehaviour {
 		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
 		bossRbody.gravityScale = 0;
 		bossbody.isTrigger = true;
+		target = m.currentplayer;
 
 		transform.localScale = new Vector3 (1.2f, 1.2f, 1);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		//model.changeTexture (this.bossHealth/10);
-		float playerx = m.currentplayer.transform.position.x;
-		float playery = m.currentplayer.transform.position.y;
+		target = m.currentplayer;
+		targetx = target.transform.position.x;
+		targety = target.transform.position.y;
 		if (!usingBlades) {
-			if ((playery - this.transform.position.y) <= 0 && !charge) {
-				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (playery - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((playerx - this.transform.position.x), 2) + Mathf.Pow ((playery - this.transform.position.y), 2)));
-				float sign = (playerx - this.transform.position.x) / Mathf.Abs (playerx - this.transform.position.x);
+			if ((targety - this.transform.position.y) <= 0 && !charge) {
+				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
+				float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
 				transform.eulerAngles = new Vector3 (0, 0, 180 + (sign * angle));
 				if (slow) {
 					transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
 				} else {
 					transform.Translate (Vector3.up * speed * Time.deltaTime);
 				}
-			} else if ((playery - this.transform.position.y) > 0 && !charge) {
-				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (playery - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((playerx - this.transform.position.x), 2) + Mathf.Pow ((playery - this.transform.position.y), 2)));
-				float sign = (playerx - this.transform.position.x) / Mathf.Abs (playerx - this.transform.position.x);
+			} else if ((targety - this.transform.position.y) > 0 && !charge) {
+				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
+				float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
 				transform.eulerAngles = new Vector3 (0, 0, 0 + (sign * angle * -1));
 				if (slow) {
 					transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
@@ -84,10 +88,10 @@ public class Boss : MonoBehaviour {
 		}
 			
 		if (!usingBlades) {
-			if ((Mathf.Sqrt (Mathf.Pow ((playerx - this.transform.position.x), 2) + Mathf.Pow ((playery - this.transform.position.y), 2))) >= 3) {
+			if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 3) {
 				slow = true;
 				int x = Random.Range (0, 70);
-				if ((Mathf.Sqrt (Mathf.Pow ((playerx - this.transform.position.x), 2) + Mathf.Pow ((playery - this.transform.position.y), 2))) >= 5) {
+				if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 5) {
 					slow = false;
 					if (beamCooldown <= 0) {
 						FireBeam ();
@@ -98,7 +102,7 @@ public class Boss : MonoBehaviour {
 					if (chargecd <= 0) {
 						if (!charge) {
 							charge = true;
-							charging = .5f;
+							charging = 1f;
 						}
 					}
 				} else if (bulletCooldown <= 0) {
@@ -110,7 +114,7 @@ public class Boss : MonoBehaviour {
 					bulletCooldown = bulletCooldown - Time.deltaTime;
 				}
 
-			} else if ((Mathf.Sqrt (Mathf.Pow ((playerx - this.transform.position.x), 2) + Mathf.Pow ((playery - this.transform.position.y), 2))) < 3) { 
+			} else if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) < 3) { 
 				if (bladeCooldown <= 0) {
 					SpawnBlades ();
 					usingBlades = true;
@@ -124,11 +128,11 @@ public class Boss : MonoBehaviour {
 
 		if (usingBlades) {
 			bladeDuration = bladeDuration - Time.deltaTime;
-		}
 
-		if (bladeDuration <= 0) {
-			blade.Retract();
-			usingBlades = false;
+			if (bladeDuration <= 0) {
+				blade.Retract ();
+				usingBlades = false;
+			}
 		}
 
 		if (this.bossHealth <= 0) {
@@ -213,9 +217,15 @@ public class Boss : MonoBehaviour {
 
 		GUI.Box(new Rect (250, 5, 200, 100), "Boss: \n" + s);
 
+		Vector2 targetPos;
+		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+
+		//GUI.Box(new Rect(targetPos.x-40, Screen.height-targetPos.y-80, 100, 25), s);
+
 		GUI.color = Color.white;
 		GUI.skin.box.fontSize = 12;
 		GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
