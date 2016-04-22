@@ -22,7 +22,7 @@ public class BossBullet : MonoBehaviour {
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
 		playerbody.isTrigger = true;
 		transform.localScale = new Vector3 (.35f, .35f, 1);
-		this.owner.m.bulletsFolder.Add (this.gameObject);
+		this.owner.m.bulletsFolder.Add (this.model.gameObject);
 	
 	}
 	
