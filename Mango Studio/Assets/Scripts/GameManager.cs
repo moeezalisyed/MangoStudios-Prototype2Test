@@ -203,9 +203,15 @@ public class GameManager : MonoBehaviour
 			} else {
 				//got here
 				print("Defeated one boss");
+				foreach (GameObject x in this.bulletsFolder) {
+					Destroy (x);
+				}
+
+				bulletsFolder.Clear ();
 				this.bossCurrentLife++;
 				this.createPlayerOrderList ();
 				this.createNextBoss ();
+
 				StartCoroutine (iterationSlowdown (3));
 				//************************************************
 			}
@@ -367,7 +373,7 @@ public class GameManager : MonoBehaviour
 			THEBOSS.bossHealth = 100;
 			//Start a corouting to slow down the time:
 			foreach (GameObject x in this.bulletsFolder) {
-				Destroy (x.gameObject);
+				Destroy (x);
 			}
 
 			bulletsFolder.Clear ();
