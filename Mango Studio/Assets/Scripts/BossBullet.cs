@@ -13,6 +13,8 @@ public class BossBullet : MonoBehaviour {
 		this.name = "BossBullet";
 		speed = owner.chargeSpeed;
 
+
+
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossBulletModel>();						// Add a marbleModel script to control visuals of the gem.
 		model.init(this);
@@ -25,6 +27,10 @@ public class BossBullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (!owner.m.inSlowDown) {
+			this.speed = owner.chargeSpeed;
+		}
 
 		transform.Translate (Vector3.up * Time.deltaTime * speed);
 

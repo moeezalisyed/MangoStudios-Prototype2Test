@@ -81,20 +81,66 @@ public class playerModel : MonoBehaviour
 
 	void Update(){
 
+		//this.owner.GetComponent<BoxCollider2D> ().size = transform.localScale;
 
 		// Kinda funky world wrapping - commented out for now!
 
-//		Vector3 curPos = Camera.main.WorldToScreenPoint(this.transform.position);
-//		curPos.x = curPos.x % Screen.width;
-//		print ("player x : " + curPos.x + "width: " + Screen.width);
-//		curPos.y = curPos.y % Screen.height;
-//		curPos = Camera.main.ScreenToWorldPoint (curPos);
-//		this.transform.position = curPos;
+	//Vector3 curPos = Camera.main.WorldToScreenPoint(this.transform.position);
+		//print ("player x : " + curPos.x + "width: " + Screen.width);
+		//print ("player y : " + curPos.x + "player y: " + curPos.y);
+
+		// Much improved handling of screen bounds - but still has some funly movement porblmes - will work on getting it done right
+		/*
+		//Handle Cornres
+		// top left
+		if (curPos.x <= 22 && curPos.y >= Screen.height - 22) {
+			curPos.x = 22;
+			curPos.y = Screen.height - 22;
+		} 
+		//print ("player x : " + curPos.x + "width: " + Screen.width);
+
+		//top right
+		else if (curPos.x >= Screen.width - 22 && curPos.y >= Screen.height - 22) {
+			curPos.x = Screen.width - 22;
+			curPos.y = Screen.height - 22;
+		}
+
+		//bottom right
+		else if (curPos.x >= Screen.width - 22 && curPos.y <= 22) {
+			curPos.x = Screen.width - 22;
+			curPos.y = 22;
+		}
+
+		//bottom left
+		else if (curPos.x <=  22 && curPos.y <= 22) {
+			curPos.y =  22;
+			curPos.x = 22;
+		}
+
+		//Handle the right and left
+		else if (curPos.x >= Screen.width - 22) {
+			curPos.x = Screen.width -22;		
+		} else if (curPos.x <= 22) {
+			curPos.x = 22;		
+		}
+
+
+
+		// Handle the top and Bottom
+		else if (curPos.y >= Screen.height - 22) {
+			curPos.y = Screen.height -22;		
+		} else if (curPos.y <= 22) {
+			curPos.y = 22;		
+		}*/
+
+		//curPos = Camera.main.ScreenToWorldPoint (curPos);
+		//this.transform.position = curPos;
 
 		owner.clock += Time.deltaTime;
 		clock += Time.deltaTime;
 		if (firstRun) {
 			shadowMovements.Add (this.transform.position);
+			//this.owner.GetComponent<BoxCollider2D> ().offset = transform.position;
 			if (Input.GetKeyDown (KeyCode.Space)) {
 				shadowFiring.Add (true);
 			} else {
@@ -134,6 +180,7 @@ public class playerModel : MonoBehaviour
 				this.transform.position = new Vector3(Screen.width +200, Screen.height + 200, shadowMovements[0].z);
 
 			} else {
+				
 				this.owner.tag = "Player";
 				this.mat.color = Color.gray;
 				this.transform.eulerAngles = new Vector3 (0, 0, this.shadowDirection[shadowitr] * 90);
@@ -145,6 +192,9 @@ public class playerModel : MonoBehaviour
 					this.owner.useAbility ();
 				}
 				this.transform.position = shadowMovements [shadowitr];
+				//***Jun Offset Code***
+				this.owner.GetComponent<BoxCollider2D> ().transform.position = transform.position;
+
 				shadowitr++;
 			}
 		
@@ -164,9 +214,21 @@ public class playerModel : MonoBehaviour
 	}
 
 	public void damage(){
-		healthval--;
-		if (healthval == 0) {
+		if (firstRun) {
+			healthval--;
+			print ("Took damage in first run");
+		} 
+
+		if (!firstRun) {
+			healthval--;
+			print ("Took damage as shadow");
+		}
+
+
+
+		if (healthval <= 0) {
 			if (firstRun) {
+				this.owner.m.whenPlayerDies ();
 				this.destroy ();
 			} else {
 				shadowitr = this.shadowDirection.Count;
@@ -177,12 +239,13 @@ public class playerModel : MonoBehaviour
 
 	public void destroy(){
 		
-			firstRun = false;
-			this.owner.m.THEBOSS.bossHealth = 100;
+			this.firstRun = false;
+			//this.owner.m.THEBOSS.bossHealth = 100;
 			
 			//this.healthval = 10;
 			//this.owner.m.THEBOSS.model.transform.position = new Vector3(0,0, 0);
 			foreach (Player x in owner.m.shadowPlayers) {
+				x.tag = "Player";
 				x.model.shadowitr = 0;
 				x.model.healthval = 5;
 				x.model.owner.playerbody.isTrigger = true;
@@ -218,6 +281,9 @@ public class playerModel : MonoBehaviour
 
 	void OnBecameInvisible() {
 		print ("went off screen");
+
+		//We can handle it here as well
+		//this.transform.position = new Vector3(0,0,0);
 	}
 		
 

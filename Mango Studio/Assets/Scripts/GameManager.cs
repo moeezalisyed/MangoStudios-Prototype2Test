@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int boardWidth, boardHeight; // board size init is in Unity editor
     private GameObject playerFolder;// folders for object organization
 
+
     private List<Player> players; // list of all placed players
 //	******** FELIPE LOOK HERE FOR current player ********
 	public Player currentplayer;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
 
+
 	//******Handling player lives, as well as the order and iteration of player********
 	private int playerLives = 9;
 	private int[] playerOrder;// = new int[playerLives];
@@ -49,13 +51,14 @@ public class GameManager : MonoBehaviour
 
 
 	// These are the readonly CD Functions
-	public readonly float coolDownCircle = 0.2f;
+	public readonly float coolDownCircle = 0.4f;
 	public readonly float coolDownTriangle = 0.6f;
 	public readonly float coolDownSquare = 1.3f;
 
 	//define character speed for every iteration blowup and slowdown
-	public float charSpeed = 2f;
+	public float charSpeed = 1.7f;
 	public float bossSpeed = 2f;
+	public bool inSlowDown = false;
 
     // Level number
 
@@ -135,6 +138,7 @@ public class GameManager : MonoBehaviour
 		Boss boss = bossObject.AddComponent<Boss>();
 		boss.init (this);
 		THEBOSS = boss;
+		StartCoroutine (iterationSlowdown (3));
 
 		// setting up music
         SoundSetUp();
@@ -193,8 +197,9 @@ public class GameManager : MonoBehaviour
 		}
 		clock += Time.deltaTime;
 		currentplayer.model.shadowDirection.Add (currentplayer.direction);
-	//	shadow.Add (currentplayer.model.transform.localPosition);
-		if (Input.GetKey (KeyCode.RightArrow) ) {
+		Vector3 playerPosScreen = Camera.main.WorldToScreenPoint(currentplayer.transform.position);
+
+		if (Input.GetKey (KeyCode.RightArrow)  && playerPosScreen.x < Screen.width -22) {
 			if (currentplayer.playerType != 2) {
 				currentplayer.direction = 3;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
@@ -223,7 +228,7 @@ public class GameManager : MonoBehaviour
 			
 			}
 		} 
-		if (Input.GetKey (KeyCode.UpArrow) ) {
+		if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22 ) {
 			
 
 			//above
@@ -256,7 +261,7 @@ public class GameManager : MonoBehaviour
 			//below
 
 		}
-		if (Input.GetKey (KeyCode.LeftArrow) ){
+		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22 ){
 			
 			//above
 			if (currentplayer.playerType != 2) {
@@ -288,7 +293,7 @@ public class GameManager : MonoBehaviour
 			}
 			//below
 		}
-		if (Input.GetKey (KeyCode.DownArrow) ) {
+		if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22 ) {
 			
 
 			//bove
@@ -333,16 +338,22 @@ public class GameManager : MonoBehaviour
 
 		}
 
+
+
+    }
+
+	public void whenPlayerDies(){
 		//setHealthText ();
 		if (currentplayer.getHealth () <= 0) {
 			//recenter the boss
 			Vector3 p = THEBOSS.transform.position;
 			float q = p.z;
 			THEBOSS.transform.position = new Vector3 (0, 0, q);
+			THEBOSS.bossHealth = 100;
 			//Start a corouting to slow down the time:
 
 
-			currentplayer.destroy();
+			//currentplayer.destroy();
 
 			//this.THEBOSS.model.transform.position.y = 0;
 			players.Remove(currentplayer);
@@ -353,7 +364,7 @@ public class GameManager : MonoBehaviour
 				//playertype++;
 			} else if (shadowPlayers.Count > this.playerLives) {
 				this.gameOver();
-			
+
 			}
 
 
@@ -368,25 +379,28 @@ public class GameManager : MonoBehaviour
 			} else if (currentplayer.playerType == 1) {
 				//circle
 				currentplayer.setCD (this.coolDownCircle);
-			
+
 			} else if (currentplayer.playerType == 2) {
 				//triangle
 				currentplayer.setCD (this.coolDownTriangle);
 			}
 
 		}
+	}
 
-    }
 
 
 	IEnumerator iterationSlowdown (int sec){
+		this.inSlowDown = true;
 		this.charSpeed = this.charSpeed/5;
 		this.bossSpeed = this.bossSpeed/5;
 		THEBOSS.setSpeeds();
 		yield return new WaitForSeconds (sec);
+
 		this.charSpeed = this.charSpeed*5;
 		this.bossSpeed = this.bossSpeed*5;
 		THEBOSS.setSpeeds();
+		this.inSlowDown = false;
 	}
 
 
@@ -449,7 +463,9 @@ public class GameManager : MonoBehaviour
 
 	public void createPlayerOrderList() {
 
-		/*for (int i = 0; i < playerLives; i++) {
+		// We use this to setup the list because it allows for pseudorandom ordering - which is that we wanted. 
+		// It still maintains the same number of each kind of character
+		for (int i = 0; i < playerLives; i++) {
 			for (int j = 0; j < playerLives / 3; j++) {
 				this.playerOrder [i] = this.playertype;
 				if (j < playerLives / 3 - 1) {
@@ -457,12 +473,12 @@ public class GameManager : MonoBehaviour
 				}
 			}
 			this.playertype++;
-		}*/
+		}
 
 		this.shuffleYates (playerOrder);
-		for (int i = 0; i < playerLives; i++) {
-			this.playerOrder [i] = i % 3;
-		}
+//		for (int i = 0; i < playerLives; i++) {
+//			this.playerOrder [i] = i % 3;
+//		}
 	}
 
 

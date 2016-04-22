@@ -21,19 +21,27 @@ public class Bullet : MonoBehaviour {
 
 
 		playerType = owner.getType ();
-
+		if (owner.owner.m.inSlowDown) {
+			speed -= 6;
+		}
 
 		if (this.playerType == 0) {
-			speed = 8.5f;
+			speed = 11.5f;
 		} else if (this.playerType == 1) {
-			speed = 6;
+			speed = 8f;
 		} else if (this.playerType == 2) {
-			speed = 3.5f;
+			speed = 4.5f;
 		}
 
+		//speed += 3;
+
 		if (this.name == "SpecialBullet") {
-			speed -= 3;
+			speed -= 1.5f;
 		}
+		if (owner.owner.m.inSlowDown) {
+			speed -= 4;
+		}
+
 
 		clock = 0f;
 
@@ -82,13 +90,17 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 
+	void OnBecomeInvisible(){
+		Destroy (this.gameObject);
+	}
+
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Boss" || other.name == "BossBeam") {
 			Destroy (this.gameObject);
 		}
-		if (other.name == "BossBullet") {
-			Destroy (other.gameObject);
-			Destroy (this.gameObject);
-		}
+//		if (other.name == "BossBullet") {
+//			Destroy (other.gameObject);
+//			Destroy (this.gameObject);
+//		}
 	}
 }

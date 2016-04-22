@@ -21,7 +21,7 @@ public class BossBeam : MonoBehaviour {
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
 		playerbody.isTrigger = true;
 		transform.localScale = new Vector3 (2.2f, .2f, 1);
-
+		this.GetComponent<BoxCollider2D> ().size = model.transform.localScale;
 		this.transform.rotation = new Quaternion(m.transform.rotation .x,m.transform.rotation.y,m.transform.rotation.z,m.transform.rotation.w);
 
 
@@ -30,6 +30,9 @@ public class BossBeam : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (!m.m.inSlowDown) {
+			this.speed = m.chargeSpeed;
+		}
 
 		transform.Translate (Vector3.up * Time.deltaTime * speed);
 
