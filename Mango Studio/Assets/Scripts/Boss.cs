@@ -49,7 +49,7 @@ public class Boss : MonoBehaviour {
 		bossbody.isTrigger = true;
 		target = m.currentplayer;
 
-		transform.localScale = new Vector3 (1.2f, 1.2f, 1);
+		transform.localScale = new Vector3 (1.5f, 1.5f, 1);
 	}
 
 	// Update is called once per frame
@@ -102,7 +102,7 @@ public class Boss : MonoBehaviour {
 					if (chargecd <= 0) {
 						if (!charge) {
 							charge = true;
-							charging = 1f;
+							charging = 1.2f;
 						}
 					}
 				} else if (bulletCooldown <= 0) {

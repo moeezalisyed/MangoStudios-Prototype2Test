@@ -417,13 +417,13 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator iterationSlowdown (int sec){
 		this.inSlowDown = true;
-		this.charSpeed = this.charSpeed/5;
-		this.bossSpeed = this.bossSpeed/5;
+		this.charSpeed = this.charSpeed/5f;
+		this.bossSpeed = this.bossSpeed/5f;
 		THEBOSS.setSpeeds();
 		yield return new WaitForSeconds (sec);
 
-		this.charSpeed = this.charSpeed*5;
-		this.bossSpeed = this.bossSpeed*5;
+		this.charSpeed = this.charSpeed*5f;
+		this.bossSpeed = this.bossSpeed*5f;
 		THEBOSS.setSpeeds();
 		this.inSlowDown = false;
 	}
