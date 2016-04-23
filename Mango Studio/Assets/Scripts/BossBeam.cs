@@ -11,7 +11,7 @@ public class BossBeam : MonoBehaviour {
 	public void init (Boss boss) {
 		this.name = "BossBeam";
 		m = boss;
-		speed = m.chargeSpeed;
+		speed = m.chargeSpeed*1.1f;
 	
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.

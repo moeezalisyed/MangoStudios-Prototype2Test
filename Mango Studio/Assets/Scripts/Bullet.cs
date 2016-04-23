@@ -27,11 +27,11 @@ public class Bullet : MonoBehaviour {
 		}
 
 		if (this.playerType == 0) {
-			speed = 11.5f;
+			speed = 9.5f;
 		} else if (this.playerType == 1) {
 			speed = 8f;
 		} else if (this.playerType == 2) {
-			speed = 4.5f;
+			speed = 6.5f;
 		}
 
 		//speed += 3;
@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour {
 			speed -= 1.5f;
 		}
 		if (owner.owner.m.inSlowDown) {
-			speed -= 4;
+			speed -= 1;
 		}
 
 
