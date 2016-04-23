@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour {
 	private Player target;
 	private float targetx;
 	private float targety;
-
+	private float chargeMultiplier = 2;
 	// sfx
 	public AudioClip bossDead;
 	public AudioClip bossHit;
@@ -35,7 +35,7 @@ public class Boss : MonoBehaviour {
 
 		m = owner;
 		speed = m.bossSpeed;
-		chargeSpeed = m.bossSpeed*4;
+		chargeSpeed = m.bossSpeed*this.chargeMultiplier;
 		this.bossHealth = 100;
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossModel>();						// Add a marbleModel script to control visuals of the gem.
@@ -54,6 +54,7 @@ public class Boss : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		print ("boss speed: " + this.speed);
 		target = m.currentplayer;
 		targetx = target.transform.position.x;
 		targety = target.transform.position.y;
@@ -144,7 +145,7 @@ public class Boss : MonoBehaviour {
 
 	public void setSpeeds(){
 		this.speed = m.bossSpeed;
-		this.chargeSpeed = m.bossSpeed * 2;
+		this.chargeSpeed = m.bossSpeed * this.chargeMultiplier;
 	}
 
 	void FireBullet(){ 						//I made this take x and y because I was thinking about it and different enemies will need to fire from different parts of their models

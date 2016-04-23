@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour
 	public readonly float coolDownSquare = 1.3f;
 
 	//define character speed for every iteration blowup and slowdown
-	public float charSpeed = 1.7f;
-	public float bossSpeed = 2f;
+	public float charSpeed;
+	public float bossSpeed;
 	public bool inSlowDown = false;
 
     // Level number
@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
 
     // Use this for initialization
     void Start(){
+		this.charSpeed = 2f;
+		this.bossSpeed = 1.7f;
 		// Set up the player order
 		playerOrder = new int[playerLives];
 		this.createPlayerOrderList ();
@@ -452,13 +454,15 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator iterationSlowdown (int sec){
 		this.inSlowDown = true;
-		this.charSpeed = this.charSpeed/5f;
-		this.bossSpeed = this.bossSpeed/5f;
+		float pcharSpeed = this.charSpeed;
+		float pbossSpeed = this.bossSpeed;
+		this.charSpeed = 0.3f;
+		this.bossSpeed = 0.3f;
 		THEBOSS.setSpeeds();
 		yield return new WaitForSeconds (sec);
 
-		this.charSpeed = this.charSpeed*5f;
-		this.bossSpeed = this.bossSpeed*5f;
+		this.charSpeed = pcharSpeed;
+		this.bossSpeed = pbossSpeed;
 		THEBOSS.setSpeeds();
 		this.inSlowDown = false;
 	}
