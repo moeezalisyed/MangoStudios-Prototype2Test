@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour {
 	private Player target;
 	private float targetx;
 	private float targety;
-	private float chargeMultiplier = 2;
+	private float chargeMultiplier = 1.5f;
 	// sfx
 	public AudioClip bossDead;
 	public AudioClip bossHit;

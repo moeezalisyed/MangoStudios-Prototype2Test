@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     // Use this for initialization
     void Start(){
-		this.charSpeed = 2f;
+		this.charSpeed = 2.7f;
 		this.bossSpeed = 1.7f;
 		// Set up the player order
 		playerOrder = new int[playerLives];
