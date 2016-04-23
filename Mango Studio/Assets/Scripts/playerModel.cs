@@ -140,7 +140,7 @@ public class playerModel : MonoBehaviour
 		clock += Time.deltaTime;
 		if (firstRun) {
 			shadowMovements.Add (this.transform.position);
-			//this.owner.GetComponent<BoxCollider2D> ().offset = transform.position;
+			this.owner.GetComponent<BoxCollider2D> ().transform.position = transform.position;
 			if (Input.GetKeyDown (KeyCode.Space)) {
 				shadowFiring.Add (true);
 			} else {
@@ -178,6 +178,7 @@ public class playerModel : MonoBehaviour
 				this.mat.color = Color.black;
 				this.owner.tag = "Dead";
 				this.transform.position = new Vector3(Screen.width +200, Screen.height + 200, shadowMovements[0].z);
+				this.owner.GetComponent<BoxCollider2D> ().transform.position = transform.position;
 
 			} else {
 				
