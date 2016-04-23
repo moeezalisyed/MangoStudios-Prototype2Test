@@ -219,19 +219,29 @@ public class GameManager : MonoBehaviour
 		clock += Time.deltaTime;
 		currentplayer.model.shadowDirection.Add (currentplayer.direction);
 		Vector3 playerPosScreen = Camera.main.WorldToScreenPoint(currentplayer.transform.position);
+		float speed = this.charSpeed;
 
 		if (Input.GetKey (KeyCode.RightArrow)  && playerPosScreen.x < Screen.width -22) {
-			if (currentplayer.playerType != 2) {
+			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 3;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
+				if (Input.GetKey (KeyCode.UpArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 + 45);
+					speed = this.charSpeed * (1/2);
+				}
+				if (Input.GetKey (KeyCode.DownArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 - 45);
+					speed = this.charSpeed * (1/2);
+				}
 				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
+				//speed = this.charSpeed * Mathf.Sqrt (2);
 //				if (currentplayer.transform.position.x > Screen.width) {
 //					print ("x width");
 //					Vector3 xvec = currentplayer.transform.position;
 //					xvec.x = 0;
 //					currentplayer.transform.position = xvec;
 //				}
-			} else{
+			} /*else{
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 3;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
@@ -247,23 +257,31 @@ public class GameManager : MonoBehaviour
 				}
 			
 			
-			}
+			}*/
 		} 
 		if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22 ) {
 			
 
 			//above
-			if (currentplayer.playerType != 2) {
+			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 0;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
+				if (Input.GetKey (KeyCode.RightArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 - 45);
+					speed = this.charSpeed * (1/2);
+				}
+				if (Input.GetKey (KeyCode.LeftArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 + 45);
+					speed = this.charSpeed * (1/2);
+				}
+				currentplayer.transform.Translate (Vector3.up * speed * Time.deltaTime);
 //				if (currentplayer.transform.position.y < 0) {
 //					print ("y 0");
 //					Vector3 xvec = currentplayer.transform.position;
 //					xvec.y = Screen.height;
 //					currentplayer.transform.position = xvec;
 //				}
-			} else {
+			} /*else {
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 0;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
@@ -278,16 +296,24 @@ public class GameManager : MonoBehaviour
 				}
 
 
-			}
+			}*/
 			//below
 
 		}
 		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22 ){
 			
 			//above
-			if (currentplayer.playerType != 2) {
+			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 1;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
+				if (Input.GetKey (KeyCode.UpArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 - 45);
+					speed = this.charSpeed * (1/2);
+				}
+				if (Input.GetKey (KeyCode.DownArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 + 45);
+					speed = this.charSpeed * (1/2);
+				}
 				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
 //				if (currentplayer.transform.position.x < 0) {
 //					print ("x 0");
@@ -297,7 +323,7 @@ public class GameManager : MonoBehaviour
 //				}
 
 
-			} else {
+			} /*else {
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 1;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
@@ -305,23 +331,32 @@ public class GameManager : MonoBehaviour
 //					if (currentplayer.transform.position.x < 0) {
 //						print ("x 0");
 //						Vector3 xvec = currentplayer.transform.position;
-//						xvec.x = Screen.width;
+//						xvec.x = Screen.width; 
 //						currentplayer.transform.position = xvec;
 //					}
 				}
 
 
-			}
+			}*/
 			//below
 		}
 		if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22 ) {
 			
 
 			//bove
-			if (currentplayer.playerType != 2) {
+			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 2;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
+				if (Input.GetKey (KeyCode.LeftArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 - 45);
+					speed = this.charSpeed * (1/2);
+
+				}
+				if (Input.GetKey (KeyCode.RightArrow)) {
+					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90 + 45);
+					speed = this.charSpeed * (1/2);
+				}
+				currentplayer.transform.Translate (Vector3.up * speed * Time.deltaTime);
 //				if (currentplayer.transform.position.y > Screen.height) {
 //					print ("y height");
 //					Vector3 xvec = currentplayer.transform.position;
@@ -329,7 +364,7 @@ public class GameManager : MonoBehaviour
 //					currentplayer.transform.position = xvec;
 //				}
 
-			} else {
+			} /*else {
 				if (!currentplayer.usingability) {
 					currentplayer.direction = 2;
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
@@ -343,7 +378,7 @@ public class GameManager : MonoBehaviour
 				}
 
 
-			}
+			}*/
 			//below
 
 		}
