@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
 		playerOrderIndex++;
 
 		currentplayer = players [0];
+
 		print ("firstplayertype: " + currentplayer.playerType);
 		if (currentplayer.playerType == 0) {
 			//square
@@ -144,6 +145,7 @@ public class GameManager : MonoBehaviour
 		Boss boss = bossObject.AddComponent<Boss>();
 		boss.init (this);
 		THEBOSS = boss;
+		THEBOSS.updatePlayer (currentplayer);
 		StartCoroutine (iterationSlowdown (3));
 
 
@@ -175,6 +177,7 @@ public class GameManager : MonoBehaviour
 		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
 		currentplayer = players [0];
+		THEBOSS.updatePlayer (currentplayer);
 		if (currentplayer.playerType == 0) {
 			//square
 			currentplayer.setCD (this.coolDownSquare);
@@ -219,6 +222,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 		clock += Time.deltaTime;
+		//THEBOSS.updatePositions (currentplayer.transform.position.x, currentplayer.transform.position.y);
 		currentplayer.model.shadowDirection.Add (currentplayer.direction);
 		Vector3 playerPosScreen = Camera.main.WorldToScreenPoint(currentplayer.transform.position);
 		float speed = this.charSpeed;
@@ -433,6 +437,7 @@ public class GameManager : MonoBehaviour
 			addPlayer (playerOrder[playerOrderIndex], 1, -4, -4);
 			playerOrderIndex++;
 			currentplayer = players [0];
+			THEBOSS.updatePlayer (currentplayer);
 			StartCoroutine(iterationSlowdown(3) );
 
 			if (currentplayer.playerType == 0) {

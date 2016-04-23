@@ -52,10 +52,19 @@ public class Boss : MonoBehaviour {
 		transform.localScale = new Vector3 (1.5f, 1.5f, 1);
 	}
 
+	public void updatePlayer(Player newTarget){
+		this.target = newTarget;
+	}
+
+	/*public void updatePositions(float posx, float posy){
+		targetx = posx;
+		targety = posy;
+	}*/
+
 	// Update is called once per frame
 	void Update () {
-		print ("boss speed: " + this.speed);
-		target = m.currentplayer;
+		//print ("boss speed: " + this.speed);
+		//target = m.currentplayer;
 		targetx = target.transform.position.x;
 		targety = target.transform.position.y;
 		if (!usingBlades) {
@@ -131,8 +140,9 @@ public class Boss : MonoBehaviour {
 			bladeDuration = bladeDuration - Time.deltaTime;
 
 			if (bladeDuration <= 0) {
-				blade.Retract ();
 				usingBlades = false;
+				blade.Retract ();
+
 			}
 		}
 

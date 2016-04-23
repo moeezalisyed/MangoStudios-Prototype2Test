@@ -33,6 +33,6 @@ public class BossBlades : MonoBehaviour {
 	}
 
 	public void Retract(){
-		Destroy (this.gameObject);
+	Destroy (this.gameObject);
 	}
 }
