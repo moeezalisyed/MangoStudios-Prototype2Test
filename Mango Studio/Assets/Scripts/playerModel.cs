@@ -184,7 +184,7 @@ public class playerModel : MonoBehaviour
 				
 				this.owner.tag = "Player";
 				this.mat.color = Color.gray;
-				this.transform.eulerAngles = new Vector3 (0, 0, this.shadowDirection[shadowitr] * 90);
+				this.transform.eulerAngles = new Vector3 (0, 0, (this.shadowDirection[shadowitr]%4) * 90+(this.shadowDirection[shadowitr]/4)*45);
 				//this.mat.shader = Shader.Find("Transparent/Diffuse");
 				if (shadowFiring [shadowitr] == true) {
 					this.shoot ();
