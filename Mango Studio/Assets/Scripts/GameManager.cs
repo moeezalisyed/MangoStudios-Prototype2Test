@@ -33,7 +33,9 @@ public class GameManager : MonoBehaviour
 	public Boss THEBOSS;
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
-	private int currentboss;
+
+	// Am using the bossCurrentLife variable since that is already being used in other places as well.
+	//private int currentboss;
 
 
 	//******Handling player lives, as well as the order and iteration of player********
@@ -94,7 +96,9 @@ public class GameManager : MonoBehaviour
     void Start(){
 		this.charSpeed = 2.7f;
 		this.bossSpeed = 1.7f;
-		currentboss = 1;
+		this.bossCurrentLife = 1;
+		this.bossTotalLives = 3;
+		//currentboss = 1;
 		// Set up the player order
 		playerOrder = new int[playerLives];
 		this.createPlayerOrderList ();
@@ -145,7 +149,7 @@ public class GameManager : MonoBehaviour
 
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
-		boss.init (this, currentboss);
+		boss.init (this, bossCurrentLife);
 		THEBOSS = boss;
 		StartCoroutine (iterationSlowdown (3));
 
@@ -160,8 +164,8 @@ public class GameManager : MonoBehaviour
 		Destroy (THEBOSS.gameObject);
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
-		boss.init (this, currentboss);
-		Destroy (THEBOSS.gameObject);
+		boss.init (this, bossCurrentLife);
+		//Destroy (THEBOSS.gameObject);
 		THEBOSS = boss;
 		playerOrderIndex = 0;
 		foreach (Player x in players) {
@@ -203,7 +207,7 @@ public class GameManager : MonoBehaviour
 		if (this.gamewon == false && THEBOSS.bossHealth <= 0) {
 			//this.gamewon = true;				
 //			The commented bit below is for multiple levels and bosses - still working through the code for this ******* MOEEZ
-			if (this.bossCurrentLife >= 3) {
+			if (this.bossCurrentLife > this.bossTotalLives) {
 				this.gamewon = true;
 			} else {
 				//got here
@@ -217,7 +221,7 @@ public class GameManager : MonoBehaviour
 				this.createPlayerOrderList ();
 				this.createNextBoss ();
 
-				StartCoroutine (iterationSlowdown (3));
+			//	StartCoroutine (iterationSlowdown (3));
 				//************************************************
 			}
 		}
@@ -592,6 +596,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		if(this.gamewon){
+			
 
 			foreach (Player x in this.players) {
 				Destroy (x.gameObject);
@@ -682,10 +687,10 @@ public class GameManager : MonoBehaviour
 	public float GetTargetX(){
 		Player target = currentplayer;
 		float targetdistance = 100000;
-		if (currentboss == 1) {
+		if (bossCurrentLife == 1) {
 			return currentplayer.getX();
 		}
-		else if (currentboss == 2) {
+		else if (bossCurrentLife == 2) {
 			for (int z = players.Count; z <= 0; z--) {
 				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
 					target = players [z];
@@ -701,9 +706,9 @@ public class GameManager : MonoBehaviour
 	public float GetTargetY(){
 		Player target = currentplayer;
 		float targetdistance = 100000;
-		if (currentboss == 1) {
+		if (bossCurrentLife == 1) {
 			return currentplayer.getY();
-		} else if (currentboss == 2) {
+		} else if (bossCurrentLife == 2) {
 			for (int z = players.Count; z <= 0; z--) {
 				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
 					target = players [z];
