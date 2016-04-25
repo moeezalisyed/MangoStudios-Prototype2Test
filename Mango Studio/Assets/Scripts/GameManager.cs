@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
 	//******Boss Lives********
 	private int bossTotalLives = 3;
-	public int bossCurrentLife = 1;
+	public int bossCurrentLife = 2;
 
 	//Iteration Transition Variables
 	private bool inTransition = false;
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     void Start(){
 		this.charSpeed = 2.7f;
 		this.bossSpeed = 1.7f;
-		this.bossCurrentLife = 1;
+		this.bossCurrentLife = 2;
 		this.bossTotalLives = 3;
 		//currentboss = 1;
 		// Set up the player order
