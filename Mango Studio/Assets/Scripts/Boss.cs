@@ -86,9 +86,9 @@ public class Boss : MonoBehaviour {
 			shield.transform.position = new Vector3(this.transform.position.x-.5f,this.transform.position.y+.5f,0);
 
 			shieldDead = false;
-//			this.bossHit = m.bossHit;
-//			this.bossHitX = m.bossHitX;
-//			this.bossDead = m.bossDead;
+			this.bossHit = m.bossHit;
+			this.bossHitX = m.bossHitX;
+			this.bossDead = m.bossDead;
 		}
 	}
 
@@ -313,15 +313,15 @@ public class Boss : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Bullet") {
 			this.dealDamage (2);
-			if (this.bossType == 1) {
+			//if (this.bossType == 1) {
 				m.PlayEffect (bossHit);
-			}
+			//}
 		} else if (other.name == "SpecialBullet") {
 			print("Did special damage");
 			this.dealDamage (7);
-			if (this.bossType == 1) {
+		//	if (this.bossType == 1) {
 				m.PlayEffect (bossHitX);
-			}
+		//	}
 		}
 	}
 

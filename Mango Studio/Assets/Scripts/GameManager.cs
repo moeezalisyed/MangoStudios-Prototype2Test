@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
 				this.createPlayerOrderList ();
 				this.createNextBoss ();
 
-			//	StartCoroutine (iterationSlowdown (3));
+				StartCoroutine (iterationSlowdown (3));
 				//************************************************
 			}
 		}
