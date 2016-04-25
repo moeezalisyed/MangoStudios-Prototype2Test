@@ -138,6 +138,14 @@ public class Player : MonoBehaviour {
 		return model.getType();
 	}
 
+	public float getX(){
+		return transform.position.x;
+	}
+
+	public float getY(){
+		return transform.position.y;
+	}
+
 
 
 	void OnTriggerEnter2D(Collider2D other){

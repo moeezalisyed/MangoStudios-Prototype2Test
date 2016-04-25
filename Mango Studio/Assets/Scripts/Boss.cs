@@ -20,10 +20,11 @@ public class Boss : MonoBehaviour {
 	public int bossHealth;
 	private bool slow;
 	private BossBlades blade;
-	private Player target;
 	private float targetx;
 	private float targety;
 	private float chargeMultiplier = 1.5f;
+	public float xpos;
+	public float ypos;
 	// sfx
 	public AudioClip bossDead;
 	public AudioClip bossHit;
@@ -47,13 +48,8 @@ public class Boss : MonoBehaviour {
 		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
 		bossRbody.gravityScale = 0;
 		bossbody.isTrigger = true;
-		target = m.currentplayer;
 
 		transform.localScale = new Vector3 (1.5f, 1.5f, 1);
-	}
-
-	public void updatePlayer(Player newTarget){
-		this.target = newTarget;
 	}
 
 	/*public void updatePositions(float posx, float posy){
@@ -63,10 +59,10 @@ public class Boss : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		//print ("boss speed: " + this.speed);
-		//target = m.currentplayer;
-		targetx = target.transform.position.x;
-		targety = target.transform.position.y;
+		xpos = transform.position.x;
+		ypos = transform.position.y;
+		targetx = m.GetTargetX ();
+		targety = m.GetTargetY ();
 		if (!usingBlades) {
 			if ((targety - this.transform.position.y) <= 0 && !charge) {
 				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
