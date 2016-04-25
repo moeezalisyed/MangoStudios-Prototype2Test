@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
 	public	float cdbufA= -0.5f;		//time until ability cooldown is over
 	public float cdA= 0f;	//cooldown length for ability
 	public float clock;	// to keep track of the time(not used for now)
+	private float damageclock = .7f;
 
 	public void init(int playerType, GameManager m) {
 
@@ -199,8 +200,33 @@ public class Player : MonoBehaviour {
 			}
 
 		}
+		if (other.name == "TracerBullet") {
+			if (this.playerType == 0 && this.usingability) {
+				// Square is invulnerable
+			} else {
+				StartCoroutine (this.whenGotHit ());
+				this.destroy ();
+			}
+
+		}
 
 
+	}
+
+	void OnTriggerStay2D(Collider2D other){
+		if (other.name == "AOE") {
+			if (this.playerType == 0 && this.usingability) {
+				// Square is invulnerable
+			} else {
+				if (damageclock <= 0) {
+					damageclock = .7f;
+					StartCoroutine (this.whenGotHit ());
+					this.destroy ();
+				} else {
+					damageclock = damageclock - Time.deltaTime;
+				}
+			}
+		}
 	}
 
 

@@ -84,18 +84,17 @@ public class GameManager : MonoBehaviour
     public AudioSource sfx;
 
     // Music clips
-    private AudioClip idle;
-    private AudioClip gametrack;
-    private AudioClip winmusic;
+    private AudioClip bgm;
+    private AudioClip menumusic;
 
     // Sound effect clips
 	public AudioClip bossDead;
+	public AudioClip playerHit;
+	public AudioClip playerHitX;
 	public AudioClip bossHit;
 	public AudioClip bossHitX;
     public AudioClip abilityon;
-	public AudioClip shootClip;
-	public AudioClip shootSPABClip;
-
+    public AudioClip abilityoff;
 
     // Use this for initialization
     void Start(){
@@ -597,11 +596,12 @@ public class GameManager : MonoBehaviour
 
         // sfx
         bossDead = Resources.Load<AudioClip>("Music/explosion");
-        bossHit = Resources.Load<AudioClip>("Music/shoot");
-        bossHitX = Resources.Load<AudioClip>("Music/shootX");  //Special bullet when ability is on
+        playerHit = Resources.Load<AudioClip>("Music/shoot");
+        playerHitX = Resources.Load<AudioClip>("Music/shootX");  //Special bullet when ability is on
+  		bossHit = Resources.Load<AudioClip>("Music/bosshit");
+        bossHitX = Resources.Load<AudioClip>("Music/bosshitX");
         abilityon = Resources.Load<AudioClip>("Music/abilityon");
-
-    }
+        abilityoff = Resources.Load<AudioClip>("Music/abilityoff");    }
         // Music section
     public void PlayEffect(AudioClip clip)
     {
@@ -757,52 +757,15 @@ public class GameManager : MonoBehaviour
 	}
 
 	public Player GetTarget(){
-		Player target = currentplayer;
-		float targetdistance = 100000;
-		for (int z = players.Count; z <= 0; z--) {
-			if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
-				target = players [z];
-				targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2)));
-			}
-		}
-		return target;
+		return currentplayer;
 	}
 
 	public float GetTargetX(){
-		Player target = currentplayer;
-		float targetdistance = 100000;
-		if (bossCurrentLife == 1) {
-			return currentplayer.getX();
-		}
-		else if (bossCurrentLife == 2) {
-			for (int z = players.Count; z <= 0; z--) {
-				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
-					target = players [z];
-					targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2)));
-				}
-			}
-			return target.getX();
-		}else {
-			return 0;
-		}
+		return currentplayer.getX();
 	}
 
 	public float GetTargetY(){
-		Player target = currentplayer;
-		float targetdistance = 100000;
-		if (bossCurrentLife == 1) {
-			return currentplayer.getY();
-		} else if (bossCurrentLife == 2) {
-			for (int z = players.Count; z <= 0; z--) {
-				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
-					target = players [z];
-					targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2)));
-				}
-			}
-			return target.getY ();
-		} else {
-			return 0;
-		}
+		return currentplayer.getY();
 	}
 
 

@@ -22,7 +22,7 @@ public class AOEModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		mat.color = new Color(0 + Mathf.Sin(clock),1,1);
+		mat.color = new Color(0 + Mathf.Sin(clock*2),1,1);
 		clock = clock + Time.deltaTime;
 	}
 }
