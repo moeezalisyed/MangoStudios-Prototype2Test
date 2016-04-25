@@ -701,7 +701,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		if (this.guiTransition) {
-			if (GUI.Button (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 50, 200, 100), "Boss Defeared /n Click to Proceed")) {
+			if (GUI.Button (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 100, 400, 200), "Boss Defeared /n Click to Proceed")) {
 				this.guiTransition = false;
 			}
 		
