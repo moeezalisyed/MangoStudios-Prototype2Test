@@ -187,7 +187,7 @@ public class Boss : MonoBehaviour {
 			}
 
 			if (this.bossHealth <= 0) {
-				Destroy (this.gameObject);
+				//Destroy (this.gameObject);
 				if (this.bossType == 1) {
 					m.PlayEffect (bossDead);
 				}

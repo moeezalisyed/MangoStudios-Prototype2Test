@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
 	private int bossTotalLives = 3;
 	public int bossCurrentLife = 1;
 
+	//Iteration Transition Variables
+	private bool inTransition = false;
+	private bool guiTransition = false;
+
 
 	//Textures for GUI
 	public Texture forSq;
@@ -161,9 +165,24 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	public void destroyForNextIteration(){
+		foreach (Player x in players) {
+			x.transform.position = new Vector3(-100f, -100f, 0f);
+		}
+		foreach (Player x in shadowPlayers) {
+			x.transform.position = new Vector3(-100f, -100f, 0f);
+		}
+		foreach (EnvVar x in envVariables) {
+			x.transform.position = new Vector3(-100f, -100f, 0f);
+		}
+
+	}
+
 	//create next boss
 	public void createNextBoss(){
-		Destroy (THEBOSS.gameObject);
+		this.bossCurrentLife++;
+
+
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
 		boss.init (this, bossCurrentLife);
@@ -224,6 +243,24 @@ public class GameManager : MonoBehaviour
 		this.envVariables.Add (newenv);
 	}
 
+	IEnumerator startTransition (){
+		this.inTransition = true;
+		this.guiTransition = true;
+		if (this.THEBOSS.gameObject != null) {
+			Destroy (THEBOSS.gameObject);
+		}
+		bulletsFolder.Clear ();
+		this.createPlayerOrderList ();
+		this.destroyForNextIteration ();
+		while (this.guiTransition) {
+			yield return new WaitForSeconds (0.01f);
+		}
+		this.createNextBoss ();
+		StartCoroutine (iterationSlowdown (3));
+		this.inTransition = false;
+	}
+
+
         
     // Update is called once per frame
     void Update()
@@ -239,17 +276,24 @@ public class GameManager : MonoBehaviour
 				this.gamewon = true;
 			} else {
 				//got here
-				print("Defeated one boss");
-				foreach (GameObject x in this.bulletsFolder) {
-					Destroy (x);
+//				print("Defeated one boss");
+
+
+				if (!this.inTransition) {
+					foreach (GameObject x in this.bulletsFolder) {
+						Destroy (x);
+					}
+
+
+//					bulletsFolder.Clear ();
+//					this.createPlayerOrderList ();
+					StartCoroutine (startTransition ());
+//					this.createNextBoss ();
+//					StartCoroutine (iterationSlowdown (3));			
 				}
 
-				bulletsFolder.Clear ();
-				this.bossCurrentLife++;
-				this.createPlayerOrderList ();
-				this.createNextBoss ();
 
-				StartCoroutine (iterationSlowdown (3));
+
 				//************************************************
 			}
 		}
@@ -512,6 +556,10 @@ public class GameManager : MonoBehaviour
 	}
 
 
+
+
+
+
 	public void addPlayer(int playerTypee, int initHealth, int x, int y)
 	{
 		GameObject playerObject = new GameObject();
@@ -651,6 +699,14 @@ public class GameManager : MonoBehaviour
 
 
 		}
+
+		if (this.guiTransition) {
+			if (GUI.Button (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 50, 200, 100), "Boss Defeared /n Click to Proceed")) {
+				this.guiTransition = false;
+			}
+		
+		}
+
 			if (this.currentplayer.model.healthval > 3) {			
 				GUI.color = Color.green;
 			} else {
