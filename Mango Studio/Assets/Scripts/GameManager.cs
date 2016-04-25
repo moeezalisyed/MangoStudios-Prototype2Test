@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
 	private int shadowiterator;
 	private Boolean startitr;
 	public Boss THEBOSS;
-	public Boss2 THEBOSS2;
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
 	private int currentboss;
@@ -146,7 +145,7 @@ public class GameManager : MonoBehaviour
 
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
-		boss.init (this);
+		boss.init (this, currentboss);
 		THEBOSS = boss;
 		StartCoroutine (iterationSlowdown (3));
 
@@ -161,7 +160,7 @@ public class GameManager : MonoBehaviour
 		Destroy (THEBOSS.gameObject);
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
-		boss.init (this);
+		boss.init (this, currentboss);
 		Destroy (THEBOSS.gameObject);
 		THEBOSS = boss;
 		playerOrderIndex = 0;
@@ -664,9 +663,9 @@ public class GameManager : MonoBehaviour
 		Player target = currentplayer;
 		float targetdistance = 100000;
 		for (int z = players.Count; z <= 0; z--) {
-			if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS2.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS2.ypos), 2))) < targetdistance) {
+			if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
 				target = players [z];
-				targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS2.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS2.ypos), 2)));
+				targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2)));
 			}
 		}
 		return target;
@@ -680,9 +679,9 @@ public class GameManager : MonoBehaviour
 		}
 		else if (currentboss == 2) {
 			for (int z = players.Count; z <= 0; z--) {
-				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS2.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS2.ypos), 2))) < targetdistance) {
+				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
 					target = players [z];
-					targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS2.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS2.ypos), 2)));
+					targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2)));
 				}
 			}
 			return target.getX();
@@ -698,9 +697,9 @@ public class GameManager : MonoBehaviour
 			return currentplayer.getY();
 		} else if (currentboss == 2) {
 			for (int z = players.Count; z <= 0; z--) {
-				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS2.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS2.ypos), 2))) < targetdistance) {
+				if ((Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2))) < targetdistance) {
 					target = players [z];
-					targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS2.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS2.ypos), 2)));
+					targetdistance = (Mathf.Sqrt (Mathf.Pow ((players [z].getX() - THEBOSS.xpos), 2) + Mathf.Pow ((players [z].getY() - THEBOSS.ypos), 2)));
 				}
 			}
 			return target.getY ();

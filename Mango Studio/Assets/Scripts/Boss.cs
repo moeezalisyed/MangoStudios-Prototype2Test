@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class Boss : MonoBehaviour {
 
-	public BossModel model;
+	private int bossType;
+
+	//Boss1 things
+	public BossModel model1;
 	public float speed;
 	public GameManager m;
 	private float bulletCooldown;
@@ -28,28 +31,61 @@ public class Boss : MonoBehaviour {
 	// sfx
 	public AudioClip bossDead;
 	public AudioClip bossHit;
-	public AudioClip bossHitX;	
+	public AudioClip bossHitX;
+
+
+	//Boss 2 things
+	public Boss2Model model2;
+	private float TracerCooldown;
+	private float AOECooldown;
+	private float BurstCooldown;
+	private float recharging;
+	public int boss2Health;
+	private Player target;
+	public bool shieldDead;
+	public float shieldcharge;
 
 	// Use this for initialization
-	public void init (GameManager owner) {
-		this.name = "Boss";
+	public void init (GameManager owner, int type) {
+		bossType = type;
 
-		m = owner;
-		speed = m.bossSpeed;
-		chargeSpeed = m.bossSpeed*this.chargeMultiplier;
-		this.bossHealth = 100;
-		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
-		model = modelObject.AddComponent<BossModel>();						// Add a marbleModel script to control visuals of the gem.
-		model.init(this);
-		this.bossHit = m.bossHit;
-		this.bossHitX = m.bossHitX;
-		this.bossDead = m.bossDead;
-		BoxCollider2D bossbody = gameObject.AddComponent<BoxCollider2D> ();
-		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
-		bossRbody.gravityScale = 0;
-		bossbody.isTrigger = true;
+		if (bossType == 1) {
+			this.name = "Boss";
+			m = owner;
+			speed = m.bossSpeed;
+			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
+			this.bossHealth = 100;
+			var modelObject = GameObject.CreatePrimitive (PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
+			model1 = modelObject.AddComponent<BossModel> ();						// Add a marbleModel script to control visuals of the gem.
+			model1.init (this);
+			this.bossHit = m.bossHit;
+			this.bossHitX = m.bossHitX;
+			this.bossDead = m.bossDead;
+			BoxCollider2D bossbody = gameObject.AddComponent<BoxCollider2D> ();
+			Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
+			bossRbody.gravityScale = 0;
+			bossbody.isTrigger = true;
+			transform.localScale = new Vector3 (1.5f, 1.5f, 1);
+		} 
+		else if (bossType == 2) {
+			this.bossHealth = 100;
+			var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
+			model2 = modelObject.AddComponent<Boss2Model>();						// Add a marbleModel script to control visuals of the gem.
+			model2.init(this);
+			BoxCollider2D bossbody = gameObject.AddComponent<BoxCollider2D> ();
+			Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
+			bossRbody.gravityScale = 0;
+			bossbody.isTrigger = true;
 
-		transform.localScale = new Vector3 (1.5f, 1.5f, 1);
+			transform.localScale = new Vector3 (2f, 2f, 1);
+
+			GameObject shieldObject = new GameObject();		
+			BossShield shield = shieldObject.AddComponent<BossShield>();
+			shield.init (this);
+			shield.transform.position = new Vector3(this.transform.position.x-.5f,this.transform.position.y+.5f,0);
+
+			shieldDead = false;
+		}
 	}
 
 	/*public void updatePositions(float posx, float posy){
@@ -63,88 +99,109 @@ public class Boss : MonoBehaviour {
 		ypos = transform.position.y;
 		targetx = m.GetTargetX ();
 		targety = m.GetTargetY ();
-		if (!usingBlades) {
-			if ((targety - this.transform.position.y) <= 0 && !charge) {
-				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
-				float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
-				transform.eulerAngles = new Vector3 (0, 0, 180 + (sign * angle));
-				if (slow) {
-					transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
+		if (bossType == 1) {
+			if (!usingBlades) {
+				if ((targety - this.transform.position.y) <= 0 && !charge) {
+					float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
+					float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
+					transform.eulerAngles = new Vector3 (0, 0, 180 + (sign * angle));
+					if (slow) {
+						transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
+					} else {
+						transform.Translate (Vector3.up * speed * Time.deltaTime);
+					}
+				} else if ((targety - this.transform.position.y) > 0 && !charge) {
+					float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
+					float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
+					transform.eulerAngles = new Vector3 (0, 0, 0 + (sign * angle * -1));
+					if (slow) {
+						transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
+					} else {
+						transform.Translate (Vector3.up * speed * Time.deltaTime);
+					}
 				} else {
-					transform.Translate (Vector3.up * speed * Time.deltaTime);
-				}
-			} else if ((targety - this.transform.position.y) > 0 && !charge) {
-				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
-				float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
-				transform.eulerAngles = new Vector3 (0, 0, 0 + (sign * angle * -1));
-				if (slow) {
-					transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
-				} else {
-					transform.Translate (Vector3.up * speed * Time.deltaTime);
-				}
-			} else {
-				transform.Translate (Vector3.up * chargeSpeed * Time.deltaTime);
-				charging = charging - Time.deltaTime;
+					transform.Translate (Vector3.up * chargeSpeed * Time.deltaTime);
+					charging = charging - Time.deltaTime;
 
-				if (charging <= 0) {
-					charge = false;
-					chargecd = 1;
+					if (charging <= 0) {
+						charge = false;
+						chargecd = 1;
+					}
 				}
 			}
-		}
 			
-		if (!usingBlades) {
-			if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 3) {
-				slow = true;
-				int x = Random.Range (0, 70);
-				if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 5) {
-					slow = false;
-					if (beamCooldown <= 0) {
-						FireBeam ();
-						beamCooldown = 1;
-					}
-					beamCooldown = beamCooldown - Time.deltaTime;
-				} else if (x == 3) {
-					if (chargecd <= 0) {
-						if (!charge) {
-							charge = true;
-							charging = 1.2f;
+			if (!usingBlades) {
+				if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 3) {
+					slow = true;
+					int x = Random.Range (0, 70);
+					if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 5) {
+						slow = false;
+						if (beamCooldown <= 0) {
+							FireBeam ();
+							beamCooldown = 1;
 						}
+						beamCooldown = beamCooldown - Time.deltaTime;
+					} else if (x == 3) {
+						if (chargecd <= 0) {
+							if (!charge) {
+								charge = true;
+								charging = 1.2f;
+							}
+						}
+					} else if (bulletCooldown <= 0) {
+						FireBullet ();
+						bulletCooldown = .6f;
+					} else {
+						chargecd = chargecd - Time.deltaTime;
+						chargecd = chargecd - Time.deltaTime;
+						bulletCooldown = bulletCooldown - Time.deltaTime;
 					}
-				} else if (bulletCooldown <= 0) {
-					FireBullet ();
+
+				} else if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) < 3) { 
+					if (bladeCooldown <= 0) {
+						SpawnBlades ();
+						usingBlades = true;
+						bladeDuration = 1f;
+						bladeCooldown = 1.8f;
+					} else if (!usingBlades) {
+						bladeCooldown = bladeCooldown - Time.deltaTime;
+					}
+				}
+			}
+
+			if (usingBlades) {
+				bladeDuration = bladeDuration - Time.deltaTime;
+
+				if (bladeDuration <= 0) {
+					usingBlades = false;
+					blade.Retract ();
+
+				}
+			}
+
+			if (this.bossHealth <= 0) {
+				Destroy (this.gameObject);
+				m.PlayEffect (bossDead);
+			}
+		} else if (bossType == 2) {
+			if (shieldDead) {
+				shieldcharge = shieldcharge - Time.deltaTime;
+				if (shieldcharge <= 0) {
+					shieldDead = false;
+					GameObject shieldObject = new GameObject();		
+					BossShield shield = shieldObject.AddComponent<BossShield>();
+					shield.init (this);
+					shield.transform.position = new Vector3(this.transform.position.x-.5f,this.transform.position.y+.5f,0);
+				}
+			}
+			else{
+				if (bulletCooldown <= 0) {
+					FireTracer ();
 					bulletCooldown = .6f;
 				} else {
-					chargecd = chargecd - Time.deltaTime;
-					chargecd = chargecd - Time.deltaTime;
 					bulletCooldown = bulletCooldown - Time.deltaTime;
 				}
-
-			} else if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) < 3) { 
-				if (bladeCooldown <= 0) {
-					SpawnBlades ();
-					usingBlades = true;
-					bladeDuration = 1f;
-					bladeCooldown = 1.8f;
-				} else if (!usingBlades) {
-					bladeCooldown = bladeCooldown - Time.deltaTime;
-				}
 			}
-		}
-
-		if (usingBlades) {
-			bladeDuration = bladeDuration - Time.deltaTime;
-
-			if (bladeDuration <= 0) {
-				usingBlades = false;
-				blade.Retract ();
-
-			}
-		}
-
-		if (this.bossHealth <= 0) {
-			Destroy (this.gameObject);
-			m.PlayEffect (bossDead);
 		}
 
 	}
@@ -176,34 +233,43 @@ public class Boss : MonoBehaviour {
 		blade.init (this);
 	}
 
+	void FireTracer(){ 						//I made this take x and y because I was thinking about it and different enemies will need to fire from different parts of their models
+		GameObject bulletObject = new GameObject();		
+		TracerBullet bullet = bulletObject.AddComponent<TracerBullet>();
+		bullet.init (m.GetTarget());
+		bullet.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,0);
+	}
 
 
 	public void dealDamage(int damage){
 		this.bossHealth -= damage;
 
-
-		if (this.bossHealth > 90 && this.bossHealth <= 100) {
-			model.changeTexture (0);
-		} else if (this.bossHealth > 80 && this.bossHealth <= 90 ) {
-			model.changeTexture (1);
-		} else if (this.bossHealth > 70&& this.bossHealth <= 80) {
-			model.changeTexture (2);
-		} else if (this.bossHealth > 60&& this.bossHealth <= 70) {
-			model.changeTexture (3);
-		} else if (this.bossHealth > 50&& this.bossHealth <= 60) {
-			model.changeTexture (4);
-		} else if (this.bossHealth > 40&& this.bossHealth <= 50) {
-			model.changeTexture (5);
-		} else if (this.bossHealth > 30&& this.bossHealth <= 40) {
-			model.changeTexture (6);
-		} else if (this.bossHealth > 20&& this.bossHealth <= 30) {
-			model.changeTexture (7);
-		} else if (this.bossHealth > 10&& this.bossHealth <= 20) {
-			model.changeTexture (8);
-		} else {
-			//model.changeTexture (9);
+		if (bossType == 1) {
+			if (this.bossHealth > 90 && this.bossHealth <= 100) {
+				model1.changeTexture (0);
+			} else if (this.bossHealth > 80 && this.bossHealth <= 90) {
+				model1.changeTexture (1);
+			} else if (this.bossHealth > 70 && this.bossHealth <= 80) {
+				model1.changeTexture (2);
+			} else if (this.bossHealth > 60 && this.bossHealth <= 70) {
+				model1.changeTexture (3);
+			} else if (this.bossHealth > 50 && this.bossHealth <= 60) {
+				model1.changeTexture (4);
+			} else if (this.bossHealth > 40 && this.bossHealth <= 50) {
+				model1.changeTexture (5);
+			} else if (this.bossHealth > 30 && this.bossHealth <= 40) {
+				model1.changeTexture (6);
+			} else if (this.bossHealth > 20 && this.bossHealth <= 30) {
+				model1.changeTexture (7);
+			} else if (this.bossHealth > 10 && this.bossHealth <= 20) {
+				model1.changeTexture (8);
+			} else {
+				//model.changeTexture (9);
+			}
+			print ("bosshealth: " + bossHealth);
 		}
-		print ("bosshealth: " + bossHealth);
+		if (bossType == 2) {
+		}
 	}
 
 	void OnGUI(){

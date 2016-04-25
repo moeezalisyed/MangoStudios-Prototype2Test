@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class BossShield : MonoBehaviour {
 
-	private Boss2 m;
+	private Boss m;
 	private int ShieldHealth;
 	public BossShieldModel model;
 	private float clock1 = 0;
 	private float clock2;
 
 	// Use this for initialization
-	public void init (Boss2 owner){
+	public void init (Boss owner){
 		this.name = "BossShield";
 
 		m = owner;
-		ShieldHealth = 200;
+		ShieldHealth = 30;
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossShieldModel>();						// Add a marbleModel script to control visuals of the gem.
 		model.init(this);
