@@ -84,18 +84,17 @@ public class GameManager : MonoBehaviour
     public AudioSource sfx;
 
     // Music clips
-    private AudioClip idle;
-    private AudioClip gametrack;
-    private AudioClip winmusic;
+    private AudioClip bgm;
+    private AudioClip menumusic;
 
     // Sound effect clips
 	public AudioClip bossDead;
+	public AudioClip playerHit;
+	public AudioClip playerHitX;
 	public AudioClip bossHit;
 	public AudioClip bossHitX;
     public AudioClip abilityon;
-	public AudioClip shootClip;
-	public AudioClip shootSPABClip;
-
+    public AudioClip abilityoff;
 
     // Use this for initialization
     void Start(){
@@ -597,11 +596,12 @@ public class GameManager : MonoBehaviour
 
         // sfx
         bossDead = Resources.Load<AudioClip>("Music/explosion");
-        bossHit = Resources.Load<AudioClip>("Music/shoot");
-        bossHitX = Resources.Load<AudioClip>("Music/shootX");  //Special bullet when ability is on
+        playerHit = Resources.Load<AudioClip>("Music/shoot");
+        playerHitX = Resources.Load<AudioClip>("Music/shootX");  //Special bullet when ability is on
+  		bossHit = Resources.Load<AudioClip>("Music/bosshit");
+        bossHitX = Resources.Load<AudioClip>("Music/bosshitX");
         abilityon = Resources.Load<AudioClip>("Music/abilityon");
-
-    }
+        abilityoff = Resources.Load<AudioClip>("Music/abilityoff");    }
         // Music section
     public void PlayEffect(AudioClip clip)
     {
