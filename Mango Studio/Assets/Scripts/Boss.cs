@@ -68,6 +68,8 @@ public class Boss : MonoBehaviour {
 			transform.localScale = new Vector3 (1.5f, 1.5f, 1);
 		} 
 		else if (bossType == 2) {
+			this.speed = m.bossSpeed;
+			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
 			this.bossHealth = 100;
 			var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model2 = modelObject.AddComponent<Boss2Model>();						// Add a marbleModel script to control visuals of the gem.

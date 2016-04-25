@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
 
-	// Am using the bossCurrentLife variable since that is already being used in other places as well.
-	//private int currentboss;
+	//A list for the environment variables
+	public List<EnvVar> envVariables = new List<EnvVar>();
+	private int maxEnv = 1;
 
 
 	//******Handling player lives, as well as the order and iteration of player********
@@ -146,6 +147,7 @@ public class GameManager : MonoBehaviour
 		shadow = new List<Vector3> ();
 		shadowiterator = 0;
 		startitr = false;
+		//this.createInitialEnv ();
 
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
@@ -174,10 +176,16 @@ public class GameManager : MonoBehaviour
 		foreach (Player x in shadowPlayers) {
 			Destroy (x.gameObject);
 		}
+		foreach (EnvVar x in envVariables) {
+			Destroy (x.gameObject);
+		}
 		this.players.Clear ();
 		this.shadowPlayers.Clear ();
+		this.envVariables.Clear ();
 		players = new List<Player> ();
 		shadowPlayers = new List<Player> ();
+		envVariables = new List<EnvVar> ();
+		//createInitialEnv ();
 		playerOrderIndex = 0;
 		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
@@ -194,6 +202,26 @@ public class GameManager : MonoBehaviour
 			currentplayer.setCD (this.coolDownTriangle);
 		}
 	
+	}
+
+
+	public void createInitialEnv(){
+		for (int i = 0; i < this.maxEnv; i++) {
+			GameObject envObject = new GameObject();
+			EnvVar newenv = envObject.AddComponent<EnvVar>();
+			newenv.init (this);
+			this.envVariables.Add (newenv);
+		}
+	
+	}
+
+
+
+	public void spawnNewEnv(){
+		GameObject envObject = new GameObject();
+		EnvVar newenv = envObject.AddComponent<EnvVar>();
+		newenv.init (this);
+		this.envVariables.Add (newenv);
 	}
 
         
