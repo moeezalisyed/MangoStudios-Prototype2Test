@@ -11,7 +11,7 @@ public class TracerBullet : MonoBehaviour {
 
 	// Use this for initialization
 	public void init (Player target, Boss owner) {
-		this.name = "Tracer Bullet";
+		this.name = "TracerBullet";
 		t = target;
 		m = owner;
 		speed = m.speed;
@@ -30,8 +30,13 @@ public class TracerBullet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if (!m.m.inSlowDown) {
+			this.speed = m.chargeSpeed;
+		}
+
 		clock = clock + Time.deltaTime;
-		if (clock <= 2) {
+		if (clock <= 1.3f) {
 				if ((t.getY () - this.transform.position.y <= 0)) {
 					float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (t.getY () - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((t.getX () - this.transform.position.x), 2) + Mathf.Pow ((t.getY () - this.transform.position.y), 2)));
 					float sign = (t.getX () - this.transform.position.x) / Mathf.Abs (t.getX () - this.transform.position.x);
@@ -46,6 +51,13 @@ public class TracerBullet : MonoBehaviour {
 		transform.Translate (Vector3.up * Time.deltaTime * speed);
 
 		if (this.transform.position.x > 7 || this.transform.position.x < -7 || this.transform.position.y > 5 || this.transform.position.y < -5) {
+			Destroy (this.gameObject);
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		print ("entered collider in boss bullet");
+		if (other.tag == "Player" || other.tag == "inviscircle") {
 			Destroy (this.gameObject);
 		}
 	}

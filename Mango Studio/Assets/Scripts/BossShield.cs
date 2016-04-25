@@ -42,5 +42,13 @@ public class BossShield : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.name == "Bullet") {
+			ShieldHealth = ShieldHealth - 2;
+		} else if (other.name == "SpecialBullet") {
+			ShieldHealth = ShieldHealth - 7;
+		}
+	}
+
 
 }
