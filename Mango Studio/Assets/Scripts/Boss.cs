@@ -36,9 +36,7 @@ public class Boss : MonoBehaviour {
 
 	//Boss 2 things
 	public Boss2Model model2;
-	private float TracerCooldown = 0;
-	private float AOECooldown;
-	private float BurstCooldown;
+	private float attackCD;
 	private float recharging;
 	public int boss2Health;
 	private Player target;
@@ -68,6 +66,7 @@ public class Boss : MonoBehaviour {
 			transform.localScale = new Vector3 (1.5f, 1.5f, 1);
 		} 
 		else if (bossType == 2) {
+			speed = 3;
 			this.bossHealth = 100;
 			var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model2 = modelObject.AddComponent<Boss2Model>();						// Add a marbleModel script to control visuals of the gem.
@@ -193,6 +192,15 @@ public class Boss : MonoBehaviour {
 			}
 		} 
 		else if (bossType == 2) {
+			if ((targety - this.transform.position.y) <= 0 && !charge) {
+				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
+				float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
+				transform.eulerAngles = new Vector3 (0, 0, 180 + (sign * angle));
+			} else if ((targety - this.transform.position.y) > 0 && !charge) {
+				float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
+				float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
+				transform.eulerAngles = new Vector3 (0, 0, 0 + (sign * angle * -1));
+			}
 			if (shieldDead) {
 				shieldcharge = shieldcharge - Time.deltaTime;
 				if (shieldcharge <= 0) {
@@ -204,12 +212,33 @@ public class Boss : MonoBehaviour {
 				}
 			}
 			else{
-				if (TracerCooldown <= 0) {
-					TracerCooldown = 1f;
-					FireTracer ();
+				int x = Random.Range (0, 4);
+				if (!charge) {
+					if (attackCD <= 0) {
+						attackCD = 1.5f;
+						if (x < 3) {
+							FireTracer ();
+
+						} else {
+							charge = true;
+							recharging = 1.5f;
+						}
+					}
 				} else {
-					TracerCooldown = TracerCooldown - Time.deltaTime;
+					recharging = recharging - Time.deltaTime;
+					if (recharging <= 0) {
+						charge = false;
+						if (x < 3) {
+							FireAOE ();
+						} else {
+							FireBurst ();
+						}
+
+					}
 				}
+
+				attackCD = attackCD - Time.deltaTime;
+
 			}
 		}
 
@@ -245,8 +274,26 @@ public class Boss : MonoBehaviour {
 	void FireTracer(){ 						//I made this take x and y because I was thinking about it and different enemies will need to fire from different parts of their models
 		GameObject bulletObject = new GameObject();		
 		TracerBullet bullet = bulletObject.AddComponent<TracerBullet>();
-		bullet.init (m.GetTarget());
+		bullet.init (m.GetTarget(),this);
 		bullet.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,0);
+		bullet.transform.rotation = new Quaternion(this.transform.rotation .x,this.transform.rotation.y,this.transform.rotation.z,this.transform.rotation.w);
+	}
+
+	void FireAOE(){
+		GameObject bulletObject = new GameObject();		
+		AOE bullet = bulletObject.AddComponent<AOE>();
+		bullet.init (m.GetTarget());
+		bullet.transform.position = new Vector3(targetx,targety,0);
+	}
+
+	void FireBurst(){
+		for(int x = 0; x <= 360; x = x +10){
+			GameObject bulletObject = new GameObject();		
+			BossBullet bullet = bulletObject.AddComponent<BossBullet>();
+			bullet.init (this);
+			bullet.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,0);
+			bullet.transform.eulerAngles = new Vector3(this.transform.position.x,this.transform.position.y,x);
+		}
 	}
 
 
