@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Boss : MonoBehaviour {
 
-	private int bossType;
+	public int bossType;
 
 	//Boss1 things
 	public BossModel model1;
@@ -36,7 +36,7 @@ public class Boss : MonoBehaviour {
 
 	//Boss 2 things
 	public Boss2Model model2;
-	private float TracerCooldown;
+	private float TracerCooldown = 0;
 	private float AOECooldown;
 	private float BurstCooldown;
 	private float recharging;
@@ -48,10 +48,10 @@ public class Boss : MonoBehaviour {
 	// Use this for initialization
 	public void init (GameManager owner, int type) {
 		bossType = type;
+		this.name = "Boss";
+		m = owner;
 
 		if (bossType == 1) {
-			this.name = "Boss";
-			m = owner;
 			speed = m.bossSpeed;
 			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
 			this.bossHealth = 100;
@@ -99,6 +99,7 @@ public class Boss : MonoBehaviour {
 		ypos = transform.position.y;
 		targetx = m.GetTargetX ();
 		targety = m.GetTargetY ();
+
 		if (bossType == 1) {
 			if (!usingBlades) {
 				if ((targety - this.transform.position.y) <= 0 && !charge) {
@@ -183,7 +184,8 @@ public class Boss : MonoBehaviour {
 				Destroy (this.gameObject);
 				m.PlayEffect (bossDead);
 			}
-		} else if (bossType == 2) {
+		} 
+		else if (bossType == 2) {
 			if (shieldDead) {
 				shieldcharge = shieldcharge - Time.deltaTime;
 				if (shieldcharge <= 0) {
@@ -195,11 +197,11 @@ public class Boss : MonoBehaviour {
 				}
 			}
 			else{
-				if (bulletCooldown <= 0) {
+				if (TracerCooldown <= 0) {
+					TracerCooldown = 1f;
 					FireTracer ();
-					bulletCooldown = .6f;
 				} else {
-					bulletCooldown = bulletCooldown - Time.deltaTime;
+					TracerCooldown = TracerCooldown - Time.deltaTime;
 				}
 			}
 		}
