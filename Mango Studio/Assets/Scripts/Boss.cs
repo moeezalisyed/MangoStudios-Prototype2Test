@@ -66,7 +66,12 @@ public class Boss : MonoBehaviour {
 			transform.localScale = new Vector3 (1.5f, 1.5f, 1);
 		} 
 		else if (bossType == 2) {
+<<<<<<< HEAD
 			speed = 3;
+=======
+			this.speed = m.bossSpeed;
+			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
+>>>>>>> origin/master
 			this.bossHealth = 100;
 			var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model2 = modelObject.AddComponent<Boss2Model>();						// Add a marbleModel script to control visuals of the gem.
@@ -85,9 +90,9 @@ public class Boss : MonoBehaviour {
 			shield.transform.position = new Vector3(this.transform.position.x-.5f,this.transform.position.y+.5f,0);
 
 			shieldDead = false;
-//			this.bossHit = m.bossHit;
-//			this.bossHitX = m.bossHitX;
-//			this.bossDead = m.bossDead;
+			this.bossHit = m.bossHit;
+			this.bossHitX = m.bossHitX;
+			this.bossDead = m.bossDead;
 		}
 	}
 
@@ -184,7 +189,7 @@ public class Boss : MonoBehaviour {
 			}
 
 			if (this.bossHealth <= 0) {
-				Destroy (this.gameObject);
+				//Destroy (this.gameObject);
 				if (this.bossType == 1) {
 					m.PlayEffect (bossDead);
 				}
@@ -360,15 +365,15 @@ public class Boss : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Bullet") {
 			this.dealDamage (2);
-			if (this.bossType == 1) {
+			//if (this.bossType == 1) {
 				m.PlayEffect (bossHit);
-			}
+			//}
 		} else if (other.name == "SpecialBullet") {
 			print("Did special damage");
 			this.dealDamage (7);
-			if (this.bossType == 1) {
+		//	if (this.bossType == 1) {
 				m.PlayEffect (bossHitX);
-			}
+		//	}
 		}
 	}
 

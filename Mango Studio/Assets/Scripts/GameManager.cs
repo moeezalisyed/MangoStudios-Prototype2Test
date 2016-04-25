@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
 
-	// Am using the bossCurrentLife variable since that is already being used in other places as well.
-	//private int currentboss;
+	//A list for the environment variables
+	public List<EnvVar> envVariables = new List<EnvVar>();
+	private int maxEnv = 1;
 
 
 	//******Handling player lives, as well as the order and iteration of player********
@@ -46,6 +47,10 @@ public class GameManager : MonoBehaviour
 	//******Boss Lives********
 	private int bossTotalLives = 3;
 	public int bossCurrentLife = 2;
+
+	//Iteration Transition Variables
+	private bool inTransition = false;
+	private bool guiTransition = false;
 
 
 	//Textures for GUI
@@ -146,6 +151,7 @@ public class GameManager : MonoBehaviour
 		shadow = new List<Vector3> ();
 		shadowiterator = 0;
 		startitr = false;
+		//this.createInitialEnv ();
 
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
@@ -159,9 +165,24 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	public void destroyForNextIteration(){
+		foreach (Player x in players) {
+			x.transform.position = new Vector3(-100f, -100f, 0f);
+		}
+		foreach (Player x in shadowPlayers) {
+			x.transform.position = new Vector3(-100f, -100f, 0f);
+		}
+		foreach (EnvVar x in envVariables) {
+			x.transform.position = new Vector3(-100f, -100f, 0f);
+		}
+
+	}
+
 	//create next boss
 	public void createNextBoss(){
-		Destroy (THEBOSS.gameObject);
+		this.bossCurrentLife++;
+
+
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
 		boss.init (this, bossCurrentLife);
@@ -174,10 +195,16 @@ public class GameManager : MonoBehaviour
 		foreach (Player x in shadowPlayers) {
 			Destroy (x.gameObject);
 		}
+		foreach (EnvVar x in envVariables) {
+			Destroy (x.gameObject);
+		}
 		this.players.Clear ();
 		this.shadowPlayers.Clear ();
+		this.envVariables.Clear ();
 		players = new List<Player> ();
 		shadowPlayers = new List<Player> ();
+		envVariables = new List<EnvVar> ();
+		//createInitialEnv ();
 		playerOrderIndex = 0;
 		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
@@ -196,6 +223,44 @@ public class GameManager : MonoBehaviour
 	
 	}
 
+
+	public void createInitialEnv(){
+		for (int i = 0; i < this.maxEnv; i++) {
+			GameObject envObject = new GameObject();
+			EnvVar newenv = envObject.AddComponent<EnvVar>();
+			newenv.init (this);
+			this.envVariables.Add (newenv);
+		}
+	
+	}
+
+
+
+	public void spawnNewEnv(){
+		GameObject envObject = new GameObject();
+		EnvVar newenv = envObject.AddComponent<EnvVar>();
+		newenv.init (this);
+		this.envVariables.Add (newenv);
+	}
+
+	IEnumerator startTransition (){
+		this.inTransition = true;
+		this.guiTransition = true;
+		if (this.THEBOSS.gameObject != null) {
+			Destroy (THEBOSS.gameObject);
+		}
+		bulletsFolder.Clear ();
+		this.createPlayerOrderList ();
+		this.destroyForNextIteration ();
+		while (this.guiTransition) {
+			yield return new WaitForSeconds (0.01f);
+		}
+		this.createNextBoss ();
+		StartCoroutine (iterationSlowdown (3));
+		this.inTransition = false;
+	}
+
+
         
     // Update is called once per frame
     void Update()
@@ -211,17 +276,24 @@ public class GameManager : MonoBehaviour
 				this.gamewon = true;
 			} else {
 				//got here
-				print("Defeated one boss");
-				foreach (GameObject x in this.bulletsFolder) {
-					Destroy (x);
+//				print("Defeated one boss");
+
+
+				if (!this.inTransition) {
+					foreach (GameObject x in this.bulletsFolder) {
+						Destroy (x);
+					}
+
+
+//					bulletsFolder.Clear ();
+//					this.createPlayerOrderList ();
+					StartCoroutine (startTransition ());
+//					this.createNextBoss ();
+//					StartCoroutine (iterationSlowdown (3));			
 				}
 
-				bulletsFolder.Clear ();
-				this.bossCurrentLife++;
-				this.createPlayerOrderList ();
-				this.createNextBoss ();
 
-			//	StartCoroutine (iterationSlowdown (3));
+
 				//************************************************
 			}
 		}
@@ -484,6 +556,10 @@ public class GameManager : MonoBehaviour
 	}
 
 
+
+
+
+
 	public void addPlayer(int playerTypee, int initHealth, int x, int y)
 	{
 		GameObject playerObject = new GameObject();
@@ -623,6 +699,14 @@ public class GameManager : MonoBehaviour
 
 
 		}
+
+		if (this.guiTransition) {
+			if (GUI.Button (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 50, 200, 100), "Boss Defeared /n Click to Proceed")) {
+				this.guiTransition = false;
+			}
+		
+		}
+
 			if (this.currentplayer.model.healthval > 3) {			
 				GUI.color = Color.green;
 			} else {
