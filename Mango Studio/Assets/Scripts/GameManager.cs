@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     // Use this for initialization
     void Start(){
-		this.charSpeed = 2.7f;
+		this.charSpeed = 3.5f;
 		this.bossSpeed = 1.7f;
 		this.bossCurrentLife = 1;
 		this.bossTotalLives = 3;
