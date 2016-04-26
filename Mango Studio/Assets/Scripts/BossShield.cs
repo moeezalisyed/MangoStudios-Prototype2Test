@@ -25,7 +25,7 @@ public class BossShield : MonoBehaviour {
 		bossRbody.gravityScale = 0;
 		bossbody.isTrigger = true;
 
-		transform.localScale = new Vector3 (1.3f, 1.3f, 1);
+		//transform.localScale = new Vector3 (1.3f, 1.3f, 1);
 	}
 	
 	// Update is called once per frame

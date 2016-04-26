@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
 	public AudioClip bossHitX;
     public AudioClip abilityon;
     public AudioClip abilityoff;
+	public AudioClip shootClip;
 
     // Use this for initialization
     void Start(){
