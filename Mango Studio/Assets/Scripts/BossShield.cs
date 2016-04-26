@@ -24,13 +24,14 @@ public class BossShield : MonoBehaviour {
 		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
 		bossRbody.gravityScale = 0;
 		bossbody.isTrigger = true;
+		transform.localScale = new Vector3 (1.3f, 1.3f, 1);
 
 		//transform.localScale = new Vector3 (1.3f, 1.3f, 1);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position = new Vector3 (.71f * Mathf.Cos (clock1), .71f * Mathf.Sin (clock1), 0);
+		transform.position = new Vector3 (1.13f * Mathf.Cos (clock1), 1.13f * Mathf.Sin (clock1), 0);
 		transform.eulerAngles = new Vector3 (0, 0, clock2*90 +225);
 		clock1 = clock1 + (Time.deltaTime)*3.062f *.5f;
 		clock2 = clock2 + (Time.deltaTime)*1.95f * .5f;
