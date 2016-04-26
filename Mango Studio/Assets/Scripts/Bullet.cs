@@ -47,13 +47,18 @@ public class Bullet : MonoBehaviour {
 		clock = 0f;
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
-		model = modelObject.AddComponent<BulletModel>();						// Add a marbleModel script to control visuals of the gem.
+		model = modelObject.AddComponent<BulletModel>();					// Add a marbleModel script to control visuals of the gem.
 		model.init(this);
 
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
 		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
 		bossRbody.gravityScale = 0;
 		playerbody.isTrigger = true;
+		if (this.name == "Bullet") {
+			transform.localScale = new Vector3 (.3f, 0.8f, 1);
+		} else {
+			transform.localScale = new Vector3 (.65f, 0.8f, 1);
+		}
 
 	}
 

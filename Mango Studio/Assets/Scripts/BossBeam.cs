@@ -20,7 +20,7 @@ public class BossBeam : MonoBehaviour {
 
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
 		playerbody.isTrigger = true;
-		transform.localScale = new Vector3 (2.2f, .2f, 1);
+		transform.localScale = new Vector3 (1.8f, 0.2f, 1);
 		this.GetComponent<BoxCollider2D> ().size = model.transform.localScale;
 		this.transform.rotation = new Quaternion(m.transform.rotation .x,m.transform.rotation.y,m.transform.rotation.z,m.transform.rotation.w);
 		this.m.m.bulletsFolder.Add (this.model.gameObject);

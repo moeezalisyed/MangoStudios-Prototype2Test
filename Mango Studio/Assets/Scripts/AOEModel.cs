@@ -16,7 +16,7 @@ public class AOEModel : MonoBehaviour {
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/Boss2");	// Set the texture.  Must be in Resources folder.
+		mat.mainTexture = Resources.Load<Texture2D>("Textures/Boss2AOE");	// Set the texture.  Must be in Resources folder.
 		clock = 0;
 	}
 	

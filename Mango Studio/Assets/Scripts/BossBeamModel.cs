@@ -11,13 +11,13 @@ public class BossBeamModel : MonoBehaviour {
 
 		transform.parent = owner.transform;					// Set the model's parent to the gem.
 		transform.localPosition = new Vector3(0,0,0);		// Center the model on the parent.
-		transform.localScale = new Vector3(0.7f, 0.7f, 1);
+		//transform.localScale = new Vector3(0.7f, 0.7f, 1);
 		name = "BossBullet Model";									// Name the object.
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/WhiteBox");	// Set the texture.  Must be in Resources folder.
-		mat.color = new Color(1,1,1);
+		mat.mainTexture = Resources.Load<Texture2D>("Textures/bossBeam");	// Set the texture.  Must be in Resources folder.
+		//mat.color = new Color(1,1,1);
 	}
 
 	// Update is called once per frame

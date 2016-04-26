@@ -22,7 +22,7 @@ public class TracerBullet : MonoBehaviour {
 
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
 		playerbody.isTrigger = true;
-		transform.localScale = new Vector3 (.35f, .35f, 1);
+		transform.localScale = new Vector3 (.8f, .82f, 1);
 		clock = 0;
 
 

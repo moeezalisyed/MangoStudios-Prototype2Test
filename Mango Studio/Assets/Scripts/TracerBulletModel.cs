@@ -15,8 +15,8 @@ public class TracerBulletModel : MonoBehaviour {
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/WhiteBox");	// Set the texture.  Must be in Resources folder.
-		mat.color = new Color(0,1,0);
+		mat.mainTexture = Resources.Load<Texture2D>("Textures/tracerBullet");	// Set the texture.  Must be in Resources folder.
+		//mat.color = new Color(0,1,0);
 	}
 	
 	// Update is called once per frame

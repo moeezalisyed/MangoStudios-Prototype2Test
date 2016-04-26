@@ -17,6 +17,7 @@ public class Boss : MonoBehaviour {
 	private float bladeDuration;
 	private bool usingBlades;
 	private bool charge;
+	private bool flicker;
 	private float charging;
 	public float chargeSpeed;
 	private float chargecd;
@@ -28,6 +29,7 @@ public class Boss : MonoBehaviour {
 	private float chargeMultiplier = 2f;
 	public float xpos;
 	public float ypos;
+
 	// sfx
 	public AudioClip bossDead;
 	public AudioClip bossHit;
@@ -68,6 +70,8 @@ public class Boss : MonoBehaviour {
 		else if (bossType == 2) {
 			speed = 2.2f;
 			this.speed = m.bossSpeed;
+			this.charge = false;
+			this.flicker = false;
 			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
 			this.bossHealth = 100;
 			var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
@@ -97,6 +101,17 @@ public class Boss : MonoBehaviour {
 		targetx = posx;
 		targety = posy;
 	}*/
+
+	IEnumerator flickerRoutine (){
+		while (true) {
+			print ("started flickeritng");
+			this.model2.mat.color = Color.green;
+			yield return new WaitForSeconds (0.03f);
+			this.model2.mat.color = new Color (1, 1, 1, 1);
+			yield return new WaitForSeconds (0.03f);
+		}
+
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -131,6 +146,10 @@ public class Boss : MonoBehaviour {
 
 					if (charging <= 0) {
 						charge = false;
+
+							StopCoroutine (flickerRoutine ());
+							this.model2.mat.color = new Color (1, 1, 1, 1);
+
 						chargecd = 1;
 					}
 				}
@@ -151,6 +170,10 @@ public class Boss : MonoBehaviour {
 						if (chargecd <= 0) {
 							if (!charge) {
 								charge = true;
+
+									print ("here start flickering");
+									StartCoroutine (flickerRoutine ());
+
 								charging = 1.2f;
 							}
 						}

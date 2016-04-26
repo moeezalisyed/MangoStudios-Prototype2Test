@@ -15,8 +15,9 @@ public class BossBulletModel : MonoBehaviour {
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/WhiteBox");	// Set the texture.  Must be in Resources folder.
-		mat.color = new Color(1,1,1);
+		mat.mainTexture = Resources.Load<Texture2D>("Textures/bossBullet");	// Set the texture.  Must be in Resources folder.
+		//mat.color = new Color(1,1,1);
+
 	}
 	
 	// Update is called once per frame
