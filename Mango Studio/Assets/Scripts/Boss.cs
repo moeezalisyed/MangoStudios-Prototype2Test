@@ -26,7 +26,7 @@ public class Boss : MonoBehaviour {
 	private BossBlades blade;
 	private float targetx;
 	private float targety;
-	private float chargeMultiplier = 2f;
+	private float chargeMultiplier = 1.8f;
 	public float xpos;
 	public float ypos;
 
@@ -54,7 +54,7 @@ public class Boss : MonoBehaviour {
 		if (bossType == 1) {
 			speed = m.bossSpeed;
 			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
-			this.bossHealth = 3;
+			this.bossHealth = 100;
 			var modelObject = GameObject.CreatePrimitive (PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model1 = modelObject.AddComponent<BossModel> ();						// Add a marbleModel script to control visuals of the gem.
 			model1.init (this);
@@ -68,7 +68,7 @@ public class Boss : MonoBehaviour {
 			transform.localScale = new Vector3 (2f, 2f, 1);
 		} 
 		else if (bossType == 2) {
-			speed = 2.2f;
+			speed = 1.8f;
 			this.speed = m.bossSpeed;
 			this.charge = false;
 			this.flicker = false;
@@ -156,10 +156,10 @@ public class Boss : MonoBehaviour {
 			}
 			
 			if (!usingBlades) {
-				if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 3) {
+				if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 4) {
 					slow = true;
 					int x = Random.Range (0, 70);
-					if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 5) {
+					if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 6) {
 						slow = false;
 						if (beamCooldown <= 0) {
 							FireBeam ();
@@ -237,11 +237,11 @@ public class Boss : MonoBehaviour {
 				}
 			}
 			else{
-				int x = Random.Range (0, 10);
+				int x = Random.Range (0, 5);
 				if (!charge) {
 					if (attackCD <= 0) {
-						attackCD = 1.5f;
-						if (x < 9) {
+						attackCD = 2f;
+						if (x < 4) {
 							FireTracer ();
 
 						} else {
@@ -253,7 +253,7 @@ public class Boss : MonoBehaviour {
 					recharging = recharging - Time.deltaTime;
 					if (recharging <= 0) {
 						charge = false;
-						if (x < 6) {
+						if (x < 2) {
 							FireAOE ();
 						} else {
 							FireBurst ();

@@ -11,7 +11,7 @@ public class BossBullet : MonoBehaviour {
 	public void init (Boss boss) {
 		owner = boss;
 		this.name = "BossBullet";
-		speed = owner.chargeSpeed*1.1f;
+		speed = owner.chargeSpeed*1.5f;
 
 
 
