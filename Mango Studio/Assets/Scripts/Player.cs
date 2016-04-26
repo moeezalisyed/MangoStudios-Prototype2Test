@@ -53,7 +53,11 @@ public class Player : MonoBehaviour {
 		model = modelObject.AddComponent<playerModel>();						// Add an playerModel script to control visuals of the gem.
 		model.init(playerType, this);		
 		this.tag = "Player";
-		transform.localScale = new Vector3 (0.6f, 0.6f, 1);
+		transform.localScale = new Vector3 (0.75f, 0.75f, 1);
+		if (this.playerType == 1) {
+			transform.localScale = new Vector3 (1.4f, 1f, 1);
+
+		}
 	}
 	void Start(){
 		clock = 0f;

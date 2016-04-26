@@ -5,6 +5,7 @@ public class BossModel : MonoBehaviour {
 
 	private Boss owner;			// Pointer to the parent object.
 	public Material mat;
+	private string bossTex;
 
 	public void init(Boss owner) {
 		this.owner = owner;
@@ -15,11 +16,14 @@ public class BossModel : MonoBehaviour {
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/WhiteBox");	// Set the texture.  Must be in Resources folder.
+
+
 		if (owner.m.bossCurrentLife == 1) {
-			mat.color = new Color(1,0,0);
+			this.bossTex = "Textures/boss1d";
+			mat.mainTexture = Resources.Load<Texture2D>("Textures/boss1d0");	// Set the texture.  Must be in Resources folder.
 		} else if (owner.m.bossCurrentLife == 2){
-			mat.color = new Color(0,1,0);
+			this.bossTex = "Textures/boss2d";
+			mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0");	// Set the texture.  Must be in Resources folder.
 		} else if(owner.m.bossCurrentLife == 3){
 			mat.color = new Color(0,0,1);
 		}
@@ -29,7 +33,7 @@ public class BossModel : MonoBehaviour {
 	}
 
 	public void changeTexture(int texType){
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/Square"+texType);	// Set the texture.  Must be in Resources folder.
+		mat.mainTexture = Resources.Load<Texture2D>(this.bossTex+texType);	// Set the texture.  Must be in Resources folder.
 	}
 
 	

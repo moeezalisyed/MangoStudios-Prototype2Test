@@ -15,7 +15,7 @@ public class BossShieldModel : MonoBehaviour {
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/BossShield");	// Set the texture.  Must be in Resources folder.
+		mat.mainTexture = Resources.Load<Texture2D>("Textures/Boss2shield");	// Set the texture.  Must be in Resources folder.
 	}
 
 	

@@ -20,7 +20,7 @@ public class BossBlades : MonoBehaviour {
 
 		BoxCollider2D playerbody = gameObject.AddComponent<BoxCollider2D> ();
 		playerbody.isTrigger = true;
-		transform.localScale = new Vector3 (.2f, 3.5f, 1);
+		transform.localScale = new Vector3 (1f, 4f, 1);
 
 		this.m.m.bulletsFolder.Add (this.gameObject);
 

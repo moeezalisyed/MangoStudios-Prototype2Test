@@ -52,7 +52,7 @@ public class Boss : MonoBehaviour {
 		if (bossType == 1) {
 			speed = m.bossSpeed;
 			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
-			this.bossHealth = 100;
+			this.bossHealth = 3;
 			var modelObject = GameObject.CreatePrimitive (PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model1 = modelObject.AddComponent<BossModel> ();						// Add a marbleModel script to control visuals of the gem.
 			model1.init (this);
@@ -63,7 +63,7 @@ public class Boss : MonoBehaviour {
 			Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
 			bossRbody.gravityScale = 0;
 			bossbody.isTrigger = true;
-			transform.localScale = new Vector3 (1.5f, 1.5f, 1);
+			transform.localScale = new Vector3 (2f, 2f, 1);
 		} 
 		else if (bossType == 2) {
 			speed = 2.2f;
@@ -79,12 +79,12 @@ public class Boss : MonoBehaviour {
 			bossRbody.gravityScale = 0;
 			bossbody.isTrigger = true;
 
-			transform.localScale = new Vector3 (2f, 2f, 1);
+			transform.localScale = new Vector3 (3f, 3f, 1);
 
 			GameObject shieldObject = new GameObject();		
 			BossShield shield = shieldObject.AddComponent<BossShield>();
 			shield.init (this);
-			shield.transform.position = new Vector3(this.transform.position.x-.5f,this.transform.position.y+.5f,0);
+			shield.transform.position = new Vector3(this.transform.position.x+3.5f,this.transform.position.y+2.7f,0);
 
 			shieldDead = false;
 			this.bossHit = m.bossHit;
@@ -324,9 +324,34 @@ public class Boss : MonoBehaviour {
 			} else {
 				//model.changeTexture (9);
 			}
-			print ("bosshealth: " + bossHealth);
+			//print ("bosshealth: " + bossHealth);
 		}
 		if (bossType == 2) {
+			if (this.bossHealth > 90 && this.bossHealth <= 100) {
+				model2.changeTexture (0);
+			} else if (this.bossHealth > 80 && this.bossHealth <= 90) {
+				model2.changeTexture (1);
+			} else if (this.bossHealth > 70 && this.bossHealth <= 80) {
+				model2.changeTexture (2);
+			} else if (this.bossHealth > 60 && this.bossHealth <= 70) {
+				model2.changeTexture (3);
+			} else if (this.bossHealth > 50 && this.bossHealth <= 60) {
+				model2.changeTexture (4);
+			} else if (this.bossHealth > 40 && this.bossHealth <= 50) {
+				model2.changeTexture (5);
+			} else if (this.bossHealth > 30 && this.bossHealth <= 40) {
+				model2.changeTexture (6);
+			} else if (this.bossHealth > 20 && this.bossHealth <= 30) {
+				model2.changeTexture (7);
+			} else if (this.bossHealth > 10 && this.bossHealth <= 20) {
+				model2.changeTexture (8);
+			} else {
+				//model.changeTexture (9);
+			}
+		
+		
+		
+		
 		}
 	}
 
