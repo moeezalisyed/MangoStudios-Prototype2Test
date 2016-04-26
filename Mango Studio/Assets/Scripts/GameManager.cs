@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
     public AudioSource sfx;
 
     // Music clips
-    private AudioClip bgm;
+	public AudioClip bgm;
     private AudioClip menumusic;
 
     // Sound effect clips
@@ -110,6 +110,9 @@ public class GameManager : MonoBehaviour
 
     // Use this for initialization
     void Start(){
+		music.GetComponent<AudioSource> ().clip = bgm;
+		music.Play ();
+	
 		this.charSpeed = 3.5f;
 		this.bossSpeed = 1.7f;
 		this.bossCurrentLife = 1;
