@@ -57,6 +57,17 @@ public class GameManager : MonoBehaviour
 	public Texture forSq;
 	public Texture forC;
 	public Texture forT;
+	public Texture bossText;
+	public Texture bossHpText;
+	public Texture lastLifeText;
+	public Texture nextBossText;
+	public Texture nextUpText;
+	public Texture scoreText;
+	public Texture cooldownText;
+	public Texture specialText;
+	public Texture abilityOnText;
+	public Texture gameoverText;
+	public Texture gamewonText;
 
 
 	// These are the readonly CD Functions
@@ -663,16 +674,15 @@ public class GameManager : MonoBehaviour
 
 
 	void OnGUI(){
+		GUI.Box (new Rect (970, 28, 200, 33), nextUpText);
 		if (this.gameover) {
 
 
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
-			string s = "GAME OVER!";
 
 
-			GUI.Box (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 50, 200, 100), s);
-			s = null;
+			GUI.Box (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 50, 200, 100), gameoverText);
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
 			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
@@ -695,11 +705,9 @@ public class GameManager : MonoBehaviour
 
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
-			string s = "GAME WON!";
 
 
-			GUI.Box (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 50, 200, 100), s);
-			s = null;
+			GUI.Box (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 50, 200, 100), gamewonText);
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
 			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
@@ -735,7 +743,7 @@ public class GameManager : MonoBehaviour
 
 			}
 
-			GUI.Box(new Rect (10, 5, 200, 100), "Player: \n " + ss);
+			/*GUI.Box(new Rect (10, 5, 200, 100), "Player: \n " + ss);*/
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
@@ -745,7 +753,7 @@ public class GameManager : MonoBehaviour
 		if (this.playerOrderIndex < playerLives) {
 			GUI.skin.box.alignment = TextAnchor.LowerCenter;
 			GUI.skin.box.fontSize = 22;
-			GUI.Box (new Rect (970, 19, 100, 40), "Next Up:");
+			//GUI.Box (new Rect (970, 22, 100, 38), nextUpText);
 
 			int nextType = playerOrder [playerOrderIndex];
 			if (nextType == 0) {
@@ -756,9 +764,9 @@ public class GameManager : MonoBehaviour
 				GUI.Box (new Rect (995, 60, 50, 50), this.forT);
 			}
 		}else {
-				GUI.color = Color.red;
+				//GUI.color = Color.red;
 				GUI.skin.box.fontSize = 22;
-				GUI.Box(new Rect (970, 19, 100, 40), "Last Life!");
+			GUI.Box(new Rect (970, 19, 100, 40), lastLifeText);
 
 
 		
@@ -781,7 +789,17 @@ public class GameManager : MonoBehaviour
 		return currentplayer.getY();
 	}
 
+	public Texture getCooldownText(){
+		return cooldownText;
+	}
 
+	public Texture getSpecialText(){
+		return specialText;
+	}
+
+	public Texture getAbilityOnText(){
+		return abilityOnText;
+	}
 
 
 

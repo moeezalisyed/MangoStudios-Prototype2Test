@@ -27,6 +27,10 @@ public class playerModel : MonoBehaviour
 	public Boolean firstRun = true;
 	public int shadowitr = 0;
 
+	private Texture cooldownText;
+	private Texture specialText;
+	private Texture abilityOnText;
+
 	public void init(int playerType,  Player owner) {
 		this.owner = owner;
 		this.playerType = playerType;
@@ -35,6 +39,9 @@ public class playerModel : MonoBehaviour
 //		healthval = 40;
 //		damagebuf = 0;
 
+		cooldownText = Resources.Load<Texture2D> ("Textures/cooldown");
+		specialText = Resources.Load<Texture2D> ("Textures/special");
+		abilityOnText = Resources.Load<Texture2D> ("Textures/ability on");
 
 
 
@@ -290,6 +297,8 @@ public class playerModel : MonoBehaviour
 
 	void OnGUI(){
 		if (this.firstRun) {
+			GUI.Box (new Rect (470, 28, 200, 33), cooldownText);
+			GUI.Box (new Rect (730, 28, 200, 33), specialText);
 			GUI.color = Color.yellow;
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
@@ -300,7 +309,8 @@ public class playerModel : MonoBehaviour
 			}
 
 
-			GUI.Box (new Rect (490, 5, 200, 100), "Cooldown: \n" + s);
+			//GUI.Box (new Rect (490, 28, 200, 33), cooldownText);
+			GUI.Box (new Rect (490, 55, 200, 50), s);
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
@@ -317,7 +327,8 @@ public class playerModel : MonoBehaviour
 			}
 
 
-			GUI.Box (new Rect (730, 5, 200, 100), "Special: \n" + p);
+			//GUI.Box (new Rect (730, 28, 200, 33), specialText);
+			GUI.Box (new Rect (730, 55, 200, 50), p);
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
@@ -327,7 +338,7 @@ public class playerModel : MonoBehaviour
 			if (this.owner.usingability) {
 				GUI.color = Color.green;
 				GUI.skin.box.fontSize = 22;
-				GUI.Box (new Rect (Screen.width - 150, Screen.height - 150, 100, 100), "Ability on!");
+				GUI.Box (new Rect (Screen.width - 150, Screen.height - 150, 100, 100), abilityOnText);
 				GUI.skin.box.fontSize = 12;
 				GUI.color = Color.white;
 			}

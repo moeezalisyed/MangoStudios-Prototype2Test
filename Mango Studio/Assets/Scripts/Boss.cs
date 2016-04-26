@@ -379,6 +379,7 @@ public class Boss : MonoBehaviour {
 	}
 
 	void OnGUI(){
+		GUI.Box(new Rect (190, 28, 200, 33), m.bossText);
 		if (this.bossHealth > 30) {			
 			GUI.color = Color.green;
 		} else {
@@ -394,7 +395,8 @@ public class Boss : MonoBehaviour {
 
 		}
 
-		GUI.Box(new Rect (250, 5, 200, 100), "Boss: \n" + s);
+		//GUI.Box(new Rect (250, 28, 200, 33), m.bossText);
+		GUI.Box(new Rect (250, 55, 200, 50), s);
 
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
