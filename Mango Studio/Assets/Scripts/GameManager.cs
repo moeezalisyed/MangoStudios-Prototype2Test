@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
 	//A list for the environment variables
 	public List<EnvVar> envVariables = new List<EnvVar>();
-	private int maxEnv = 1;
+	private int maxEnv = 4;
 
 
 	//******Handling player lives, as well as the order and iteration of player********
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
 		shadow = new List<Vector3> ();
 		shadowiterator = 0;
 		startitr = false;
-		//this.createInitialEnv ();
+		this.createInitialEnv ();
 
 		GameObject bossObject = new GameObject();
 		Boss boss = bossObject.AddComponent<Boss>();
@@ -173,6 +173,7 @@ public class GameManager : MonoBehaviour
 			x.transform.position = new Vector3(-100f, -100f, 0f);
 		}
 		foreach (EnvVar x in envVariables) {
+			x.model.transform.position = new Vector3(-100f, -100f, 0f);
 			x.transform.position = new Vector3(-100f, -100f, 0f);
 		}
 
@@ -196,6 +197,7 @@ public class GameManager : MonoBehaviour
 			Destroy (x.gameObject);
 		}
 		foreach (EnvVar x in envVariables) {
+			Destroy (x.model.gameObject);
 			Destroy (x.gameObject);
 		}
 		this.players.Clear ();
@@ -204,7 +206,7 @@ public class GameManager : MonoBehaviour
 		players = new List<Player> ();
 		shadowPlayers = new List<Player> ();
 		envVariables = new List<EnvVar> ();
-		//createInitialEnv ();
+		createInitialEnv ();
 		playerOrderIndex = 0;
 		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
@@ -307,12 +309,12 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 3;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 3 * 90);
-				if (Input.GetKey (KeyCode.UpArrow)) {
+				if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 3 * 90 + 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 7;
 				}
-				if (Input.GetKey (KeyCode.DownArrow)) {
+				if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 3 * 90 - 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 6;
@@ -350,12 +352,12 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 0;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 0 * 90);
-				if (Input.GetKey (KeyCode.RightArrow)) {
+				if (Input.GetKey (KeyCode.RightArrow) && playerPosScreen.x < Screen.width -22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 0 * 90 - 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 7;
 				}
-				if (Input.GetKey (KeyCode.LeftArrow)) {
+				if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 0 * 90 + 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 4;
@@ -392,12 +394,12 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 1;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 1 * 90);
-				if (Input.GetKey (KeyCode.UpArrow)) {
+				if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 1 * 90 - 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 4;
 				}
-				if (Input.GetKey (KeyCode.DownArrow)) {
+				if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 1 * 90 + 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 5;
@@ -435,13 +437,13 @@ public class GameManager : MonoBehaviour
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 2;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 2 * 90);
-				if (Input.GetKey (KeyCode.LeftArrow)) {
+				if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 2 * 90 - 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 5;
 
 				}
-				if (Input.GetKey (KeyCode.RightArrow)) {
+				if (Input.GetKey (KeyCode.RightArrow) && playerPosScreen.x < Screen.width -22) {
 					currentplayer.transform.eulerAngles = new Vector3 (0, 0, 2 * 90 + 45);
 					speed = this.charSpeed * (1/2);
 					currentplayer.direction = 6;

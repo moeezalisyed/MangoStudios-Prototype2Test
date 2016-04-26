@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnvVar : MonoBehaviour {
 
-	private EnvVarModel model;
+	public EnvVarModel model;
 	private GameManager owner;
 
 	private int health;
@@ -33,7 +33,9 @@ public class EnvVar : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+		if (health <= 0) {
+			this.killThisEnv ();
+		}
 	}
 
 	void doDamage(int x){
@@ -46,7 +48,8 @@ public class EnvVar : MonoBehaviour {
 	void killThisEnv(){
 		//Kill this and spawn a new one somewher else
 		this.owner.spawnNewEnv();
-		Destroy(this.gameObject);
+		Destroy(this.model.gameObject);
+		Destroy (this.gameObject);
 	}
 
 
@@ -54,17 +57,23 @@ public class EnvVar : MonoBehaviour {
 		//print ("entered collider in boss bullet");
 		if (other.tag == "Player" || other.tag == "inviscircle") {
 			//Destroy (this.gameObject);
-		} else if (other.tag == "Bullet" || other.tag == "SpecialBullet") {
+		} else if (other.name == "Bullet" || other.name == "SpecialBullet") {
 			// When hit by a bullet
-		} else if (other.tag == "BossBUllet") {
+			Destroy (other.gameObject);
+		} else if (other.name == "BossBullet") {
 			// When hit by a bossBullet
-			Destroy(other.gameObject);
+			Destroy (other.gameObject);
 			this.doDamage (1);
 
-		} else if (other.tag == "BossBeam") {
+		} else if (other.name == "BossBeam") {
 			// When hit by a BossBeam
-			Destroy(other.gameObject);
+			Destroy (other.gameObject);
 			this.doDamage (2);
+		} else if (other.name == "TracerBullet") {
+			Destroy (other.gameObject);
+			this.doDamage (1);
+		} else if (other.name == "Boss" || other.name == "BossBlade") {
+			this.doDamage (1);
 		}
 	}
 }

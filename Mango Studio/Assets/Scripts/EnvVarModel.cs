@@ -13,16 +13,20 @@ public class EnvVarModel : MonoBehaviour {
 
 
 		//Here we will assign a random position
-		transform.position = new Vector3(-2,-2,0);		// Center the model on the parent.
+		System.Random rng = new System.Random ();
+		float posx = rng.Next (-7, 7) * 1.0f;
+		float posy = rng.Next (-4, 4) * 1.0f;
+		transform.position = new Vector3(posx,posy,0);		
+
 
 
 		name = "EnvVar Model";									// Name the object.
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
-		mat.mainTexture = Resources.Load<Texture2D>("Textures/slimeGrey");	// Set the texture.  Must be in Resources folder.
+		mat.mainTexture = Resources.Load<Texture2D>("Textures/envTex");	// Set the texture.  Must be in Resources folder.
 		//mat.color = new Color(1,1,1);
-		//transform.localScale = new Vector3(2f, 2f, 1);
+		transform.localScale = new Vector3(0.8f, 0.8f, 1);
 		//this.owner.GetComponent<BoxCollider2D>().transform.position = transform.position;
 	}
 
