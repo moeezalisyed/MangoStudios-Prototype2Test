@@ -564,10 +564,15 @@ public class GameManager : MonoBehaviour
 
 	public void addPlayer(int playerTypee, int initHealth, int x, int y)
 	{
+		System.Random rng = new System.Random ();
+		float posx = rng.Next (-8, 8) * 1.0f;
+		//float posy = rng.Next (-4, 4) * 1.0f;
+		//print("sc vector:" + Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)));
+		//print("screex" + Screen.width +", " + Screen.height + ", " + posx) ;
 		GameObject playerObject = new GameObject();
 		Player player = playerObject.AddComponent<Player>();
 		player.transform.parent = playerFolder.transform;
-		player.transform.position = new Vector3(x, y, 0);
+		player.transform.position = new Vector3(posx, y, 0);
 		player.init(playerTypee, this);
 		players.Add(player);
 		playernum++;
@@ -709,6 +714,11 @@ public class GameManager : MonoBehaviour
 			}
 		
 		}
+
+// ****** TO reset the game - we will need to use a scene manager - Luxing take a look at this!**********
+//		if(GUI.Button(new Rect((Screen.width- 100, Screen.height - 200, 500, 20), "Reset")) {
+//			Application.
+//		}
 
 			if (this.currentplayer.model.healthval > 3) {			
 				GUI.color = Color.green;

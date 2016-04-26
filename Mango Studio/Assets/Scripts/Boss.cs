@@ -54,7 +54,7 @@ public class Boss : MonoBehaviour {
 		if (bossType == 1) {
 			speed = m.bossSpeed;
 			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
-			this.bossHealth = 3;
+			this.bossHealth = 100;
 			var modelObject = GameObject.CreatePrimitive (PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model1 = modelObject.AddComponent<BossModel> ();						// Add a marbleModel script to control visuals of the gem.
 			model1.init (this);

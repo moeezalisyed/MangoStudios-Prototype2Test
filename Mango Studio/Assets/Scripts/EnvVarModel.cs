@@ -14,13 +14,13 @@ public class EnvVarModel : MonoBehaviour {
 
 		//Here we will assign a random position
 		System.Random rng = new System.Random ();
-		float posx = rng.Next (-7, 7) * 1.0f;
+		float posx = rng.Next (-8, 8) * 1.0f;
 		float posy = rng.Next (-4, 4) * 1.0f;
 		transform.position = new Vector3(posx,posy,0);		
 
 
 
-		name = "EnvVar Model";									// Name the object.
+		this.name = "EnvVarModel";									// Name the object.
 
 		mat = GetComponent<Renderer>().material;		
 		mat.shader = Shader.Find ("Sprites/Default");						// Tell the renderer that our textures have transparency. // Get the material component of this quad object.
