@@ -26,7 +26,7 @@ public class Boss : MonoBehaviour {
 	private BossBlades blade;
 	private float targetx;
 	private float targety;
-	private float chargeMultiplier = 1.8f;
+	private float chargeMultiplier = 2f;
 	public float xpos;
 	public float ypos;
 
@@ -126,20 +126,10 @@ public class Boss : MonoBehaviour {
 					float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
 					float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
 					transform.eulerAngles = new Vector3 (0, 0, 180 + (sign * angle));
-					if (slow) {
-						transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
-					} else {
-						transform.Translate (Vector3.up * speed * Time.deltaTime);
-					}
 				} else if ((targety - this.transform.position.y) > 0 && !charge) {
 					float angle = Mathf.Rad2Deg * Mathf.Acos (Mathf.Abs (targety - this.transform.position.y) / Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2)));
 					float sign = (targetx - this.transform.position.x) / Mathf.Abs (targetx - this.transform.position.x);
 					transform.eulerAngles = new Vector3 (0, 0, 0 + (sign * angle * -1));
-					if (slow) {
-						transform.Translate (Vector3.up * speed * Time.deltaTime * .5f);
-					} else {
-						transform.Translate (Vector3.up * speed * Time.deltaTime);
-					}
 				} else {
 					transform.Translate (Vector3.up * chargeSpeed * Time.deltaTime);
 					charging = charging - Time.deltaTime;
@@ -156,27 +146,28 @@ public class Boss : MonoBehaviour {
 			}
 			
 			if (!usingBlades) {
-				if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 4) {
+				if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 3.5f) {
 					slow = true;
-					int x = Random.Range (0, 70);
-					if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 6) {
+					int x = Random.Range (0, 600);
+					if (x == 0) {
+						if (chargecd <= 0) {
+							if (!charge) {
+								charge = true;
+
+								print ("here start flickering");
+								StartCoroutine (flickerRoutine ());
+
+								charging = 1.3f;
+							}
+						}
+					}
+					if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 5) {
 						slow = false;
 						if (beamCooldown <= 0) {
 							FireBeam ();
 							beamCooldown = 1;
 						}
 						beamCooldown = beamCooldown - Time.deltaTime;
-					} else if (x == 3) {
-						if (chargecd <= 0) {
-							if (!charge) {
-								charge = true;
-
-									print ("here start flickering");
-									StartCoroutine (flickerRoutine ());
-
-								charging = 1.2f;
-							}
-						}
 					} else if (bulletCooldown <= 0) {
 						FireBullet ();
 						bulletCooldown = .6f;
@@ -191,7 +182,7 @@ public class Boss : MonoBehaviour {
 						SpawnBlades ();
 						usingBlades = true;
 						bladeDuration = 1f;
-						bladeCooldown = 1.8f;
+						bladeCooldown = 1.5f;
 					} else if (!usingBlades) {
 						bladeCooldown = bladeCooldown - Time.deltaTime;
 					}

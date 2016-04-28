@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
 	
 		this.charSpeed = 3.5f;
 		this.bossSpeed = 1.7f;
-		this.bossCurrentLife = 2;
+		this.bossCurrentLife = 1;
 		this.bossTotalLives = 3;
 		//currentboss = 1;
 		// Set up the player order
