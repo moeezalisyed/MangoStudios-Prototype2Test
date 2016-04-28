@@ -68,7 +68,10 @@ public class GameManager : MonoBehaviour
 	public Texture abilityOnText;
 	public Texture gameoverText;
 	public Texture gamewonText;
-
+	public Texture startText;
+	public Texture quitText;
+	public Texture nextbossText;
+	public Texture titleText;
 
 	// These are the readonly CD Functions
 	public readonly float coolDownCircle = 0.4f;
@@ -82,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     // Level number
 
-    private int level = 99;
+    private int level = 0;
 
 
     //button locations
@@ -143,7 +146,7 @@ public class GameManager : MonoBehaviour
 
 
 
-		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
+/*		addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
 		playerOrderIndex++;
 
 		currentplayer = players [0];
@@ -171,7 +174,7 @@ public class GameManager : MonoBehaviour
 		Boss boss = bossObject.AddComponent<Boss>();
 		boss.init (this, bossCurrentLife);
 		THEBOSS = boss;
-		StartCoroutine (iterationSlowdown (3));
+		StartCoroutine (iterationSlowdown (3));*/
 
 
 		// setting up music
@@ -677,7 +680,61 @@ public class GameManager : MonoBehaviour
 
 
 	void OnGUI(){
-		GUI.Box (new Rect (970, 28, 200, 33), nextUpText);
+//		GUI.Box (new Rect (970, 28, 200, 33), nextUpText);
+				    if (level == 0){ 
+//            GUIStyle myStyle = new GUIStyle(GUI.skin.GetStyle("label"));
+//            myStyle.fontSize = 40;
+			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
+			GUI.skin.box.fontSize = 25;
+
+
+			GUI.Box (new Rect (Screen.width / 2 - 300, Screen.height / 2 - 300, 600, 500), titleText);
+			GUI.color = Color.white;
+			GUI.skin.box.fontSize = 12;
+			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+
+
+           if (GUI.Button(new Rect(Screen.width / 2 - 120, Screen.height / 2 + 100, 240, 80),startText)|| Input.GetKeyDown(KeyCode.Return))
+            {
+                level = 1;
+
+        addPlayer(playerOrder[playerOrderIndex], 1, -4, -4);
+		playerOrderIndex++;
+
+		currentplayer = players [0];
+
+		print ("firstplayertype: " + currentplayer.playerType);
+		if (currentplayer.playerType == 0) {
+			//square
+			currentplayer.setCD (this.coolDownSquare);
+		} else if (currentplayer.playerType == 1) {
+			//circle
+			currentplayer.setCD (this.coolDownCircle);
+
+		} else if (currentplayer.playerType == 2) {
+			//triangle
+			currentplayer.setCD (this.coolDownTriangle);
+		}
+		//setHealthText ();
+		clock = 0f;
+		shadow = new List<Vector3> ();
+		shadowiterator = 0;
+		startitr = false;
+		this.createInitialEnv ();
+
+		GameObject bossObject = new GameObject();
+		Boss boss = bossObject.AddComponent<Boss>();
+		boss.init (this, bossCurrentLife);
+		THEBOSS = boss;
+		StartCoroutine (iterationSlowdown (3));
+
+
+
+            }
+            if (GUI.Button(new Rect(25, Screen.height - 75, 110, 60), quitText) || Input.GetKeyDown(KeyCode.Escape)){
+                Application.Quit();
+            }
+        	} if (level == 1){
 		if (this.gameover) {
 
 
@@ -720,7 +777,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		if (this.guiTransition) {
-			if (GUI.Button (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 100, 400, 200), "Boss Defeared /n Click to Proceed")) {
+			if (GUI.Button (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 100, 400, 200), nextbossText)) {
 				this.guiTransition = false;
 			}
 		
@@ -756,7 +813,7 @@ public class GameManager : MonoBehaviour
 		if (this.playerOrderIndex < playerLives) {
 			GUI.skin.box.alignment = TextAnchor.LowerCenter;
 			GUI.skin.box.fontSize = 22;
-			//GUI.Box (new Rect (970, 22, 100, 38), nextUpText);
+			GUI.Box (new Rect (970, 22, 100, 38), nextUpText);
 
 			int nextType = playerOrder [playerOrderIndex];
 			if (nextType == 0) {
@@ -776,7 +833,7 @@ public class GameManager : MonoBehaviour
 		}
 		GUI.skin.box.fontSize = 12;
 
-
+}
 
 	}
 
