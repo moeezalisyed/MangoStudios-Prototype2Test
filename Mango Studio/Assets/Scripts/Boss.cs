@@ -426,5 +426,6 @@ public class Boss : MonoBehaviour {
 
 	public void giveFullHealth(){
 		this.bossHealth = 100;
+		this.dealDamage (0);
 	}
 }

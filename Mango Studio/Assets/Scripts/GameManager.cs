@@ -113,8 +113,8 @@ public class GameManager : MonoBehaviour
 		music.GetComponent<AudioSource> ().clip = bgm;
 		music.Play ();
 	
-		this.charSpeed = 3.5f;
-		this.bossSpeed = 1.7f;
+		this.charSpeed = 2.9f;
+		this.bossSpeed = 1.5f;
 		this.bossCurrentLife = 1;
 		this.bossTotalLives = 3;
 		//currentboss = 1;
@@ -511,7 +511,7 @@ public class GameManager : MonoBehaviour
 			Vector3 p = THEBOSS.transform.position;
 			float q = p.z;
 			THEBOSS.transform.position = new Vector3 (0, 0, q);
-			THEBOSS.bossHealth = 100;
+			THEBOSS.giveFullHealth ();
 			//Start a corouting to slow down the time:
 			foreach (GameObject x in this.bulletsFolder) {
 				Destroy (x);
