@@ -43,6 +43,9 @@ public class Player : MonoBehaviour {
 
 		}
 
+//		camera = GetComponent<Camera>();
+//		camera.clearFlags = CameraClearFlags.SolidColor;
+//
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		playerbody = gameObject.AddComponent<BoxCollider2D> ();
@@ -94,8 +97,10 @@ public class Player : MonoBehaviour {
 	//Making the player temporary flash when it got hit
 	IEnumerator whenGotHit (){
 		this.model.mat.color = Color.red;
+//		camera.backgroundColor = Color.red;
 		yield return new WaitForSeconds (0.03f);
 		this.model.mat.color = new Color(1,1,1,1);
+//		camera.backgroundColor = Color.black;
 	}
 
 	IEnumerator usingabil (){
