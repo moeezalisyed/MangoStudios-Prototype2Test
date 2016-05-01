@@ -73,6 +73,18 @@ public class GameManager : MonoBehaviour
 	public Texture quitText;
 	public Texture nextbossText;
 	public Texture titleText;
+	public Texture bar1;
+	public Texture bar2;
+	public Texture bar3;
+	public Texture bar4;
+	public Texture bar5;
+	public Texture bar6;
+	public Texture bar7;
+	public Texture bar8;
+	public Texture bar9;
+	public Texture bar10;
+
+
 
 	// These are the readonly CD Functions
 	public readonly float coolDownCircle = 0.4f;
@@ -114,6 +126,7 @@ public class GameManager : MonoBehaviour
 
     // Use this for initialization
     void Start(){
+		Camera.main.backgroundColor = Color.black;
 		music.GetComponent<AudioSource> ().clip = bgm;
 		music.Play ();
 	

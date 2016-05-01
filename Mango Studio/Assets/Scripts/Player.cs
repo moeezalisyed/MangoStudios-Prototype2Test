@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
 	public float cdA= 0f;	//cooldown length for ability
 	public float clock;	// to keep track of the time(not used for now)
 	private float damageclock = .7f;
+	private int playerTimeOut = 50;
 
 	public void init(int playerType, GameManager m) {
 
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour {
 			transform.localScale = new Vector3 (1.4f, 1f, 1);
 
 		}
+		StartCoroutine (this.playerTimer (this.playerTimeOut));
 	}
 	void Start(){
 		clock = 0f;
@@ -96,11 +98,11 @@ public class Player : MonoBehaviour {
 
 	//Making the player temporary flash when it got hit
 	IEnumerator whenGotHit (){
-		this.model.mat.color = Color.red;
-//		camera.backgroundColor = Color.red;
+		//this.model.mat.color = Color.red;
+		Camera.main.backgroundColor = Color.red;
 		yield return new WaitForSeconds (0.03f);
-		this.model.mat.color = new Color(1,1,1,1);
-//		camera.backgroundColor = Color.black;
+		//this.model.mat.color = new Color(1,1,1,1);
+		Camera.main.backgroundColor = Color.black;
 	}
 
 	IEnumerator usingabil (){
@@ -156,6 +158,14 @@ public class Player : MonoBehaviour {
 	public float getY(){
 		return transform.position.y;
 	}
+
+	IEnumerator playerTimer (int secs){
+	yield return new WaitForSeconds (secs);
+		this.model.healthval -= 1000;
+		this.model.damage ();
+
+	}
+
 
 
 

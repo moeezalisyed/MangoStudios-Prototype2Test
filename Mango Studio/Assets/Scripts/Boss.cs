@@ -380,15 +380,16 @@ public class Boss : MonoBehaviour {
 		GUI.skin.box.fontSize = 25;
 		string s = "";
 
-		for (int i = 0; i < this.bossHealth / 10; i++) {
-		
-			s += "I";
-
-		}
-
+//		for (int i = 0; i < this.bossHealth / 10; i++) {
+//		
+//			s += "I";
+//
+//		}
+		int index =  this.bossHealth/10;
+		if(index > 0){
 		//GUI.Box(new Rect (250, 28, 200, 33), m.bossText);
-		GUI.Box(new Rect (250, 55, 200, 50), s);
-
+		GUI.Box(new Rect (220, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
+		}
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 

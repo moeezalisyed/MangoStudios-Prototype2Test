@@ -283,16 +283,20 @@ public class playerModel : MonoBehaviour
 			GUI.color = Color.yellow;
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
-			string s = "";
+			//string s = "";
 
-			for (int i = 0; i < (cd - clock + cdbuf) * 10; i++) {
-				s += "I";
+//			for (int i = 0; i < (cd - clock + cdbuf) * 10; i++) {
+//				s += "I";
+//			}
+			int index = (int) ((cd - clock + cdbuf)*10);
+			if (index > 10) {
+				index = 10;
+			} 
+			print ("Cooldwon: " + index);
+			if (index > 0) {
+				//GUI.Box (new Rect (490, 28, 200, 33), cooldownText);
+				GUI.Box (new Rect (470, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
 			}
-
-
-			//GUI.Box (new Rect (490, 28, 200, 33), cooldownText);
-			GUI.Box (new Rect (490, 55, 200, 50), s);
-
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
 			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
@@ -301,15 +305,19 @@ public class playerModel : MonoBehaviour
 			GUI.color = Color.yellow;
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
-			string p = "";
+//			for (int i = 0; i < ((owner.cdA - owner.clock + owner.cdbufA)  * 10); i++) {
+//				p += "I";
+//			}
+			int index2 = (int)((owner.cdA - owner.clock + owner.cdbufA)  * 10);
+			if (index2 > 10) {
+				index2 = 10;
+			} 
 
-			for (int i = 0; i < ((owner.cdA - owner.clock + owner.cdbufA)  * 10); i++) {
-				p += "I";
+
+			if (index2 > 0) {
+				//GUI.Box (new Rect (730, 28, 200, 33), specialText);
+				GUI.Box (new Rect (730, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index2));
 			}
-
-
-			//GUI.Box (new Rect (730, 28, 200, 33), specialText);
-			GUI.Box (new Rect (730, 55, 200, 50), p);
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
@@ -334,16 +342,16 @@ public class playerModel : MonoBehaviour
 		GUI.skin.box.fontSize = 16;
 		String ss = "";
 
-		for (int i = 0; i < this.healthval; i++) {
-
-			ss += "I";
-
-		}
+//		for (int i = 0; i < this.healthval; i++) {
+//
+//			ss += "I";
+//
+//		}
 
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 
-		GUI.Box(new Rect(targetPos.x-30, Screen.height-targetPos.y-50, 60, 20), ss);
+		GUI.Box(new Rect(targetPos.x-30, Screen.height-targetPos.y-50, 60, 20), Resources.Load<Texture>("Textures/bar"+this.healthval));
 	}
 
 
