@@ -137,8 +137,8 @@ public class Player : MonoBehaviour {
 	}
 
 
-	public void shoot(){
-		model.shoot ();
+	public void shoot(int x){
+		model.shoot (x);
 	}
 
 	public void setCD(float a){

@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 	private int playerLives = 9;
 	private int[] playerOrder;// = new int[playerLives];
 	private int playerOrderIndex = 0;
+	private int firingDirection = 0;
 
 	//******Boss Lives********
 	private int bossTotalLives = 3;
@@ -319,6 +320,7 @@ public class GameManager : MonoBehaviour
 		clock += Time.deltaTime;
 		//THEBOSS.updatePositions (currentplayer.transform.position.x, currentplayer.transform.position.y);
 		currentplayer.model.shadowDirection.Add (currentplayer.direction);
+		currentplayer.model.firingDirection.Add (firingDirection);
 		Vector3 playerPosScreen = Camera.main.WorldToScreenPoint(currentplayer.transform.position);
 		float speed = this.charSpeed;
 
@@ -337,35 +339,10 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 6;
 				}
 				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-				//speed = this.charSpeed * Mathf.Sqrt (2);
-				//				if (currentplayer.transform.position.x > Screen.width) {
-				//					print ("x width");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.x = 0;
-				//					currentplayer.transform.position = xvec;
-				//				}
-			} /*else{
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 3;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.x > Screen.width) {
-//						print ("x width");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.x = 0;
-//						currentplayer.transform.position = xvec;
-//					}
-				
-				
-				}
-			
-			
-			}*/
+			}
 		} 
+
 		if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22 ) {
-
-
-			//above
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 0;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 0 * 90);
@@ -380,34 +357,10 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 4;
 				}
 				currentplayer.transform.Translate (Vector3.up * speed * Time.deltaTime);
-				//				if (currentplayer.transform.position.y < 0) {
-				//					print ("y 0");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.y = Screen.height;
-				//					currentplayer.transform.position = xvec;
-				//				}
-			} /*else {
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 0;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.y < 0) {
-//						print ("y 0");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.y = Screen.height;
-//						currentplayer.transform.position = xvec;
-//					}
-
-				}
-
-
-			}*/
-			//below
-
+			}
 		}
-		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22 ){
 
-			//above
+		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22 ){
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 1;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 1 * 90);
@@ -422,35 +375,10 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 5;
 				}
 				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-				//				if (currentplayer.transform.position.x < 0) {
-				//					print ("x 0");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.x = Screen.width;
-				//					currentplayer.transform.position = xvec;
-				//				}
-
-
-			} /*else {
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 1;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.x < 0) {
-//						print ("x 0");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.x = Screen.width; 
-//						currentplayer.transform.position = xvec;
-//					}
-				}
-
-
-			}*/
-			//below
+			}
 		}
+
 		if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22 ) {
-
-
-			//bove
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 2;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 2 * 90);
@@ -466,39 +394,36 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 6;
 				}
 				currentplayer.transform.Translate (Vector3.up * speed * Time.deltaTime);
-				//				if (currentplayer.transform.position.y > Screen.height) {
-				//					print ("y height");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.y = 0;
-				//					currentplayer.transform.position = xvec;
-				//				}
+			}
+		}
 
-			} /*else {
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 2;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.y > Screen.height) {
-//						print ("y height");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.y = 0;
-//						currentplayer.transform.position = xvec;
-//					}
-				}
+		if (Input.GetKey (KeyCode.D)  && playerPosScreen.x < Screen.width -22) {
+			currentplayer.shoot (-90);
+			firingDirection = -90;
+		} 
 
+		if (Input.GetKey (KeyCode.W) && playerPosScreen.y < Screen.height -22 ) {
+			currentplayer.shoot (0);
+			firingDirection = 0;
+		}
 
-			}*/
-			//below
+		if (Input.GetKey (KeyCode.A) && playerPosScreen.x > 22 ){
+			currentplayer.shoot (90);
+			firingDirection = 90;
+		}
 
+		if (Input.GetKey (KeyCode.S) && playerPosScreen.y > 22 ) {
+			currentplayer.shoot (180);
+			firingDirection = 180;
 		}
 
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		/*if (Input.GetKeyDown (KeyCode.Space)) {
 			//The next line is just for testing texture 
 			//this.THEBOSS.dealDamage (5);
 			currentplayer.shoot();
-		}
-		if (Input.GetKeyDown (KeyCode.Z)) {
+		}*/
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			currentplayer.useAbility ();
 
 		}

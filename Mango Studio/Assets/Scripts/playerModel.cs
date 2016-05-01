@@ -23,6 +23,7 @@ public class playerModel : MonoBehaviour
 	public List<Vector3> shadowMovements = new List<Vector3>();
 	public List<Boolean> shadowFiring =  new List<Boolean>();
 	public List<int> shadowDirection =  new List<int>();
+	public List<int> firingDirection =  new List<int>();
 	public List<bool> shadowSPAB = new List<bool> ();
 	public Boolean firstRun = true;
 	public int shadowitr = 0;
@@ -148,36 +149,16 @@ public class playerModel : MonoBehaviour
 		if (firstRun) {
 			shadowMovements.Add (this.transform.position);
 			this.owner.GetComponent<BoxCollider2D> ().transform.position = transform.position;
-			if (Input.GetKeyDown (KeyCode.Space)) {
+			if (Input.GetKeyDown (KeyCode.A)||Input.GetKeyDown (KeyCode.W)||Input.GetKeyDown (KeyCode.S)||Input.GetKeyDown (KeyCode.D)) {
 				shadowFiring.Add (true);
 			} else {
 				shadowFiring.Add (false);
 			}
-			if (Input.GetKeyDown (KeyCode.Z)) {
+			if (Input.GetKeyDown (KeyCode.Space)) {
 				shadowSPAB.Add (true);
 			} else {
 				shadowSPAB.Add (false);
 			}
-		
-//			if (playerType == 2) {
-////				if (movex > 0) {
-////					transform.position = new Vector3 (transform.position.x + speed * Mathf.Sqrt (3) / 2, transform.position.y - speed / 2, 0);
-////				} else if (movex < 0) {
-////					transform.position = new Vector3 (transform.position.x - speed * Mathf.Sqrt (3) / 2, transform.position.y - speed / 2, 0);
-////				} else if (movey > 0) {
-////					transform.position = new Vector3 (transform.position.x, transform.position.y + speed, 0);
-////				} else if (movey < 0) {
-////					transform.position = new Vector3 (transform.position.x + speed / 2, transform.position.y - speed * Mathf.Sqrt (3) / 2, 0);
-////				}
-//			} else if (playerType == 1) {
-//				transform.position = new Vector3 (transform.position.x + speed * movex, transform.position.y + speed * movey);
-//			} else if (playerType == 3) {
-			//	transform.position = new Vector3 (transform.position.x + speed * movex, transform.position.y + speed * movey);
-//			}
-//			if (clock - damagebuf > 3) {
-//				damage ();
-//				damagebuf = clock;
-//			}
 		} else {
 			
 			if (shadowitr >= shadowMovements.Count) {
@@ -194,7 +175,7 @@ public class playerModel : MonoBehaviour
 				this.transform.eulerAngles = new Vector3 (0, 0, (this.shadowDirection[shadowitr]%4) * 90+(this.shadowDirection[shadowitr]/4)*45);
 				//this.mat.shader = Shader.Find("Transparent/Diffuse");
 				if (shadowFiring [shadowitr] == true) {
-					this.shoot ();
+					this.shoot (this.firingDirection[shadowitr]);
 				}
 				if (shadowSPAB [shadowitr] == true) {
 					this.owner.useAbility ();
@@ -266,7 +247,7 @@ public class playerModel : MonoBehaviour
 		return playerType;
 	}
 
-	public void shoot(){
+	public void shoot(int x){
 		
 		if (clock - cdbuf > cd) {
 			if (this.firstRun) {
@@ -276,7 +257,7 @@ public class playerModel : MonoBehaviour
 			GameObject bulletObject = new GameObject();		
 			Bullet bullet = bulletObject.AddComponent<Bullet>();
 			bullet.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,0);
-			bullet.transform.rotation = new Quaternion(this.transform.rotation .x,this.transform.rotation.y,this.transform.rotation.z,this.transform.rotation.w);
+			bullet.transform.eulerAngles = new Vector3(0, 0, x);
 			bullet.init (this);
 			cdbuf = clock;
 		}
