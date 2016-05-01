@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 	public Texture bar8;
 	public Texture bar9;
 	public Texture bar10;
-
+    public Texture tutorialText;
 
 
 	// These are the readonly CD Functions
@@ -626,13 +626,17 @@ public class GameManager : MonoBehaviour
 			GUI.skin.box.fontSize = 25;
 
 
-			GUI.Box (new Rect (Screen.width / 2 - 300, Screen.height / 2 - 300, 600, 500), titleText);
-			GUI.color = Color.white;
-			GUI.skin.box.fontSize = 12;
-			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+            GUI.Box (new Rect (Screen.width / 2 - 250, Screen.height / 2 - 270, 500, 400), titleText);
+            GUI.color = Color.white;
+            GUI.skin.box.fontSize = 12;
+            GUI.skin.box.alignment = TextAnchor.MiddleCenter;
 
+            if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 50, 140, 60),tutorialText))
+            {
+                level = 10;
+            }
 
-           if (GUI.Button(new Rect(Screen.width / 2 - 120, Screen.height / 2 + 100, 240, 80),startText)|| Input.GetKeyDown(KeyCode.Return))
+   if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 130, 140, 60),startText)|| Input.GetKeyDown(KeyCode.Return))
             {
                 level = 1;
 
@@ -672,7 +676,30 @@ public class GameManager : MonoBehaviour
             if (GUI.Button(new Rect(25, Screen.height - 75, 110, 60), quitText) || Input.GetKeyDown(KeyCode.Escape)){
                 Application.Quit();
             }
-        	} if (level == 1){
+        	} 
+
+		if (level == 10){ //level selction
+
+            for (int i = 1; i < 7; i++) {
+                    GUIStyle BStyle = new GUIStyle(GUI.skin.GetStyle("Button"));
+                    BStyle.fontSize = 25;
+                    if (GUI.Button(new Rect(Screen.width / 8 + (i - 1) * Screen.width / 8, Screen.height / 2-Screen.width / 8/2 + Screen.width / 8 / 4/2, Screen.width / 8 - Screen.width / 8 / 4, Screen.width / 8 - Screen.width / 8 / 4), i.ToString(), BStyle))
+                    {
+//                        resetLevel();
+                        level = i;
+//                        makeLevel();
+                    }
+                    if (GUI.Button(new Rect(100, Screen.height-100, 200,80), "Back To Menu"))
+                    {
+//                        resetLevel();
+                        level = 0;
+//                        makeLevel();
+                    }
+        }
+    }
+
+
+        	if (level == 1){
 		if (this.gameover) {
 
 
