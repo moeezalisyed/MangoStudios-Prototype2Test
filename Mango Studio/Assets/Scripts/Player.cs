@@ -114,8 +114,16 @@ public class Player : MonoBehaviour {
 		if (this.playerType == 1) {
 			this.tag = "inviscircle";
 			//print ("changed tag to " + this.tag);
-			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/inviscircle");
-			transform.localScale = new Vector3 (3f, 3f, 0);
+			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/CircleSP");
+			transform.localScale = new Vector3 (3f, 3f, 1f);	
+		} else if (this.playerType == 0) {
+			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/SquareSP");
+		
+		
+		} else if (this.playerType == 2) {
+			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2SP");
+//			transform.localScale = new Vector3 (1.5f, 15f, 0);	
+		
 		}
 		yield return new WaitForSeconds (5);
 		this.usingability = false;
@@ -125,8 +133,16 @@ public class Player : MonoBehaviour {
 		if (this.playerType == 1) {
 			this.tag = "Player";
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
-			transform.localScale = new Vector3 (0.75f, 0.75f, 1);
-			transform.localScale = new Vector3 (1.4f, 1f, 1);
+			transform.localScale = new Vector3 (1f, 1f, 1f);
+			transform.localScale = new Vector3 (1.4f, 1f, 1f);
+		}else if (this.playerType == 0) {
+			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
+
+
+		} else if (this.playerType == 2) {
+			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2");
+//			transform.localScale = new Vector3 (1.5f, 1.5f, 0);	
+
 		}
 	}
 

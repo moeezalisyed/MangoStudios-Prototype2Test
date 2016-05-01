@@ -72,7 +72,8 @@ public class playerModel : MonoBehaviour
 		//	cd = 0;
 			cdbuf = -0.5f;
 			this.cdA = 1.5f;
-			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Triangle");
+			mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2");
+			transform.localScale = new Vector3 (1.5f, 1.5f, 0);	
 			//mat.color = Color.red;
 		} /*else if (playerType == 3) {
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
