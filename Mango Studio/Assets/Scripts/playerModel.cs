@@ -292,7 +292,7 @@ public class playerModel : MonoBehaviour
 			if (index > 10) {
 				index = 10;
 			} 
-			print ("Cooldwon: " + index);
+			//print ("Cooldwon: " + index);
 			if (index > 0) {
 				//GUI.Box (new Rect (490, 28, 200, 33), cooldownText);
 				GUI.Box (new Rect (470, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
