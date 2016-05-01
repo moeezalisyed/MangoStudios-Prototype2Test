@@ -205,7 +205,9 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
-				this.destroy ();
+				if (this.model.firstRun) {
+					this.destroy ();
+				}
 			}
 
 		}
