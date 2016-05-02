@@ -40,9 +40,7 @@ public class EnvVar : MonoBehaviour {
 
 	void doDamage(int x){
 		this.health -= x;
-		if (health <= 0) {
-			this.killThisEnv ();
-		} else if (health == 4) {
+		if (health == 4) {
 			model.transform.localScale = new Vector3 (0.85f, 0.85f, 1);
 			this.GetComponent<BoxCollider2D>().transform.localScale = model.transform.localScale;
 		} else if (health == 3) {
@@ -50,10 +48,12 @@ public class EnvVar : MonoBehaviour {
 			this.GetComponent<BoxCollider2D>().transform.localScale = model.transform.localScale;
 		} else if (health == 2) {
 			model.transform.localScale = new Vector3 (0.50f, 0.50f, 1);
-			this.owner.GetComponent<BoxCollider2D>().transform.localScale = model.transform.localScale;
+			this.GetComponent<BoxCollider2D>().transform.localScale = model.transform.localScale;
 		} else if (health == 1) {
 			model.transform.localScale = new Vector3 (0.25f, 0.25f, 1);
 			this.GetComponent<BoxCollider2D>().transform.localScale = model.transform.localScale;
+		}else if (health <= 0) {
+			this.killThisEnv ();
 		}
 
 

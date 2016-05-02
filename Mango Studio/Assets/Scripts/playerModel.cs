@@ -23,6 +23,7 @@ public class playerModel : MonoBehaviour
 	public List<Vector3> shadowMovements = new List<Vector3>();
 	public List<Boolean> shadowFiring =  new List<Boolean>();
 	public List<int> shadowDirection =  new List<int>();
+	public List<int> firingDirection =  new List<int>();
 	public List<bool> shadowSPAB = new List<bool> ();
 	public Boolean firstRun = true;
 	public int shadowitr = 0;
@@ -71,7 +72,8 @@ public class playerModel : MonoBehaviour
 		//	cd = 0;
 			cdbuf = -0.5f;
 			this.cdA = 1.5f;
-			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Triangle");
+			mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2");
+			transform.localScale = new Vector3 (1.5f, 1.5f, 0);	
 			//mat.color = Color.red;
 		} /*else if (playerType == 3) {
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
@@ -148,36 +150,16 @@ public class playerModel : MonoBehaviour
 		if (firstRun) {
 			shadowMovements.Add (this.transform.position);
 			this.owner.GetComponent<BoxCollider2D> ().transform.position = transform.position;
-			if (Input.GetKeyDown (KeyCode.Space)) {
+			if (Input.GetKeyDown (KeyCode.A)||Input.GetKeyDown (KeyCode.W)||Input.GetKeyDown (KeyCode.S)||Input.GetKeyDown (KeyCode.D)) {
 				shadowFiring.Add (true);
 			} else {
 				shadowFiring.Add (false);
 			}
-			if (Input.GetKeyDown (KeyCode.Z)) {
+			if (Input.GetKeyDown (KeyCode.Space)) {
 				shadowSPAB.Add (true);
 			} else {
 				shadowSPAB.Add (false);
 			}
-		
-//			if (playerType == 2) {
-////				if (movex > 0) {
-////					transform.position = new Vector3 (transform.position.x + speed * Mathf.Sqrt (3) / 2, transform.position.y - speed / 2, 0);
-////				} else if (movex < 0) {
-////					transform.position = new Vector3 (transform.position.x - speed * Mathf.Sqrt (3) / 2, transform.position.y - speed / 2, 0);
-////				} else if (movey > 0) {
-////					transform.position = new Vector3 (transform.position.x, transform.position.y + speed, 0);
-////				} else if (movey < 0) {
-////					transform.position = new Vector3 (transform.position.x + speed / 2, transform.position.y - speed * Mathf.Sqrt (3) / 2, 0);
-////				}
-//			} else if (playerType == 1) {
-//				transform.position = new Vector3 (transform.position.x + speed * movex, transform.position.y + speed * movey);
-//			} else if (playerType == 3) {
-			//	transform.position = new Vector3 (transform.position.x + speed * movex, transform.position.y + speed * movey);
-//			}
-//			if (clock - damagebuf > 3) {
-//				damage ();
-//				damagebuf = clock;
-//			}
 		} else {
 			
 			if (shadowitr >= shadowMovements.Count) {
@@ -194,7 +176,7 @@ public class playerModel : MonoBehaviour
 				this.transform.eulerAngles = new Vector3 (0, 0, (this.shadowDirection[shadowitr]%4) * 90+(this.shadowDirection[shadowitr]/4)*45);
 				//this.mat.shader = Shader.Find("Transparent/Diffuse");
 				if (shadowFiring [shadowitr] == true) {
-					this.shoot ();
+					this.shoot (this.firingDirection[shadowitr]);
 				}
 				if (shadowSPAB [shadowitr] == true) {
 					this.owner.useAbility ();
@@ -266,7 +248,7 @@ public class playerModel : MonoBehaviour
 		return playerType;
 	}
 
-	public void shoot(){
+	public void shoot(int x){
 		
 		if (clock - cdbuf > cd) {
 			if (this.firstRun) {
@@ -276,7 +258,7 @@ public class playerModel : MonoBehaviour
 			GameObject bulletObject = new GameObject();		
 			Bullet bullet = bulletObject.AddComponent<Bullet>();
 			bullet.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,0);
-			bullet.transform.rotation = new Quaternion(this.transform.rotation .x,this.transform.rotation.y,this.transform.rotation.z,this.transform.rotation.w);
+			bullet.transform.eulerAngles = new Vector3(0, 0, x);
 			bullet.init (this);
 			cdbuf = clock;
 		}
@@ -302,16 +284,20 @@ public class playerModel : MonoBehaviour
 			GUI.color = Color.yellow;
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
-			string s = "";
+			//string s = "";
 
-			for (int i = 0; i < (cd - clock + cdbuf) * 10; i++) {
-				s += "I";
+//			for (int i = 0; i < (cd - clock + cdbuf) * 10; i++) {
+//				s += "I";
+//			}
+			int index = (int) ((cd - clock + cdbuf)*10);
+			if (index > 10) {
+				index = 10;
+			} 
+			//print ("Cooldwon: " + index);
+			if (index > 0) {
+				//GUI.Box (new Rect (490, 28, 200, 33), cooldownText);
+				GUI.Box (new Rect (470, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
 			}
-
-
-			//GUI.Box (new Rect (490, 28, 200, 33), cooldownText);
-			GUI.Box (new Rect (490, 55, 200, 50), s);
-
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
 			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
@@ -320,15 +306,19 @@ public class playerModel : MonoBehaviour
 			GUI.color = Color.yellow;
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
-			string p = "";
+//			for (int i = 0; i < ((owner.cdA - owner.clock + owner.cdbufA)  * 10); i++) {
+//				p += "I";
+//			}
+			int index2 = (int)((owner.cdA - owner.clock + owner.cdbufA)  * 10);
+			if (index2 > 10) {
+				index2 = 10;
+			} 
 
-			for (int i = 0; i < ((owner.cdA - owner.clock + owner.cdbufA)  * 10); i++) {
-				p += "I";
+
+			if (index2 > 0) {
+				//GUI.Box (new Rect (730, 28, 200, 33), specialText);
+				GUI.Box (new Rect (730, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index2));
 			}
-
-
-			//GUI.Box (new Rect (730, 28, 200, 33), specialText);
-			GUI.Box (new Rect (730, 55, 200, 50), p);
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
@@ -353,16 +343,16 @@ public class playerModel : MonoBehaviour
 		GUI.skin.box.fontSize = 16;
 		String ss = "";
 
-		for (int i = 0; i < this.healthval; i++) {
-
-			ss += "I";
-
-		}
+//		for (int i = 0; i < this.healthval; i++) {
+//
+//			ss += "I";
+//
+//		}
 
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 
-		GUI.Box(new Rect(targetPos.x-30, Screen.height-targetPos.y-50, 60, 20), ss);
+		GUI.Box(new Rect(targetPos.x-30, Screen.height-targetPos.y-50, 60, 20), Resources.Load<Texture>("Textures/bar"+this.healthval));
 	}
 
 

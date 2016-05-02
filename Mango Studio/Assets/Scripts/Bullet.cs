@@ -101,7 +101,10 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.name == "Boss" || other.name == "BossBeam") {
+		if (other.name == "Boss") {
+			Destroy (this.gameObject);
+		}
+		if (other.name == "BossBeam" && this.name == "Bullet") {
 			Destroy (this.gameObject);
 		}
 //		if (other.name == "BossBullet") {

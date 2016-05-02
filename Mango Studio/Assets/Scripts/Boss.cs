@@ -103,12 +103,12 @@ public class Boss : MonoBehaviour {
 	}*/
 
 	IEnumerator flickerRoutine (){
-		while (true) {
+		while (charge) {
 			print ("started flickeritng");
-			this.model2.mat.color = Color.green;
+			this.model2.mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0c");	
 			yield return new WaitForSeconds (0.03f);
-			this.model2.mat.color = new Color (1, 1, 1, 1);
-			yield return new WaitForSeconds (0.03f);
+			this.model2.mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0");	
+			yield return new WaitForSeconds (0.05f);
 		}
 
 	}
@@ -137,8 +137,7 @@ public class Boss : MonoBehaviour {
 					if (charging <= 0) {
 						charge = false;
 
-							StopCoroutine (flickerRoutine ());
-							this.model2.mat.color = new Color (1, 1, 1, 1);
+
 
 						chargecd = 1;
 					}
@@ -154,8 +153,8 @@ public class Boss : MonoBehaviour {
 							if (!charge) {
 								charge = true;
 
-								print ("here start flickering");
-								StartCoroutine (flickerRoutine ());
+
+
 
 								charging = 1.3f;
 							}
@@ -237,13 +236,18 @@ public class Boss : MonoBehaviour {
 
 						} else {
 							charge = true;
+							StartCoroutine (flickerRoutine ());
 							recharging = 1.5f;
+
+
 						}
 					}
 				} else {
 					recharging = recharging - Time.deltaTime;
 					if (recharging <= 0) {
 						charge = false;
+						StopCoroutine (flickerRoutine ());
+						this.model2.mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0");	
 						if (x < 2) {
 							FireAOE ();
 						} else {
@@ -380,15 +384,16 @@ public class Boss : MonoBehaviour {
 		GUI.skin.box.fontSize = 25;
 		string s = "";
 
-		for (int i = 0; i < this.bossHealth / 10; i++) {
-		
-			s += "I";
-
-		}
-
+//		for (int i = 0; i < this.bossHealth / 10; i++) {
+//		
+//			s += "I";
+//
+//		}
+		int index =  this.bossHealth/10;
+		if(index > 0){
 		//GUI.Box(new Rect (250, 28, 200, 33), m.bossText);
-		GUI.Box(new Rect (250, 55, 200, 50), s);
-
+		GUI.Box(new Rect (220, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
+		}
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 
@@ -407,6 +412,7 @@ public class Boss : MonoBehaviour {
 			m.PlayEffect (bossHit);
 			//}
 		} else if (other.name == "SpecialBullet") {
+<<<<<<< HEAD
 			print ("Did special damage");
 			this.dealDamage (7);
 			//	if (this.bossType == 1) {
@@ -414,6 +420,14 @@ public class Boss : MonoBehaviour {
 			//	}
 		} 
 
+=======
+			print("Did special damage");
+			this.dealDamage (4);
+		//	if (this.bossType == 1) {
+				m.PlayEffect (bossHitX);
+		//	}
+		}
+>>>>>>> origin/master
 	}
 
 	public void giveFullHealth(){

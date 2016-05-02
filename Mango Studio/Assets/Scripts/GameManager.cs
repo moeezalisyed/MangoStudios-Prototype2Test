@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 	private int playerLives = 9;
 	private int[] playerOrder;// = new int[playerLives];
 	private int playerOrderIndex = 0;
+	private int firingDirection = 0;
 
 	//******Boss Lives********
 	private int bossTotalLives = 3;
@@ -72,6 +73,18 @@ public class GameManager : MonoBehaviour
 	public Texture quitText;
 	public Texture nextbossText;
 	public Texture titleText;
+	public Texture bar1;
+	public Texture bar2;
+	public Texture bar3;
+	public Texture bar4;
+	public Texture bar5;
+	public Texture bar6;
+	public Texture bar7;
+	public Texture bar8;
+	public Texture bar9;
+	public Texture bar10;
+    public Texture tutorialText;
+
 
 	// These are the readonly CD Functions
 	public readonly float coolDownCircle = 0.4f;
@@ -85,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     // Level number
 
-    private int level = 0;
+    public int level = 0;
 
 
     //button locations
@@ -113,6 +126,7 @@ public class GameManager : MonoBehaviour
 
     // Use this for initialization
     void Start(){
+		Camera.main.backgroundColor = Color.black;
 		music.GetComponent<AudioSource> ().clip = bgm;
 		music.Play ();
 	
@@ -319,6 +333,7 @@ public class GameManager : MonoBehaviour
 		clock += Time.deltaTime;
 		//THEBOSS.updatePositions (currentplayer.transform.position.x, currentplayer.transform.position.y);
 		currentplayer.model.shadowDirection.Add (currentplayer.direction);
+		currentplayer.model.firingDirection.Add (firingDirection);
 		Vector3 playerPosScreen = Camera.main.WorldToScreenPoint(currentplayer.transform.position);
 		float speed = this.charSpeed;
 
@@ -337,35 +352,10 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 6;
 				}
 				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-				//speed = this.charSpeed * Mathf.Sqrt (2);
-				//				if (currentplayer.transform.position.x > Screen.width) {
-				//					print ("x width");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.x = 0;
-				//					currentplayer.transform.position = xvec;
-				//				}
-			} /*else{
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 3;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.x > Screen.width) {
-//						print ("x width");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.x = 0;
-//						currentplayer.transform.position = xvec;
-//					}
-				
-				
-				}
-			
-			
-			}*/
+			}
 		} 
+
 		if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22 ) {
-
-
-			//above
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 0;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 0 * 90);
@@ -380,34 +370,10 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 4;
 				}
 				currentplayer.transform.Translate (Vector3.up * speed * Time.deltaTime);
-				//				if (currentplayer.transform.position.y < 0) {
-				//					print ("y 0");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.y = Screen.height;
-				//					currentplayer.transform.position = xvec;
-				//				}
-			} /*else {
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 0;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.y < 0) {
-//						print ("y 0");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.y = Screen.height;
-//						currentplayer.transform.position = xvec;
-//					}
-
-				}
-
-
-			}*/
-			//below
-
+			}
 		}
-		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22 ){
 
-			//above
+		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22 ){
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 1;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 1 * 90);
@@ -422,35 +388,10 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 5;
 				}
 				currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-				//				if (currentplayer.transform.position.x < 0) {
-				//					print ("x 0");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.x = Screen.width;
-				//					currentplayer.transform.position = xvec;
-				//				}
-
-
-			} /*else {
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 1;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.x < 0) {
-//						print ("x 0");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.x = Screen.width; 
-//						currentplayer.transform.position = xvec;
-//					}
-				}
-
-
-			}*/
-			//below
+			}
 		}
+
 		if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22 ) {
-
-
-			//bove
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 2;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 2 * 90);
@@ -466,39 +407,36 @@ public class GameManager : MonoBehaviour
 					currentplayer.direction = 6;
 				}
 				currentplayer.transform.Translate (Vector3.up * speed * Time.deltaTime);
-				//				if (currentplayer.transform.position.y > Screen.height) {
-				//					print ("y height");
-				//					Vector3 xvec = currentplayer.transform.position;
-				//					xvec.y = 0;
-				//					currentplayer.transform.position = xvec;
-				//				}
+			}
+		}
 
-			} /*else {
-				if (!currentplayer.usingability) {
-					currentplayer.direction = 2;
-					currentplayer.transform.eulerAngles = new Vector3 (0, 0, currentplayer.direction * 90);
-					currentplayer.transform.Translate (Vector3.up * this.charSpeed * Time.deltaTime);
-//					if (currentplayer.transform.position.y > Screen.height) {
-//						print ("y height");
-//						Vector3 xvec = currentplayer.transform.position;
-//						xvec.y = 0;
-//						currentplayer.transform.position = xvec;
-//					}
-				}
+		if (Input.GetKey (KeyCode.D)  && playerPosScreen.x < Screen.width -22) {
+			currentplayer.shoot (-90);
+			firingDirection = -90;
+		} 
 
+		if (Input.GetKey (KeyCode.W) && playerPosScreen.y < Screen.height -22 ) {
+			currentplayer.shoot (0);
+			firingDirection = 0;
+		}
 
-			}*/
-			//below
+		if (Input.GetKey (KeyCode.A) && playerPosScreen.x > 22 ){
+			currentplayer.shoot (90);
+			firingDirection = 90;
+		}
 
+		if (Input.GetKey (KeyCode.S) && playerPosScreen.y > 22 ) {
+			currentplayer.shoot (180);
+			firingDirection = 180;
 		}
 
 
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		/*if (Input.GetKeyDown (KeyCode.Space)) {
 			//The next line is just for testing texture 
 			//this.THEBOSS.dealDamage (5);
 			currentplayer.shoot();
-		}
-		if (Input.GetKeyDown (KeyCode.Z)) {
+		}*/
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			currentplayer.useAbility ();
 
 		}
@@ -688,13 +626,17 @@ public class GameManager : MonoBehaviour
 			GUI.skin.box.fontSize = 25;
 
 
-			GUI.Box (new Rect (Screen.width / 2 - 300, Screen.height / 2 - 300, 600, 500), titleText);
-			GUI.color = Color.white;
-			GUI.skin.box.fontSize = 12;
-			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+            GUI.Box (new Rect (Screen.width / 2 - 250, Screen.height / 2 - 270, 500, 400), titleText);
+            GUI.color = Color.white;
+            GUI.skin.box.fontSize = 12;
+            GUI.skin.box.alignment = TextAnchor.MiddleCenter;
 
+            if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 50, 140, 60),tutorialText))
+            {
+                level = 10;
+            }
 
-           if (GUI.Button(new Rect(Screen.width / 2 - 120, Screen.height / 2 + 100, 240, 80),startText)|| Input.GetKeyDown(KeyCode.Return))
+   if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 130, 140, 60),startText)|| Input.GetKeyDown(KeyCode.Return))
             {
                 level = 1;
 
@@ -734,7 +676,30 @@ public class GameManager : MonoBehaviour
             if (GUI.Button(new Rect(25, Screen.height - 75, 110, 60), quitText) || Input.GetKeyDown(KeyCode.Escape)){
                 Application.Quit();
             }
-        	} if (level == 1){
+        	} 
+
+		if (level == 10){ //level selction
+
+            for (int i = 1; i < 7; i++) {
+                    GUIStyle BStyle = new GUIStyle(GUI.skin.GetStyle("Button"));
+                    BStyle.fontSize = 25;
+                    if (GUI.Button(new Rect(Screen.width / 8 + (i - 1) * Screen.width / 8, Screen.height / 2-Screen.width / 8/2 + Screen.width / 8 / 4/2, Screen.width / 8 - Screen.width / 8 / 4, Screen.width / 8 - Screen.width / 8 / 4), i.ToString(), BStyle))
+                    {
+//                        resetLevel();
+                        level = i;
+//                        makeLevel();
+                    }
+                    if (GUI.Button(new Rect(100, Screen.height-100, 200,80), "Back To Menu"))
+                    {
+//                        resetLevel();
+                        level = 0;
+//                        makeLevel();
+                    }
+        }
+    }
+
+
+        	if (level == 1){
 		if (this.gameover) {
 
 
