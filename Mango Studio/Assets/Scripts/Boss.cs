@@ -374,15 +374,16 @@ public class Boss : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		GUI.Box(new Rect (190, 28, 200, 33), m.bossText);
+		GUI.skin.box.alignment = TextAnchor.MiddleLeft;
+		GUI.Box(new Rect (220, 28, 200, 33), m.bossText);
 		if (this.bossHealth > 30) {			
 			GUI.color = Color.green;
 		} else {
 			GUI.color = Color.red;
 		}
-		GUI.skin.box.alignment = TextAnchor.MiddleLeft;
-		GUI.skin.box.fontSize = 25;
-		string s = "";
+
+//		GUI.skin.box.fontSize = 25;
+//		string s = "";
 
 //		for (int i = 0; i < this.bossHealth / 10; i++) {
 //		
@@ -392,11 +393,13 @@ public class Boss : MonoBehaviour {
 		int index =  this.bossHealth/10;
 		if(index > 0){
 		//GUI.Box(new Rect (250, 28, 200, 33), m.bossText);
-		GUI.Box(new Rect (220, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
+		
+			GUI.Box(new Rect (190, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
+		
 		}
-		Vector2 targetPos;
-		targetPos = Camera.main.WorldToScreenPoint (transform.position);
-
+//		Vector2 targetPos;
+//		targetPos = Camera.main.WorldToScreenPoint (transform.position);
+//
 		//GUI.Box(new Rect(targetPos.x-40, Screen.height-targetPos.y-80, 100, 25), s);
 
 		GUI.color = Color.white;
@@ -405,17 +408,29 @@ public class Boss : MonoBehaviour {
 
 	}
 
+
+	public void initHit(float posx, float posy, int x){
+		GameObject expObject = new GameObject();		
+		explosion expl = expObject.AddComponent<explosion>();
+		Vector3 posv = new Vector3(posx, posy, 0);
+		expl.transform.position = posv;
+		expl.init (posv, x);
+
+	}
+
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Bullet") {
 			this.dealDamage (2);
 			//if (this.bossType == 1) {
-				m.PlayEffect (bossHit);
+			m.PlayEffect (bossHit);
+			this.initHit (this.transform.position.x, this.transform.position.y, 2);
 			//}
 		} else if (other.name == "SpecialBullet") {
 			print("Did special damage");
 			this.dealDamage (4);
 		//	if (this.bossType == 1) {
-				m.PlayEffect (bossHitX);
+			m.PlayEffect (bossHitX);
+			this.initHit (this.transform.position.x, this.transform.position.y, 3);
 		//	}
 		}
 	}

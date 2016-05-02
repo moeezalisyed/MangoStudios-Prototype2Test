@@ -79,20 +79,24 @@ public class Player : MonoBehaviour {
 	}
 
 	public void useAbility(){
-		if (clock - cdbufA > cdA) {
-			if (this.model.firstRun) {
-				m.PlayEffect (this.m.abilityon);
-			}
-			StartCoroutine (usingabil ());
-			cdbufA = clock;
-		}
+		if (this.usingability == false) {
+			if (clock - cdbufA > cdA) {
+				if (this.model.firstRun) {
+					m.PlayEffect (this.m.abilityon);
+				}
+				StartCoroutine (usingabil ());
 
+				cdbufA = clock;
+			}
+		}
 	}
 
 
 	IEnumerator startPowerUp (){
 		this.usingcircpowerup = true;
+		this.model.mat.color = Color.red;
 		yield return new WaitForSeconds (5);
+		this.model.mat.color = new Color(1,1,1,1);
 		this.usingcircpowerup = false;
 	}
 
@@ -105,7 +109,7 @@ public class Player : MonoBehaviour {
 		Camera.main.backgroundColor = Color.black;
 	}
 
-	IEnumerator usingabil (){
+	public IEnumerator usingabil (){
 		this.usingability = true;
 		if (this.playerType == 2) {
 			this.setCD (this.model.cd/1.7f);
@@ -126,6 +130,28 @@ public class Player : MonoBehaviour {
 		
 		}
 		yield return new WaitForSeconds (5);
+//		this.usingability = false;
+//		if (this.playerType == 2) {
+//			this.setCD (this.model.cd * 1.7f);
+//		}
+//		if (this.playerType == 1) {
+//			this.tag = "Player";
+//			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
+//			transform.localScale = new Vector3 (1f, 1f, 1f);
+//			transform.localScale = new Vector3 (1.4f, 1f, 1f);
+//		}else if (this.playerType == 0) {
+//			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
+//
+//
+//		} else if (this.playerType == 2) {
+//			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2");
+////			transform.localScale = new Vector3 (1.5f, 1.5f, 0);	
+//
+//		}
+		this.endLifeStopPowerUp();
+	}
+
+	public void endLifeStopPowerUp(){
 		this.usingability = false;
 		if (this.playerType == 2) {
 			this.setCD (this.model.cd * 1.7f);
@@ -141,7 +167,7 @@ public class Player : MonoBehaviour {
 
 		} else if (this.playerType == 2) {
 			model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2");
-//			transform.localScale = new Vector3 (1.5f, 1.5f, 0);	
+			//			transform.localScale = new Vector3 (1.5f, 1.5f, 0);	
 
 		}
 	}
@@ -182,17 +208,33 @@ public class Player : MonoBehaviour {
 
 	}
 
+	public void initHit(float posx, float posy, int x){
+		if (this.getHealth () >= 0) {
+			GameObject expObject = new GameObject ();		
+			explosion expl = expObject.AddComponent<explosion> ();
+			Vector3 posv = new Vector3 (posx, posy, 0);
+			expl.transform.position = posv;
+			expl.init (posv, x);
+		}
+	
+	}
+
+	public void initDead(float posx, float posy, int x){
+		
+			GameObject expObject = new GameObject ();		
+			explosion expl = expObject.AddComponent<explosion> ();
+			Vector3 posv = new Vector3 (posx, posy, 0);
+			expl.transform.position = posv;
+			expl.init (posv, x);
+		
+
+	}
 
 
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "inviscircle") {
-			//Here it will check if it collided with a circle
-			/*if (other.GetComponentInParent (Texture2D) == "inviscircle") {
-				//increase the damage stuff
-				print("got to the invis circle");
-			}*/
-
+			print ("ppp!");
 			print ("Got a powerup!");
 			StartCoroutine (startPowerUp ());
 
@@ -215,6 +257,7 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
+				this.initHit (this.transform.position.x, this.transform.position.y, 1);
 				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
 			}
@@ -224,15 +267,17 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
+				this.initHit (this.transform.position.x, this.transform.position.y, 1);
 				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
 			}
 
 		}
 		if (other.name == "BossBlade") {
-			if (this.playerType == 0 && this.usingability) {
+			if (this.playerType == 0 && this.usingability || !this.model.firstRun) {
 			// Square is invulnerable
 			} else {
+				this.initHit (this.transform.position.x, this.transform.position.y, 1);
 				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
 			}
@@ -242,6 +287,7 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 				// Square is invulnerable
 			} else {
+				this.initHit (this.transform.position.x, this.transform.position.y, 1);
 				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
 			}
