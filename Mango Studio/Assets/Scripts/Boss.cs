@@ -58,7 +58,7 @@ public class Boss : MonoBehaviour {
 		if (bossType == 1) {
 			speed = m.bossSpeed;
 			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
-			this.bossHealth = 100;
+			this.bossHealth = 3;
 			var modelObject = GameObject.CreatePrimitive (PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model1 = modelObject.AddComponent<BossModel> ();						// Add a marbleModel script to control visuals of the gem.
 			model1.init (this);
@@ -114,6 +114,17 @@ public class Boss : MonoBehaviour {
 			this.model2.mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0");	
 			yield return new WaitForSeconds (0.05f);
 		}
+
+	}
+
+	public void initDead(){
+
+		GameObject expObject = new GameObject ();		
+		explosion expl = expObject.AddComponent<explosion> ();
+		Vector3 posv = new Vector3 (transform.position.x, transform.position.y, 0);
+		expl.transform.position = posv;
+		expl.init (posv, 5);
+
 
 	}
 
@@ -453,14 +464,7 @@ public class Boss : MonoBehaviour {
 
 			//}
 		} else if (other.name == "SpecialBullet") {
-<<<<<<< HEAD
-			print ("Did special damage");
-			this.dealDamage (7);
-			//	if (this.bossType == 1) {
-			m.PlayEffect (bossHitX);
-			//	}
-		} 
-=======
+
 
 		
 
@@ -472,7 +476,6 @@ public class Boss : MonoBehaviour {
 			this.initHit (this.transform.position.x, this.transform.position.y, 3);
 		//	}
 		}
->>>>>>> origin/master
 	}
 
 

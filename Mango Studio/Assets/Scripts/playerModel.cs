@@ -203,13 +203,30 @@ public class playerModel : MonoBehaviour
 		return healthval;
 	}
 
-	public void pastani(){
-		
+
+
+	public void whenPlayerDiesAnum(){
+
+		StartCoroutine (pdani());
+	}
+
+	IEnumerator pdani (){
+		foreach (GameObject x in this.owner.m.bulletsFolder) {
+			Destroy (x);
+		}
+
+		this.owner.m.bulletsFolder.Clear ();
+
+
+		yield return new WaitForSeconds (3.05f);
 		this.owner.m.whenPlayerDies ();
 		this.destroy ();
 
 
+
 	}
+
+
 
 	public void damage(){
 		if (firstRun) {
@@ -226,13 +243,16 @@ public class playerModel : MonoBehaviour
 
 		if (healthval <= 0) {
 			if (firstRun) {
-//				if (healthval == 0) {
-//					this.owner.initDead (transform.position.x, transform.position.y, 4);
-//				}
+				if (healthval == 0) {
+					this.owner.initDead (transform.position.x, transform.position.y, 4);
+				}
 				StopCoroutine (this.owner.usingabil ());
 				this.owner.endLifeStopPowerUp ();
-				this.owner.m.whenPlayerDies ();
-				this.destroy ();
+				this.whenPlayerDiesAnum();
+				//StopCoroutine (this.owner.usingabil ());
+				//this.owner.endLifeStopPowerUp ();
+				//this.owner.m.whenPlayerDiesAnum();
+				//this.destroy ();
 
 			} else {
 				shadowitr = this.shadowDirection.Count;

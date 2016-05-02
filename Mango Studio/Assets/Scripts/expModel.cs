@@ -42,7 +42,7 @@ public class expModel : MonoBehaviour {
 			// when boss dies
 			//whitish
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/bossdead");
-			transform.localScale = new Vector3 (5f, 5f, 1);
+			transform.localScale = new Vector3 (4f, 4f, 1);
 		}
 
 

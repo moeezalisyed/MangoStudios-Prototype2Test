@@ -33,7 +33,7 @@ public class explosion : MonoBehaviour {
 			// when boss dies
 			//whitish
 			timer = 0;
-			totalTime = 3.0f;
+			totalTime = 5.0f;
 		}
 
 	
@@ -65,18 +65,18 @@ public class explosion : MonoBehaviour {
 			// when player dies
 			//reddish
 			if (timer <= totalTime * 0.67f) {
-				transform.localScale += new Vector3 (0.049f, 0.049f, 1f);
+				transform.localScale += new Vector3 (0.099f, 0.099f, 1f);
 			} else {
-				transform.localScale -= new Vector3 (0.009f, 0.009f, 1f);
+				transform.localScale -= new Vector3 (0.007f, 0.007f, 1f);
 			}
 			timer++;
 		} else if (type == 5) {
 			// when boss dies
 			//whitish
 			if (timer <= totalTime * 0.67f) {
-				transform.localScale += new Vector3 (0.03f, 0.03f, 1f);
+				transform.localScale += new Vector3 (0.4f, 0.4f, 1f);
 			} else {
-				transform.localScale -= new Vector3 (0.13f, 0.13f, 1f);
+				transform.localScale -= new Vector3 (0.0085f, 0.0085f, 1f);
 			}
 			timer++;
 		}

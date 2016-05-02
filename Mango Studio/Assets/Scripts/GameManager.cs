@@ -279,12 +279,12 @@ public class GameManager : MonoBehaviour
 	IEnumerator startTransition (){
 		this.inTransition = true;
 		this.guiTransition = true;
-		if (this.THEBOSS.gameObject != null) {
-			Destroy (THEBOSS.gameObject);
-		}
-		bulletsFolder.Clear ();
-		this.createPlayerOrderList ();
-		this.destroyForNextIteration ();
+//		if (this.THEBOSS.gameObject != null) {
+//			Destroy (THEBOSS.gameObject);
+//		}
+//		bulletsFolder.Clear ();
+//		this.createPlayerOrderList ();
+//		this.destroyForNextIteration ();
 		while (this.guiTransition) {
 			yield return new WaitForSeconds (0.01f);
 		}
@@ -292,6 +292,24 @@ public class GameManager : MonoBehaviour
 		StartCoroutine (iterationSlowdown (3));
 		this.inTransition = false;
 	}
+
+	IEnumerator startTransitionAni (){
+
+
+		this.THEBOSS.initDead ();
+		if (this.THEBOSS.gameObject != null) {
+			Destroy (THEBOSS.gameObject);
+		}
+		bulletsFolder.Clear ();
+		this.createPlayerOrderList ();
+		this.destroyForNextIteration ();
+		yield return new WaitForSeconds (5.03f);
+
+		StartCoroutine (this.startTransition ());
+	}
+
+
+
 
 
         
@@ -320,7 +338,7 @@ public class GameManager : MonoBehaviour
 
 //					bulletsFolder.Clear ();
 //					this.createPlayerOrderList ();
-					StartCoroutine (startTransition ());
+					StartCoroutine (startTransitionAni ());
 //					this.createNextBoss ();
 //					StartCoroutine (iterationSlowdown (3));			
 				}
@@ -444,24 +462,7 @@ public class GameManager : MonoBehaviour
 
 
     }
-	public void whenPlayerDiesAnum(){
-		
-		StartCoroutine (pdani());
-	}
 
-	IEnumerator pdani (){
-		foreach (GameObject x in this.bulletsFolder) {
-			Destroy (x);
-		}
-
-		bulletsFolder.Clear ();
-
-
-		yield return new WaitForSeconds (3.05f);
-		currentplayer.model.pastani ();
-
-	
-	}
 
 	public void whenPlayerDies(){
 		//setHealthText ();
