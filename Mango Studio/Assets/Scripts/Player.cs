@@ -12,15 +12,15 @@ public class Player : MonoBehaviour {
 	public int direction = 0;
 	public BoxCollider2D playerbody;
 	public bool usingability = false;
-	public bool usingcircpowerup = false;
+	public bool usingcircpowerup;
 	public	float cdbufA= -0.5f;		//time until ability cooldown is over
 	public float cdA= 0f;	//cooldown length for ability
 	public float clock;	// to keep track of the time(not used for now)
 	private float damageclock = .7f;
-	private int playerTimeOut = 50;
-
+	public int playerTimeOut = 50;
+	public int timeIndex;
 	public void init(int playerType, GameManager m) {
-
+		this.usingcircpowerup = false;
 		this.playerType = playerType;
 		//this.initHealth = initHealth;
 		this.m = m;
@@ -94,10 +94,21 @@ public class Player : MonoBehaviour {
 
 	IEnumerator startPowerUp (){
 		this.usingcircpowerup = true;
-		this.model.mat.color = Color.red;
+
+		if (this.playerType == 0) {
+			this.model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/pup"+this.playerType);
+		} else if (this.playerType == 2) {
+			this.model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/pup"+this.playerType);
+		}
+//		this.model.mat.color = Color.red;
 		yield return new WaitForSeconds (5);
-		this.model.mat.color = new Color(1,1,1,1);
+//		this.model.mat.color = new Color(1,1,1,1);
 		this.usingcircpowerup = false;
+		if (this.playerType == 0) {
+			this.model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
+		} else if (this.playerType == 2) {
+			this.model.mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2");
+		}
 	}
 
 	//Making the player temporary flash when it got hit
@@ -202,7 +213,11 @@ public class Player : MonoBehaviour {
 	}
 
 	IEnumerator playerTimer (int secs){
-	yield return new WaitForSeconds (secs);
+		timeIndex = secs;
+		while (timeIndex > 0) {
+			yield return new WaitForSeconds (1);
+			timeIndex--;
+		}
 		this.model.healthval -= 1000;
 		this.model.damage ();
 

@@ -20,6 +20,8 @@ public class playerModel : MonoBehaviour
 	public	float cdbufA= 0f;		//time until ability cooldown is over
 	public float cdA= 0f;	//cooldown length for ability
 
+
+
 	public List<Vector3> shadowMovements = new List<Vector3>();
 	public List<Boolean> shadowFiring =  new List<Boolean>();
 	public List<int> shadowDirection =  new List<int>();
@@ -245,6 +247,7 @@ public class playerModel : MonoBehaviour
 		if (healthval <= 0) {
 			if (firstRun) {
 				if (healthval == 0) {
+					//this.mat.color = Color.black;
 					this.owner.initDead (transform.position.x, transform.position.y, 4);
 				}
 				StopCoroutine (this.owner.usingabil ());
@@ -266,7 +269,7 @@ public class playerModel : MonoBehaviour
 		
 			this.firstRun = false;
 			//this.owner.m.THEBOSS.bossHealth = 100;
-			
+			//this.mat.color = new Color(1,1,1,1);
 			//this.healthval = 10;
 			//this.owner.m.THEBOSS.model.transform.position = new Vector3(0,0, 0);
 			foreach (Player x in owner.m.shadowPlayers) {
@@ -354,6 +357,16 @@ public class playerModel : MonoBehaviour
 				//GUI.Box (new Rect (730, 28, 200, 33), specialText);
 				GUI.Box (new Rect (730, 55, 200, 50), Resources.Load<Texture> ("Textures/bar" + index2));
 			}
+
+			int timeind1 = this.owner.timeIndex % 10;
+			int timeind2 = (int) this.owner.timeIndex /10;
+
+				//GUI.Box (new Rect (0, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+timeind));
+				//Make a GUI TEXTURE HERE ******JUN LI*******
+				//*******CHANGE THE LOCATION AS WELL*******
+		//	GUI.Box (new Rect (0, 55, 200, 50), Resources.Load<Texture>("Textures/number"+timeind1));
+		//	GUI.Box (new Rect (0, 55, 200, 50), Resources.Load<Texture>("Textures/number"+timeind2));
+
 
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
