@@ -337,7 +337,7 @@ public class GameManager : MonoBehaviour
 		Vector3 playerPosScreen = Camera.main.WorldToScreenPoint(currentplayer.transform.position);
 		float speed = this.charSpeed;
 
-		if (Input.GetKey (KeyCode.RightArrow)  && playerPosScreen.x < Screen.width -22) {
+		if (Input.GetKey (KeyCode.RightArrow)  && playerPosScreen.x < Screen.width -22 && currentplayer.getHealth() >0) {
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 3;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 3 * 90);
@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
 			}
 		} 
 
-		if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22 ) {
+		if (Input.GetKey (KeyCode.UpArrow) && playerPosScreen.y < Screen.height -22 && currentplayer.getHealth() >0 ) {
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 0;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 0 * 90);
@@ -373,7 +373,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22 ){
+		if (Input.GetKey (KeyCode.LeftArrow) && playerPosScreen.x > 22  && currentplayer.getHealth() >0){
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 1;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 1 * 90);
@@ -391,7 +391,7 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22 ) {
+		if (Input.GetKey (KeyCode.DownArrow) && playerPosScreen.y > 22 && currentplayer.getHealth() >0) {
 			if (currentplayer.playerType != 2 || !currentplayer.usingability) {
 				currentplayer.direction = 2;
 				currentplayer.transform.eulerAngles = new Vector3 (0, 0, 2 * 90);
@@ -410,22 +410,22 @@ public class GameManager : MonoBehaviour
 			}
 		}
 
-		if (Input.GetKey (KeyCode.D)  && playerPosScreen.x < Screen.width -22) {
+		if (Input.GetKey (KeyCode.D)  && playerPosScreen.x < Screen.width -22 && currentplayer.getHealth() >0) {
 			currentplayer.shoot (-90);
 			firingDirection = -90;
 		} 
 
-		if (Input.GetKey (KeyCode.W) && playerPosScreen.y < Screen.height -22 ) {
+		if (Input.GetKey (KeyCode.W) && playerPosScreen.y < Screen.height -22 && currentplayer.getHealth() >0) {
 			currentplayer.shoot (0);
 			firingDirection = 0;
 		}
 
-		if (Input.GetKey (KeyCode.A) && playerPosScreen.x > 22 ){
+		if (Input.GetKey (KeyCode.A) && playerPosScreen.x > 22 && currentplayer.getHealth() >0){
 			currentplayer.shoot (90);
 			firingDirection = 90;
 		}
 
-		if (Input.GetKey (KeyCode.S) && playerPosScreen.y > 22 ) {
+		if (Input.GetKey (KeyCode.S) && playerPosScreen.y > 22 && currentplayer.getHealth() >0) {
 			currentplayer.shoot (180);
 			firingDirection = 180;
 		}
@@ -444,6 +444,24 @@ public class GameManager : MonoBehaviour
 
 
     }
+	public void whenPlayerDiesAnum(){
+		
+		StartCoroutine (pdani());
+	}
+
+	IEnumerator pdani (){
+		foreach (GameObject x in this.bulletsFolder) {
+			Destroy (x);
+		}
+
+		bulletsFolder.Clear ();
+
+
+		yield return new WaitForSeconds (3.05f);
+		currentplayer.model.pastani ();
+
+	
+	}
 
 	public void whenPlayerDies(){
 		//setHealthText ();
@@ -454,12 +472,12 @@ public class GameManager : MonoBehaviour
 			THEBOSS.transform.position = new Vector3 (0, 0, q);
 			THEBOSS.giveFullHealth ();
 			//Start a corouting to slow down the time:
+
 			foreach (GameObject x in this.bulletsFolder) {
 				Destroy (x);
 			}
 
 			bulletsFolder.Clear ();
-
 			//currentplayer.destroy();
 
 			//this.THEBOSS.model.transform.position.y = 0;

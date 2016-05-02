@@ -203,6 +203,14 @@ public class playerModel : MonoBehaviour
 		return healthval;
 	}
 
+	public void pastani(){
+		
+		this.owner.m.whenPlayerDies ();
+		this.destroy ();
+
+
+	}
+
 	public void damage(){
 		if (firstRun) {
 			healthval--;
@@ -218,8 +226,14 @@ public class playerModel : MonoBehaviour
 
 		if (healthval <= 0) {
 			if (firstRun) {
+//				if (healthval == 0) {
+//					this.owner.initDead (transform.position.x, transform.position.y, 4);
+//				}
+				StopCoroutine (this.owner.usingabil ());
+				this.owner.endLifeStopPowerUp ();
 				this.owner.m.whenPlayerDies ();
 				this.destroy ();
+
 			} else {
 				shadowitr = this.shadowDirection.Count;
 
