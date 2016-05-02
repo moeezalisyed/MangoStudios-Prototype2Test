@@ -172,7 +172,8 @@ public class playerModel : MonoBehaviour
 			} else {
 				
 				this.owner.tag = "Player";
-				this.mat.color = Color.gray;
+				//this.mat.color = Color.grey;
+				this.mat.color = new Color(0.3f, 0.3f, 0.3f, 1);
 				this.transform.eulerAngles = new Vector3 (0, 0, (this.shadowDirection[shadowitr]%4) * 90+(this.shadowDirection[shadowitr]/4)*45);
 				//this.mat.shader = Shader.Find("Transparent/Diffuse");
 				if (shadowFiring [shadowitr] == true) {
@@ -351,7 +352,7 @@ public class playerModel : MonoBehaviour
 
 			if (index2 > 0) {
 				//GUI.Box (new Rect (730, 28, 200, 33), specialText);
-				GUI.Box (new Rect (730, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index2));
+				GUI.Box (new Rect (730, 55, 200, 50), Resources.Load<Texture> ("Textures/bar" + index2));
 			}
 
 			GUI.color = Color.white;
@@ -386,7 +387,10 @@ public class playerModel : MonoBehaviour
 		Vector2 targetPos;
 		targetPos = Camera.main.WorldToScreenPoint (transform.position);
 
-		GUI.Box(new Rect(targetPos.x-30, Screen.height-targetPos.y-50, 60, 20), Resources.Load<Texture>("Textures/bar"+this.healthval));
+		if (!this.firstRun) {
+			GUI.color = new Color (0.3f, 0.3f, 0.3f, 1);
+		}
+		GUI.Box (new Rect (targetPos.x - 30, Screen.height - targetPos.y - 50, 60, 20), Resources.Load<Texture> ("Textures/bar" + this.healthval));
 	}
 
 
