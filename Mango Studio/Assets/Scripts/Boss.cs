@@ -160,7 +160,7 @@ public class Boss : MonoBehaviour {
 							}
 						}
 					}
-					if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 5) {
+					if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) >= 5.5f) {
 						slow = false;
 						if (beamCooldown <= 0) {
 							FireBeam ();
@@ -176,7 +176,7 @@ public class Boss : MonoBehaviour {
 						bulletCooldown = bulletCooldown - Time.deltaTime;
 					}
 
-				} else if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) < 3) { 
+				} else if ((Mathf.Sqrt (Mathf.Pow ((targetx - this.transform.position.x), 2) + Mathf.Pow ((targety - this.transform.position.y), 2))) < 3.5f) { 
 					if (bladeCooldown <= 0) {
 						SpawnBlades ();
 						usingBlades = true;
@@ -423,9 +423,16 @@ public class Boss : MonoBehaviour {
 			this.dealDamage (2);
 			//if (this.bossType == 1) {
 			m.PlayEffect (bossHit);
+
 			this.initHit (this.transform.position.x, this.transform.position.y, 2);
+
+
 			//}
 		} else if (other.name == "SpecialBullet") {
+
+		
+
+
 			print("Did special damage");
 			this.dealDamage (4);
 		//	if (this.bossType == 1) {
@@ -434,6 +441,8 @@ public class Boss : MonoBehaviour {
 		//	}
 		}
 	}
+
+
 
 	public void giveFullHealth(){
 		this.bossHealth = 100;

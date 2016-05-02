@@ -6,12 +6,14 @@ public class BossBeam : MonoBehaviour {
 	private BossBeamModel model;
 	private Boss m;
 	private float speed;
+	private int health;
 
 	// Use this for initialization
 	public void init (Boss boss) {
 		this.name = "BossBeam";
 		m = boss;
 		speed = m.chargeSpeed*1.1f;
+		health = 2;
 	
 
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
@@ -40,11 +42,17 @@ public class BossBeam : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 
+		if (health <= 0) {
+			Destroy (this.gameObject);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Player" || other.tag == "inviscircle") {
 			Destroy (this.gameObject);
+		}
+		if (other.name == "Bullet") {
+			health = health - 1;
 		}
 	}
 }
