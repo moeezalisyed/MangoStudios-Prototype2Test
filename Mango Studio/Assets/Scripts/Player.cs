@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 	public int direction = 0;
 	public BoxCollider2D playerbody;
 	public bool usingability = false;
-	public bool usingcircpowerup = false;
+	public bool usingcircpowerup;
 	public	float cdbufA= -0.5f;		//time until ability cooldown is over
 	public float cdA= 0f;	//cooldown length for ability
 	public float clock;	// to keep track of the time(not used for now)
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
 	private int playerTimeOut = 50;
 
 	public void init(int playerType, GameManager m) {
-
+		this.usingcircpowerup = false;
 		this.playerType = playerType;
 		//this.initHealth = initHealth;
 		this.m = m;
@@ -94,9 +94,9 @@ public class Player : MonoBehaviour {
 
 	IEnumerator startPowerUp (){
 		this.usingcircpowerup = true;
-		this.model.mat.color = Color.red;
+//		this.model.mat.color = Color.red;
 		yield return new WaitForSeconds (5);
-		this.model.mat.color = new Color(1,1,1,1);
+//		this.model.mat.color = new Color(1,1,1,1);
 		this.usingcircpowerup = false;
 	}
 

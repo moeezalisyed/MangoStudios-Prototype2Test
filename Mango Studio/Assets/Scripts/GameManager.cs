@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -652,7 +653,9 @@ public class GameManager : MonoBehaviour
 
             if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 50, 140, 60),tutorialText))
             {
-                level = 10;
+                //level = 10;
+				SceneManager.LoadScene("main");
+				// Here, we can just load a differnet scene
             }
 
    if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 130, 140, 60),startText)|| Input.GetKeyDown(KeyCode.Return))
