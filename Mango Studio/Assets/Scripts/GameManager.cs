@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     // Level number
 
-    private int level = 0;
+    public int level = 0;
 
 
     //button locations
