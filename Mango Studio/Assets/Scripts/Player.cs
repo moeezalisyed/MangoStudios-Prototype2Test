@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
 	public float cdA= 0f;	//cooldown length for ability
 	public float clock;	// to keep track of the time(not used for now)
 	private float damageclock = .7f;
-	public int playerTimeOut = 50;
+	public int playerTimeOut = 40;
 	public int timeIndex;
 	public void init(int playerType, GameManager m) {
 		this.usingcircpowerup = false;
@@ -124,6 +124,9 @@ public class Player : MonoBehaviour {
 		this.usingability = true;
 		if (this.playerType == 2) {
 			this.setCD (this.model.cd/1.7f);
+		}
+		if (this.playerType == 0) {
+			this.setCD (this.model.cd/1.3f);
 		}
 
 		if (this.playerType == 1) {

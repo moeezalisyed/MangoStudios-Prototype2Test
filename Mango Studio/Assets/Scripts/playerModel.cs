@@ -246,7 +246,7 @@ public class playerModel : MonoBehaviour
 
 		if (healthval <= 0) {
 			if (firstRun) {
-				if (healthval == 0) {
+				if (healthval == 0 || this.owner.timeIndex == 0 ) {
 					//this.mat.color = Color.black;
 					this.owner.initDead (transform.position.x, transform.position.y, 4);
 				}
@@ -364,8 +364,13 @@ public class playerModel : MonoBehaviour
 				//GUI.Box (new Rect (0, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+timeind));
 				//Make a GUI TEXTURE HERE ******JUN LI*******
 				//*******CHANGE THE LOCATION AS WELL*******
-		//	GUI.Box (new Rect (0, 55, 200, 50), Resources.Load<Texture>("Textures/number"+timeind1));
-		//	GUI.Box (new Rect (0, 55, 200, 50), Resources.Load<Texture>("Textures/number"+timeind2));
+			if (this.owner.timeIndex > this.owner.playerTimeOut * 0.3) {
+				GUI.color = Color.green;
+			} else {
+				GUI.color = Color.red;
+			}
+			GUI.Box (new Rect (20, 55, 40, 50), Resources.Load<Texture>("Textures/number"+timeind2));
+			GUI.Box (new Rect (60, 55, 40, 50), Resources.Load<Texture>("Textures/number"+timeind1));
 
 
 			GUI.color = Color.white;

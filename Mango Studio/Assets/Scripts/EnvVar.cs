@@ -91,8 +91,10 @@ public class EnvVar : MonoBehaviour {
 		} else if (other.name == "TracerBullet") {
 			Destroy (other.gameObject);
 			this.doDamage (1);
-		} else if (other.name == "Boss" || other.name == "BossBlade") {
+		} else if (other.name == "BossBlade") {
 			this.doDamage (1);
+		} else if (other.name == "Boss") {
+			this.doDamage (1000);
 		}
 	}
 }

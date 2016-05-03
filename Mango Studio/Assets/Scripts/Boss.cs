@@ -111,9 +111,12 @@ public class Boss : MonoBehaviour {
 			print ("started flickeritng");
 			this.model2.mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0c");	
 			yield return new WaitForSeconds (0.03f);
-			this.model2.mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0");	
+
+			this.dealDamage (0);
+
 			yield return new WaitForSeconds (0.05f);
 		}
+		this.dealDamage (0);
 
 	}
 
