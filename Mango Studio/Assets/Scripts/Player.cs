@@ -265,8 +265,10 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
-				if (this.model.firstRun) {
-					this.destroy ();
+				if (this.model.healthval > 0) {
+					if (this.model.firstRun) {
+						this.destroy ();
+					}
 				}
 			}
 
@@ -275,9 +277,12 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
-				this.initHit (this.transform.position.x, this.transform.position.y, 1);
-				StartCoroutine (this.whenGotHit ());
-				this.destroy ();
+				if (this.model.healthval > 0) {
+					this.m.PlayEffect (this.m.playerHit);
+					this.initHit (this.transform.position.x, this.transform.position.y, 1);
+					StartCoroutine (this.whenGotHit ());
+					this.destroy ();
+				}
 			}
 
 		}
@@ -285,6 +290,7 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 			// Square is invulnerable
 			} else {
+				this.m.PlayEffect (this.m.playerHit);
 				this.initHit (this.transform.position.x, this.transform.position.y, 1);
 				StartCoroutine (this.whenGotHit ());
 				this.destroy ();
@@ -295,10 +301,12 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability || !this.model.firstRun) {
 			// Square is invulnerable
 			} else {
-				this.m.PlayEffect (this.m.bladecrash);
-				this.initHit (this.transform.position.x, this.transform.position.y, 1);
-				StartCoroutine (this.whenGotHit ());
-				this.destroy ();
+				if (this.model.healthval > 0) {
+					this.m.PlayEffect (this.m.bladecrash);
+					this.initHit (this.transform.position.x, this.transform.position.y, 1);
+					StartCoroutine (this.whenGotHit ());
+					this.destroy ();
+				}
 			}
 
 		}
@@ -306,9 +314,13 @@ public class Player : MonoBehaviour {
 			if (this.playerType == 0 && this.usingability) {
 				// Square is invulnerable
 			} else {
-				this.initHit (this.transform.position.x, this.transform.position.y, 1);
-				StartCoroutine (this.whenGotHit ());
-				this.destroy ();
+				if (this.model.healthval > 0) {
+					this.m.PlayEffect (this.m.playerHit);
+
+					this.initHit (this.transform.position.x, this.transform.position.y, 1);
+					StartCoroutine (this.whenGotHit ());
+					this.destroy ();
+				}
 			}
 
 		}

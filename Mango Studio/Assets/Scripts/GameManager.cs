@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 	public Boss THEBOSS;
 	public Boolean gameover = false;
 	public Boolean gamewon = false;
+	public int score;
 
 	//A list for the environment variables
 	public List<EnvVar> envVariables = new List<EnvVar>();
@@ -146,6 +147,7 @@ public class GameManager : MonoBehaviour
 		this.bossSpeed = 1.5f;
 		this.bossCurrentLife = 1;
 		this.bossTotalLives = 3;
+		this.score = 36000;
 		//currentboss = 1;
 		// Set up the player order
 		playerOrder = new int[playerLives];
@@ -309,6 +311,8 @@ public class GameManager : MonoBehaviour
 
 
 		this.THEBOSS.initDead ();
+		this.currentplayer.timeIndex = 0;
+
 		if (this.THEBOSS.gameObject != null) {
 			Destroy (THEBOSS.gameObject);
 		}
@@ -316,8 +320,7 @@ public class GameManager : MonoBehaviour
 		this.createPlayerOrderList ();
 		this.destroyForNextIteration ();
 		this.PlayEffect (this.bossDead);
-		yield return new WaitForSeconds (5.03f);
-
+		yield return new WaitForSeconds (5.01f);
 		StartCoroutine (this.startTransition ());
 	}
 
@@ -329,7 +332,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+		if (!this.gamewon && !this.gameover) {
+			score -= (int)Mathf.Floor (100 * Time.deltaTime);
+		}
 
 
 
@@ -805,6 +810,26 @@ public class GameManager : MonoBehaviour
 //		if(GUI.Button(new Rect((Screen.width- 100, Screen.height - 200, 500, 20), "Reset")) {
 //			Application.
 //		}
+			GUI.Box(new Rect (1100, 28, 200, 33), scoreText);
+			int s1 = score / 10000;
+			int s2 = (score-10000*s1 )/ 1000;
+			int s3 = (score-10000*s1-1000*s2 )/ 100;
+			int s4 = (score-10000*s1-1000*s2 -100*s3) / 10;
+			int s5 = score-10000*s1-1000*s2 -100*s3-10*s4;
+			if (score >= 10000) {
+				GUI.Box (new Rect (1050, 58, 30, 30), Resources.Load<Texture> ("Textures/number" + s1));
+			}
+			if (score >= 1000) {
+				GUI.Box (new Rect (1080, 58, 30, 30), Resources.Load<Texture> ("Textures/number" + s2));
+			}
+			if (score >= 100) {
+				GUI.Box (new Rect (1110, 58, 30, 30), Resources.Load<Texture> ("Textures/number" + s3));
+			}
+			if (score >= 10) {
+				GUI.Box (new Rect (1140, 58, 30, 30), Resources.Load<Texture> ("Textures/number" + s4));
+			}
+			GUI.Box (new Rect (1170, 58, 30, 30), Resources.Load<Texture>("Textures/number"+s5));
+
 
 			if (this.currentplayer.model.healthval > 3) {			
 				GUI.color = Color.green;
@@ -831,20 +856,20 @@ public class GameManager : MonoBehaviour
 		if (this.playerOrderIndex < playerLives) {
 			GUI.skin.box.alignment = TextAnchor.LowerCenter;
 			GUI.skin.box.fontSize = 22;
-			GUI.Box (new Rect (970, 22, 100, 38), nextUpText);
+			GUI.Box (new Rect (900, 25, 110, 34), nextUpText);
 
 			int nextType = playerOrder [playerOrderIndex];
 			if (nextType == 0) {
-				GUI.Box (new Rect (995, 60, 50, 50), this.forSq);
+				GUI.Box (new Rect (925, 60, 50, 50), this.forSq);
 			} else if (nextType == 1) {
-				GUI.Box (new Rect (995, 60, 50, 50), this.forC);
+				GUI.Box (new Rect (925, 60, 50, 50), this.forC);
 			} else if (nextType == 2) {
-				GUI.Box (new Rect (995, 60, 50, 50), this.forT);
+				GUI.Box (new Rect (925, 60, 50, 50), this.forT);
 			}
 		}else {
 				//GUI.color = Color.red;
 				GUI.skin.box.fontSize = 22;
-			GUI.Box(new Rect (970, 19, 100, 40), lastLifeText);
+			GUI.Box(new Rect (900, 19, 100, 40), lastLifeText);
 
 
 		

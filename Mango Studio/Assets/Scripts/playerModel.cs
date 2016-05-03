@@ -246,13 +246,14 @@ public class playerModel : MonoBehaviour
 
 		if (healthval <= 0) {
 			if (firstRun) {
-				if (healthval == 0 || this.owner.timeIndex == 0 ) {
+				if (healthval == 0 || this.owner.timeIndex == 0) {
 					//this.mat.color = Color.black;
 					this.owner.initDead (transform.position.x, transform.position.y, 4);
+				
+					StopCoroutine (this.owner.usingabil ());
+					this.owner.endLifeStopPowerUp ();
+					this.whenPlayerDiesAnum ();
 				}
-				StopCoroutine (this.owner.usingabil ());
-				this.owner.endLifeStopPowerUp ();
-				this.whenPlayerDiesAnum();
 				//StopCoroutine (this.owner.usingabil ());
 				//this.owner.endLifeStopPowerUp ();
 				//this.owner.m.whenPlayerDiesAnum();
@@ -317,8 +318,8 @@ public class playerModel : MonoBehaviour
 
 	void OnGUI(){
 		if (this.firstRun) {
-			GUI.Box (new Rect (470, 28, 200, 33), cooldownText);
-			GUI.Box (new Rect (730, 28, 200, 33), specialText);
+			GUI.Box (new Rect (420, 28, 200, 33), cooldownText);
+			GUI.Box (new Rect (650, 28, 200, 33), specialText);
 			GUI.color = Color.yellow;
 			GUI.skin.box.alignment = TextAnchor.MiddleLeft;
 			GUI.skin.box.fontSize = 25;
@@ -334,7 +335,7 @@ public class playerModel : MonoBehaviour
 			//print ("Cooldwon: " + index);
 			if (index > 0) {
 				//GUI.Box (new Rect (490, 28, 200, 33), cooldownText);
-				GUI.Box (new Rect (470, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
+				GUI.Box (new Rect (420, 55, 200, 50), Resources.Load<Texture>("Textures/bar"+index));
 			}
 			GUI.color = Color.white;
 			GUI.skin.box.fontSize = 12;
@@ -355,7 +356,7 @@ public class playerModel : MonoBehaviour
 
 			if (index2 > 0) {
 				//GUI.Box (new Rect (730, 28, 200, 33), specialText);
-				GUI.Box (new Rect (730, 55, 200, 50), Resources.Load<Texture> ("Textures/bar" + index2));
+				GUI.Box (new Rect (650, 55, 200, 50), Resources.Load<Texture> ("Textures/bar" + index2));
 			}
 
 			int timeind1 = this.owner.timeIndex % 10;
