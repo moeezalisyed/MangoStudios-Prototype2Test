@@ -85,7 +85,12 @@ public class GameManager : MonoBehaviour
 	public Texture bar9;
 	public Texture bar10;
     public Texture tutorialText;
-
+	public Texture instSet;
+	public Texture shootingText;
+	public Texture arrowssq;
+	public Texture movingText;
+	public Texture spacesq;
+	public Texture specialAbText;
 
 	// These are the readonly CD Functions
 	public readonly float coolDownCircle = 0.4f;
@@ -651,7 +656,18 @@ public class GameManager : MonoBehaviour
             GUI.skin.box.fontSize = 12;
             GUI.skin.box.alignment = TextAnchor.MiddleCenter;
 
-            if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 50, 140, 60),tutorialText))
+			GUI.Box (new Rect (Screen.width - 210, Screen.height / 2 -100, 120, 60), shootingText);
+			GUI.Box (new Rect (Screen.width - 250, Screen.height / 2 -60, 200, 120), instSet);
+
+			GUI.Box (new Rect (Screen.width - 210, Screen.height / 2 +85, 120, 40), movingText);
+			GUI.Box (new Rect (Screen.width - 250, Screen.height / 2 +120, 200, 120), arrowssq);
+
+			GUI.Box (new Rect (Screen.width - 210, Screen.height / 2 +250, 120, 40), specialAbText);
+			GUI.Box (new Rect (Screen.width - 250, Screen.height / 2 +260, 200, 120), spacesq);
+
+
+
+			if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 50, 140, 60),tutorialText))
             {
                 //level = 10;
 				SceneManager.LoadScene("main");

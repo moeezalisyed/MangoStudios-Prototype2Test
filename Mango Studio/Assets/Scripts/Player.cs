@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
 	public BoxCollider2D playerbody;
 	public bool usingability = false;
 	public bool usingcircpowerup;
-	public	float cdbufA= -0.5f;		//time until ability cooldown is over
+	public	float cdbufA= -8.5f;		//time until ability cooldown is over
 	public float cdA= 0f;	//cooldown length for ability
 	public float clock;	// to keep track of the time(not used for now)
 	private float damageclock = .7f;
@@ -27,20 +27,20 @@ public class Player : MonoBehaviour {
 
 
 		if (this.playerType == 0){
-			//triangle
+			//square
 
-			this.cdA = 1.5f;
+			this.cdA = 8.5f;
 
 
 		} else if (this.playerType == 1){
 			//circle
 
-			this.cdA = 1.5f;
+			this.cdA = 8.5f;
 
 		} else if (this.playerType == 2){
 			//square
 
-			this.cdA = 1.5f;
+			this.cdA = 8.5f;
 
 		}
 

@@ -58,7 +58,7 @@ public class playerModel : MonoBehaviour
 			//circle
 		//	cd = owner.m.coolDownCircle;
 			cdbuf = -0.5f;
-			this.cdA = 1.5f;
+			this.cdA = 20.5f;
 			this.cdbufA = 0f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Circle");
 			//mat.color = Color.red;
@@ -66,14 +66,14 @@ public class playerModel : MonoBehaviour
 			//square
 			//cd = owner.m.coolDownCircle;
 			cdbuf = -0.5f;
-			this.cdA = 1.5f;
+			this.cdA = 20.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/Square");
 			//mat.color = Color.red;
 		} else if (playerType == 2) {
 			//triangle 
 		//	cd = 0;
 			cdbuf = -0.5f;
-			this.cdA = 1.5f;
+			this.cdA = 20.5f;
 			mat.mainTexture = Resources.Load<Texture2D> ("Textures/triangle2");
 			transform.localScale = new Vector3 (1.5f, 1.5f, 0);	
 			//mat.color = Color.red;
@@ -347,7 +347,7 @@ public class playerModel : MonoBehaviour
 //			for (int i = 0; i < ((owner.cdA - owner.clock + owner.cdbufA)  * 10); i++) {
 //				p += "I";
 //			}
-			int index2 = (int)((owner.cdA - owner.clock + owner.cdbufA)  * 10);
+			int index2 = (int)(((owner.cdA - owner.clock + owner.cdbufA)  * 10)/7);
 			if (index2 > 10) {
 				index2 = 10;
 			} 
