@@ -324,6 +324,7 @@ public class Boss : MonoBehaviour {
 	}
 
 	void SpawnBlades(){
+		this.m.PlayEffect (this.m.blade);
 		GameObject bladeObject = new GameObject();		
 		blade = bladeObject.AddComponent<BossBlades>();
 		blade.init (this);
@@ -338,6 +339,7 @@ public class Boss : MonoBehaviour {
 	}
 
 	void FireAOE(){
+		this.m.PlayEffect (this.m.aoe);
 		GameObject bulletObject = new GameObject();		
 		AOE bullet = bulletObject.AddComponent<AOE>();
 		bullet.init (m.GetTarget());

@@ -314,6 +314,7 @@ public class GameManager : MonoBehaviour
 		bulletsFolder.Clear ();
 		this.createPlayerOrderList ();
 		this.destroyForNextIteration ();
+		this.PlayEffect (this.bossDead);
 		yield return new WaitForSeconds (5.03f);
 
 		StartCoroutine (this.startTransition ());

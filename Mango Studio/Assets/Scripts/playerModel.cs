@@ -209,7 +209,7 @@ public class playerModel : MonoBehaviour
 
 
 	public void whenPlayerDiesAnum(){
-
+		this.owner.m.PlayEffect (this.owner.m.playerDead);
 		StartCoroutine (pdani());
 	}
 
