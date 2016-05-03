@@ -58,7 +58,7 @@ public class Boss : MonoBehaviour {
 		if (bossType == 1) {
 			speed = m.bossSpeed;
 			chargeSpeed = m.bossSpeed * this.chargeMultiplier;
-			this.bossHealth = 3;
+			this.bossHealth = 2;
 			var modelObject = GameObject.CreatePrimitive (PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 			model1 = modelObject.AddComponent<BossModel> ();						// Add a marbleModel script to control visuals of the gem.
 			model1.init (this);
@@ -254,11 +254,11 @@ public class Boss : MonoBehaviour {
 				}
 			}
 			else{
-				int x = Random.Range (0, 5);
+				int x = Random.Range (0, 7);
 				if (!charge) {
 					if (attackCD <= 0) {
-						attackCD = 2f;
-						if (x < 4) {
+						attackCD = 1.5f;
+						if (x < 5) {
 							FireTracer ();
 
 						} else {
@@ -275,7 +275,7 @@ public class Boss : MonoBehaviour {
 						charge = false;
 						StopCoroutine (flickerRoutine ());
 						this.model2.mat.mainTexture = Resources.Load<Texture2D>("Textures/boss2d0");	
-						if (x < 2) {
+						if (x < 3) {
 							FireAOE ();
 						} else {
 							FireBurst ();
