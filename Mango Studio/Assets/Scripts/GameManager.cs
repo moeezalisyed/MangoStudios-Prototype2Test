@@ -130,6 +130,11 @@ public class GameManager : MonoBehaviour
     public AudioClip abilityoff;
 	public AudioClip shootClip;
 
+	public AudioClip aoe;	
+	public AudioClip blade;	
+	public AudioClip bladecrash;	
+	public AudioClip charging;
+	public AudioClip playerDead;			
     // Use this for initialization
     void Start(){
 		Camera.main.backgroundColor = Color.black;
@@ -583,13 +588,20 @@ public class GameManager : MonoBehaviour
         winmusic = Resources.Load<AudioClip>("Music/You Win Song");*/
 
         // sfx
-        bossDead = Resources.Load<AudioClip>("Music/explosion");
+        bossDead = Resources.Load<AudioClip>("Music/bossdeath");
         playerHit = Resources.Load<AudioClip>("Music/shoot");
         playerHitX = Resources.Load<AudioClip>("Music/shootX");  //Special bullet when ability is on
   		bossHit = Resources.Load<AudioClip>("Music/bosshit");
         bossHitX = Resources.Load<AudioClip>("Music/bosshitX");
         abilityon = Resources.Load<AudioClip>("Music/abilityon");
-        abilityoff = Resources.Load<AudioClip>("Music/abilityoff");    }
+        abilityoff = Resources.Load<AudioClip>("Music/abilityoff");    
+
+        aoe = Resources.Load<AudioClip>("Music/aoe");
+        blade = Resources.Load<AudioClip>("Music/blade2");
+        bladecrash = Resources.Load<AudioClip>("Music/bladehit");  
+        charging = Resources.Load<AudioClip>("Music/charging");
+        playerDead = Resources.Load<AudioClip>("Music/playerdeath");  
+    }
         // Music section
     public void PlayEffect(AudioClip clip)
     {
