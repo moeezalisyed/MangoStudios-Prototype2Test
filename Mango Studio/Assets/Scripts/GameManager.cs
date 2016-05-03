@@ -685,7 +685,7 @@ public class GameManager : MonoBehaviour
 			if (GUI.Button(new Rect(Screen.width / 2 - 70, Screen.height / 2 + 50, 140, 60),tutorialText))
             {
                 //level = 10;
-				SceneManager.LoadScene("main");
+				SceneManager.LoadScene("tutorial");
 				// Here, we can just load a differnet scene
             }
 
