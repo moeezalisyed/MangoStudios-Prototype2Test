@@ -135,6 +135,7 @@ public class GameManager : MonoBehaviour
 	public AudioClip bladecrash;	
 	public AudioClip charging;
 	public AudioClip playerDead;			
+	public AudioClip playerhitbyboss;	
     // Use this for initialization
     void Start(){
 		Camera.main.backgroundColor = Color.black;
@@ -602,6 +603,7 @@ public class GameManager : MonoBehaviour
         bladecrash = Resources.Load<AudioClip>("Music/bladehit");  
         charging = Resources.Load<AudioClip>("Music/charging");
         playerDead = Resources.Load<AudioClip>("Music/playerdeath");  
+        playerhitbyboss = Resources.Load<AudioClip>("Music/playerhit");  
     }
         // Music section
     public void PlayEffect(AudioClip clip)
