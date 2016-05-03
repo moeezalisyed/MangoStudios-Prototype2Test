@@ -16,7 +16,7 @@ public class BossShield : MonoBehaviour {
 		this.name = "BossShield";
 
 		m = owner;
-		ShieldHealth = 20;
+		ShieldHealth = 16;
 		var modelObject = GameObject.CreatePrimitive(PrimitiveType.Quad);	// Create a quad object for holding the gem texture.
 		model = modelObject.AddComponent<BossShieldModel>();						// Add a marbleModel script to control visuals of the gem.
 		model.init(this);
@@ -24,7 +24,7 @@ public class BossShield : MonoBehaviour {
 		Rigidbody2D bossRbody = gameObject.AddComponent<Rigidbody2D> ();
 		bossRbody.gravityScale = 0;
 		bossbody.isTrigger = true;
-		transform.localScale = new Vector3 (1.5f, 1.5f, 1);
+		transform.localScale = new Vector3 (2f, 2f, 1);
 
 		//transform.localScale = new Vector3 (1.3f, 1.3f, 1);
 	}

@@ -5,9 +5,11 @@ public class TracerBulletModel : MonoBehaviour {
 
 	private TracerBullet owner;			// Pointer to the parent object.
 	public Material mat;
+	private float clock;
 
 	public void init(TracerBullet owner) {
 		this.owner = owner;
+		clock = 0;
 
 		transform.parent = owner.transform;					// Set the model's parent to the gem.
 		transform.localPosition = new Vector3(0,0,0);		// Center the model on the parent.
@@ -21,6 +23,7 @@ public class TracerBulletModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		clock = clock + (Time.deltaTime)*2;
+		transform.eulerAngles = new Vector3 (0, 0, clock * 90);
 	}
 }

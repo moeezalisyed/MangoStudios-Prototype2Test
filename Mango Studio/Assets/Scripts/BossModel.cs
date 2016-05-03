@@ -6,9 +6,11 @@ public class BossModel : MonoBehaviour {
 	private Boss owner;			// Pointer to the parent object.
 	public Material mat;
 	private string bossTex;
+	private float clock;
 
 	public void init(Boss owner) {
 		this.owner = owner;
+		clock = 0;
 
 		transform.parent = owner.transform;					// Set the model's parent to the gem.
 		transform.localPosition = new Vector3(0,0,0);		// Center the model on the parent.
@@ -39,6 +41,11 @@ public class BossModel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		clock = clock + (Time.deltaTime)*2;
+		if (owner.bossHealth <= 50) {
+			transform.eulerAngles = new Vector3 (0, 0, clock * 90);
+		} else {
+			this.transform.rotation = new Quaternion(owner.transform.rotation .x,owner.transform.rotation.y,owner.transform.rotation.z,owner.transform.rotation.w);
+		}
 	}
 }
